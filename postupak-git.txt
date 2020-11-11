@@ -1,0 +1,73 @@
+Prvo preuzmemo i instaliramo Git sa: git-scm.com
+
+-------------------------------------------------------------------------------------------------------
+
+Otvorimo nalog na github.com
+
+Na githubu kreiramo novi repozitorijum, i nazovemo ga kao projekat. Dobicemo spisak komandi.
+
+Otvorimo projekat u VSC-u. Kucamo u Terminalu.
+
+echo "neki tekst" >> README.md (tekst pod navodnicima upisuje u navedeni fajl. Ako fajl ne postoji - kreira ga. To je opisni fajl o nasem projektu-repozitorijumu)
+
+git init (inicijalizujemo git projekat) (sad se pojavljuju zeleni nazivi, i oznaka U - untracked)
+
+git add README.md (readme.md sad ima oznaku A; Znaci, da se promjene u ovom fajlu prate)
+
+git commit -m "neka poruka" (registrujemo promjene na pracenim fajlovima, u gitu na nasem racunaru,  ali ne na gitu na internetu - githubu)
+
+git branch -M main (ne znam sta radi; prvi put sam odradio u ovom projektu)
+
+git remote add origin https://github.com/... (lokalni git upucujemo (povezujemo) na git na internetu; radi se samo jednom)
+
+git push -u origin master (commit cuva promjene lokalno, a push cuva lokalno sacuvane promjene, na internet; 
+master je glavni branch (grana - kojih moze imati vise); 
+sledeci put je dovoljno samo git push;
+za ovaj projekat sam odradio: git push -u origin main
+)
+
+---------------------------------------------------------------------------------------
+
+Sad je readme.md postavljen na github, jer je samo on bio naznacen za pracenje.
+
+Sad cemo oznaciti sve ostale fajlove da budu praceni.
+
+Prvo oznacimo sta ne zelimo da bude praceno.
+
+Kreiramo fajl .gitignore, i u njega upisemo sta ne zelimo da pratimo.
+Kad uspjesno naznacimo, nazivi ce biti prikazani tamnom bojom. Folder node_modules ne zelimo da pratimo.
+
+git add . (oznacimo sve fajlove u projektu, da budu pracene promjene na njima? )
+
+git commit -m "neka poruka" (sacuva sve promjene na pracenim fajlovima, na lokalni git)
+
+git push (sve lokalno sacuvane promjene, sacuva na gitu na internetu)
+
+-----------------------------------------------------------------------------------
+
+kad izvrsimo promjenu na fajlu, pojavi se oznaka M.
+
+git add . (sve novododate fajlove koji nisu bili praceni - U, sada se prate - A)
+
+git commit -m "neka poruka"
+
+git push
+
+------------------------------------------------------------------------
+
+git pull (Ako kolega izvrsi neke promjene u kodu na internetu-githubu; Dobicemo tu verziju na svom racunaru)
+
+---------------------------------------------------------------------------------------------------------------------
+
+Da preuzmemo projekat sa githuba:
+
+Napravimo folder projekta na racunaru, nazovemo ga po zelji.
+
+Kopiramo odgovarajuci URL sa gitguba.
+
+Otvorimo folder u VSC-u.
+
+Otkucamo u terminalu: git clone https://udgovarajuci.url .
+
+nmp install (da bi se kreirao folder node_modules)
+
