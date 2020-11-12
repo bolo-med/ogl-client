@@ -42,13 +42,13 @@ ng serve ili npm start
 
 (da bismo bolje organizovali kod)
 
-Unutar foldera app, kreiramo components/app, pa u njega prebacimo 4 fajla koja cine komponentu app (app.component: ts, html, scss, spec.ts).
+Unutar foldera app, kreiramo components/app, pa u njega prebacimo 4 fajla koji cine komponentu app (app.component: ts, html, scss, spec.ts).
 
 Promijenimo putanju u fajlu app.module.ts, na ./components/app/app.component
 
 ------------------------------------------------------------
 
-(instaliramo bootstrap i jquery)
+(instaliramo bootstrap i jquery; bootstrap ne moze bez jqueryja)
 
 npm install --save bootstrap jquery
 

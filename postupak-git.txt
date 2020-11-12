@@ -23,7 +23,7 @@ git remote add origin https://github.com/... (lokalni git upucujemo (povezujemo)
 git push -u origin master (commit cuva promjene lokalno, a push cuva lokalno sacuvane promjene, na internet; 
 master je glavni branch (grana - kojih moze imati vise); 
 sledeci put je dovoljno samo git push;
-za ovaj projekat sam odradio: git push -u origin main
+za ovaj projekat sam odradio: git push -u origin main (github je promijenio terminologiju - master u main)
 )
 
 ---------------------------------------------------------------------------------------
