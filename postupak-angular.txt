@@ -86,9 +86,9 @@ Izbrisemo sve, pa postavimo <nav>, koji smo prethodno kopirali.
 
 --------------------------------------------------------------------------
 
-(da napravimo novu komponentu, koja ce se zvati quotes)
+(da napravimo novu komponentu)
 
-ng generate component components/quotes
+ng generate component components/naziv-komponente
 
 -----------------------------------------------------------------
 
