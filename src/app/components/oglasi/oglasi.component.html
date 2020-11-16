@@ -1,5 +1,23 @@
-<p>oglasi works!</p>
+<p class="c">oglasi works!</p>
 
-<div *ngFor='let e of oglasi'>
-    <p>{{ e.tekst }}</p>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12 col-sm-12 col-md-3 col-lg-3 col-xl-3">
+            <div class="c">filter</div>
+        </div>
+        <div class="col-12 col-sm-12 col-md-9 col-lg-9 col-xl-9">
+            <p class="c">oglasi</p>
+            <div class="container-fluid">
+                <div class="row oglas" *ngFor='let e of oglasi'>
+                    <div class="col-12 col-sm-12 col-md-8 col-lg-8 col-xl-8">
+                        <p>{{ e.tekst }}</p>
+                    </div>
+                    <div class="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
+                        <img class="img-fluid img-thumbnail" src="./../../../assets/slike/no-image-available.png" alt="nema slike">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
+
