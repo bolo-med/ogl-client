@@ -7,11 +7,13 @@ import { AppComponent } from './components/app/app.component';
 import { FormsModule } from '@angular/forms';
 import { OglasiComponent } from './components/oglasi/oglasi.component';
 import { HttpClientModule } from '@angular/common/http';
+import { RegistracijaComponent } from './components/registracija/registracija.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    OglasiComponent
+    OglasiComponent,
+    RegistracijaComponent
   ],
   imports: [
     BrowserModule,
