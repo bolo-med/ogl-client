@@ -7,22 +7,24 @@
             <form>
                 <div class="form-group">
                     <label for="ime1">Ime</label>
-                    <input type="text" class="form-control" id="ime1" placeholder="Unesite ime">
+                    <input type="text" class="form-control" id="ime1" placeholder="Unesite ime" [(ngModel)]='korisnik.ime' name="ime">
                 </div>
                 <div class="form-group">
                     <label for="prezime1">Prezime</label>
-                    <input type="text" class="form-control" id="prezime1" placeholder="Unesite prezime">
+                    <input type="text" class="form-control" id="prezime1" placeholder="Unesite prezime" [(ngModel)]='korisnik.prezime' name="prezime">
                 </div>
                 <div class="form-group">
                     <label for="korisn-ime1">Korisničko ime</label>
-                    <input type="text" class="form-control" id="korisn-ime1" placeholder="Unesite korisničko ime">
+                    <input type="text" class="form-control" id="korisn-ime1" placeholder="Unesite korisničko ime" 
+                                                                             [(ngModel)]='korisnik.username' name="usrnam">
                 </div>
                 <div class="form-group">
                   <label for="exampleInputPassword1">Lozinka</label>
-                  <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Unesite lozinku">
+                  <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Unesite lozinku" 
+                                                                                         [(ngModel)]='korisnik.password' name="passwrd">
                 </div>
                 <br>
-                <button type="submit" class="form-control btn btn-primary">Registruj se</button>
+                <button type="submit" class="form-control btn btn-primary" (click)='registruj()'>Registruj se</button>
             </form>
         </div>
         <div class="col-12 col-sm-12 col-md-3 col-lg-3 col-xl-3"></div>

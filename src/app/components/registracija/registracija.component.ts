@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Korisnik } from 'src/app/models/Korisnik';
 
 @Component({
   selector: 'app-registracija',
@@ -7,9 +8,17 @@ import { Component, OnInit } from '@angular/core';
 })
 export class RegistracijaComponent implements OnInit {
 
+  korisnik: Korisnik = new Korisnik();
+
   constructor() { }
 
   ngOnInit(): void {
   }
 
+  registruj() {
+    this.korisnik.id = null;
+    this.korisnik.isAdmin = null;
+  }
+
 }
+

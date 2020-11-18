@@ -8,12 +8,16 @@ import { FormsModule } from '@angular/forms';
 import { OglasiComponent } from './components/oglasi/oglasi.component';
 import { HttpClientModule } from '@angular/common/http';
 import { RegistracijaComponent } from './components/registracija/registracija.component';
+import { KorisnikAdmComponent } from './components/korisnik-adm/korisnik-adm.component';
+import { AdministratorAdmComponent } from './components/administrator-adm/administrator-adm.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     OglasiComponent,
-    RegistracijaComponent
+    RegistracijaComponent,
+    KorisnikAdmComponent,
+    AdministratorAdmComponent
   ],
   imports: [
     BrowserModule,
