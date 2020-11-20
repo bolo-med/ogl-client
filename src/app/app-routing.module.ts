@@ -3,6 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { AdministratorAdmComponent } from './components/administrator-adm/administrator-adm.component';
 import { KorisnikAdmComponent } from './components/korisnik-adm/korisnik-adm.component';
 import { OglasiComponent } from './components/oglasi/oglasi.component';
+import { PrijavaComponent } from './components/prijava/prijava.component';
 import { RegistracijaComponent } from './components/registracija/registracija.component';
 
 
@@ -22,6 +23,10 @@ const routes: Routes = [
   {
     path: 'administrator',
     component: AdministratorAdmComponent
+  },
+  {
+    path: 'prijava',
+    component: PrijavaComponent
   }
 ];
 

@@ -10,6 +10,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { RegistracijaComponent } from './components/registracija/registracija.component';
 import { KorisnikAdmComponent } from './components/korisnik-adm/korisnik-adm.component';
 import { AdministratorAdmComponent } from './components/administrator-adm/administrator-adm.component';
+import { PrijavaComponent } from './components/prijava/prijava.component';
 
 @NgModule({
   declarations: [
@@ -17,7 +18,8 @@ import { AdministratorAdmComponent } from './components/administrator-adm/admini
     OglasiComponent,
     RegistracijaComponent,
     KorisnikAdmComponent,
-    AdministratorAdmComponent
+    AdministratorAdmComponent,
+    PrijavaComponent
   ],
   imports: [
     BrowserModule,
