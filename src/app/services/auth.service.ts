@@ -43,5 +43,14 @@ export class AuthService {
     return JSON.parse(korisnikStr);
   }
 
+  getUsername(): string {
+    if (this.isLoggedIn()) {
+      return `Prijavljeni ste kao: ${this.getKorisnikDetains().username}`;
+    }
+    else {
+      return '';
+    }
+  }
+
 }
 

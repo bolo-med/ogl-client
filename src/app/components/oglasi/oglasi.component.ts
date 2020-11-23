@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Oglas } from './../../models/Oglas';
 import { OglasiService } from 'src/app/services/oglasi.service';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-oglasi',
@@ -10,12 +11,16 @@ import { OglasiService } from 'src/app/services/oglasi.service';
 export class OglasiComponent implements OnInit {
 
   oglasi: Oglas[];
+  korisnickoIme: string = '';
 
-  constructor(private oglasiService: OglasiService) {
+  constructor(private oglasiService: OglasiService, 
+              private authService: AuthService) {
     this.oglasi = [];
   }
 
   ngOnInit(): void {
+
+    this.korisnickoIme = this.authService.getUsername();
 
     this.oglasiService.getOglasi().subscribe(data => {
       this.oglasi = data;

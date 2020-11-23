@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Host, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Korisnik } from 'src/app/models/Korisnik';
 import { AuthService } from 'src/app/services/auth.service';
@@ -11,11 +11,14 @@ import { AuthService } from 'src/app/services/auth.service';
 export class PrijavaComponent implements OnInit {
 
   korisnik: Korisnik = new Korisnik();
+  korisnickoIme = '';
 
   constructor(private authService: AuthService, 
-              private router: Router) { }
+              private router: Router) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.korisnickoIme = this.authService.getUsername();
+  }
 
   prijavi() {
     this.korisnik.id = null;
