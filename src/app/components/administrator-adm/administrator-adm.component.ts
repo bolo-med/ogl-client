@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
@@ -10,10 +11,20 @@ export class AdministratorAdmComponent implements OnInit {
 
   korisnickoIme: string = '';
 
-  constructor(private autsService: AuthService) { }
+  constructor(private authService: AuthService, 
+              private router: Router) { }
 
   ngOnInit(): void {
-    this.korisnickoIme = this.autsService.getUsername();
+
+    if (this.authService.isLoggedIn() && (this.authService.getKorisnikDetains().isAdmin === 1)) {
+      this.korisnickoIme = this.authService.getUsername();
+    }
+    else {
+      this.router.navigateByUrl('/');
+      alert('Morate se prijaviti sa administratorskim pravima!');
+    }
+    
   }
 
 }
+
