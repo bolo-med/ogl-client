@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
@@ -8,17 +9,19 @@ import { AuthService } from 'src/app/services/auth.service';
 })
 export class KorisnikAdmComponent implements OnInit {
 
-  poruka: string = "Morate biti prijavljeni!"
   korisnickoIme: string = '';
 
-  constructor(private authService: AuthService) { }
+  constructor(private authService: AuthService, 
+              private router: Router) { }
 
   ngOnInit(): void {
 
-    this.korisnickoIme = this.authService.getUsername();
-
-    if (window.localStorage.getItem('ogl-token') && this.authService.isLoggedIn()) {
-      this.poruka = `Prijavljeni ste kao ${this.authService.getKorisnikDetains().username}!`;
+    if (this.authService.isLoggedIn()) {
+      this.korisnickoIme = this.authService.getUsername();
+    }
+    else {
+      this.router.navigateByUrl('/');
+      alert('Morate biti prijavljeni!');
     }
 
   }
