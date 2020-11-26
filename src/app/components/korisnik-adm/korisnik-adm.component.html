@@ -3,10 +3,29 @@
 <div class="container-gluid">
     <div class="row">
         <div class="col-12 col-sm-12 col-md-3 col-lg-3 col-xl-3">
-            <p>MENU za izbor komponenata</p>
+            <div class="naslov display-4">opcija</div>
+            <br>
+            <ul class="list-group">
+                <li class="list-group-item list-group-item-action list-group-item-info kursor" (click)='novFn()'>Novi oglas</li>
+                <li class="list-group-item list-group-item-action list-group-item-info kursor" (click)='aktFn()'>Aktuelni oglasi</li>
+                <li class="list-group-item list-group-item-action list-group-item-info kursor" (click)='arhFn()'>Arhivirani oglasi</li>
+                <li class="list-group-item list-group-item-action list-group-item-info kursor" (click)='sviFn()'>Svi oglasi</li>
+              </ul>
         </div>
-        <div class="col-12 col-sm-12 col-md-3 col-lg-3 col-xl-3">
-            <p>KOMPONENTE</p>
+        <div class="col-12 col-sm-12 col-md-9 col-lg-9 col-xl-9">
+
+            <div class="naslov display-4">{{naslov}}</div>
+
+            <br>
+            
+            <app-korisnik-adm-nov *ngIf='oglNov'></app-korisnik-adm-nov>
+
+            <app-korisnik-adm-aktuelni *ngIf='oglAkt'></app-korisnik-adm-aktuelni>
+
+            <app-korisnik-adm-arhiva *ngIf='oglArh'></app-korisnik-adm-arhiva>
+
+            <app-korisnik-adm-svi *ngIf='oglSvi'></app-korisnik-adm-svi>
+
         </div>
     </div>
 </div>

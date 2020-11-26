@@ -10,6 +10,12 @@ import { AuthService } from 'src/app/services/auth.service';
 export class KorisnikAdmComponent implements OnInit {
 
   korisnickoIme: string = '';
+  naslov: string = 'Dodajte nov oglas';
+
+  oglNov: boolean = true;
+  oglAkt: boolean = false;
+  oglArh: boolean = false;
+  oglSvi: boolean = false;
 
   constructor(private authService: AuthService, 
               private router: Router) { }
@@ -26,4 +32,37 @@ export class KorisnikAdmComponent implements OnInit {
 
   }
 
+  novFn(): void {
+    this.oglNov = true;
+    this.oglAkt = false;
+    this.oglArh = false;
+    this.oglSvi = false;
+    this.naslov = 'Dodajte nov oglas';
+  }
+
+  aktFn(): void {
+    this.oglNov = false;
+    this.oglAkt = true;
+    this.oglArh = false;
+    this.oglSvi = false;
+    this.naslov = 'Aktivni oglasi';
+  }
+
+  arhFn(): void {
+    this.oglNov = false;
+    this.oglAkt = false;
+    this.oglArh = true;
+    this.oglSvi = false;
+    this.naslov = 'Arhivirani oglasi';
+  }
+
+  sviFn(): void {
+    this.oglNov = false;
+    this.oglAkt = false;
+    this.oglArh = false;
+    this.oglSvi = true;
+    this.naslov = 'Svi oglasi';
+  }
+
 }
+
