@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
+import { Kategorija } from 'src/app/models/Kategorija';
+import { KategorijeService } from 'src/app/services/kategorije.service';
 
 @Component({
   selector: 'app-korisnik-adm',
@@ -11,6 +13,8 @@ export class KorisnikAdmComponent implements OnInit {
 
   korisnickoIme: string = '';
   naslov: string = 'Dodajte nov oglas';
+  kategorije: Kategorija[];
+  korisnikID: number = -1;
 
   oglNov: boolean = true;
   oglAkt: boolean = false;
@@ -18,12 +22,18 @@ export class KorisnikAdmComponent implements OnInit {
   oglSvi: boolean = false;
 
   constructor(private authService: AuthService, 
-              private router: Router) { }
+              private router: Router, 
+              private kategorijeService: KategorijeService) { }
 
   ngOnInit(): void {
 
     if (this.authService.isLoggedIn()) {
       this.korisnickoIme = this.authService.getUsername();
+      this.korisnikID = this.authService.getKorisnikDetains().id;
+      this.kategorijeService.getKategorije().subscribe(data => {
+        this.kategorije = data;
+      });
+
     }
     else {
       this.router.navigateByUrl('/');

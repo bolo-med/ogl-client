@@ -18,7 +18,8 @@
 
             <br>
             
-            <app-korisnik-adm-nov *ngIf='oglNov'></app-korisnik-adm-nov>
+            <app-korisnik-adm-nov *ngIf='oglNov' [kategorije]='kategorije' 
+                                                 [korisnikID]='korisnikID'></app-korisnik-adm-nov>
 
             <app-korisnik-adm-aktuelni *ngIf='oglAkt'></app-korisnik-adm-aktuelni>
 

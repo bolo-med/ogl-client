@@ -2,8 +2,8 @@ export class Oglas {
 
     id: number;
     tekst: string;
-    datumObjave: Date;
-    datumVazenja: Date;
+    datumObjave: string;
+    datumVazenja: string;
     kategorijaID: number;
     korisnikID: number;
 

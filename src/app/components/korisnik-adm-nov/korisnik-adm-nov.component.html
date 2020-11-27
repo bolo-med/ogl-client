@@ -1,1 +1,38 @@
-<p>korisnik-adm-nov works!</p>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12 col-sm-12 col-md-1 col-lg-1 col-xl-1"></div>
+        <div class="col-12 col-sm-12 col-md-10 col-lg-10 col-xl-10">
+            <form>
+                <div class="form-group">
+                    <label for="naslov1">Naslov oglasa</label>
+                    <input type="text" class="form-control" id="naslov1" placeholder="Unesite naslov" name="naslov" disabled>
+                </div>
+
+                <div class="form-group">
+                    <label for="tekst1">Tekst oglasa</label>
+                    <textarea id="tekst1" name="tekst" rows="10" class="form-control" [(ngModel)]='oglas.tekst'>{{oglas.tekst}}</textarea>
+                </div>
+                <div class="form-group">
+                    <label for="kategorije1">Odaberite kategoruju</label>
+                    <select id="kategorije1" name="kategorije" class="custom-select" [(ngModel)]='oglas.kategorijaID'>
+                        <option value="-1">Izaberite...</option>
+                        <option *ngFor='let e of kategorije' value="{{e.id}}">{{e.naziv}}</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="podkategorije1">Odaberite podkategoruju</label>
+                    <select id="podkategorije1" class="custom-select" disabled>
+                        <option selected>Razno</option>
+                        <option value="1">Podkategorija 1</option>
+                        <option value="2">Podkategorija 2</option>
+                        <option value="3">Podkategorija 3</option>
+                    </select>
+                </div>
+                <br>
+                <button type="submit" class="form-control btn btn-primary" (click)='dodajOglas()'>Dodaj oglas</button>
+            </form>
+        </div>
+        <div class="col-12 col-sm-12 col-md-1 col-lg-1 col-xl-1"></div>
+    </div>
+</div>
+
