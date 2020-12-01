@@ -23,9 +23,20 @@ export class OglasiComponent implements OnInit {
     this.korisnickoIme = this.authService.getUsername();
 
     this.oglasiService.getOglasi().subscribe(data => {
-      this.oglasi = data;
+      this.oglasi = this.oglasiAktuelni(data);
     });
 
   }
 
+  oglasiAktuelni(ogl: Oglas[]): Oglas[] {
+    let oglAkt: Oglas[] = [];
+    for (let e of ogl) {
+      if (e.arhiviran === 0) {
+        oglAkt.push(e);
+      }
+    }
+    return oglAkt;
+  }
+
 }
+

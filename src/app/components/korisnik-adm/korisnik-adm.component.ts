@@ -55,7 +55,7 @@ export class KorisnikAdmComponent implements OnInit {
     this.oglAkt = true;
     this.oglArh = false;
     this.oglSvi = false;
-    this.naslov = 'Aktivni oglasi';
+    this.naslov = 'Aktuelni oglasi';
   }
 
   arhFn(): void {
