@@ -22,10 +22,8 @@
                 <div class="form-group" *ngIf='(oglas.kategorijaID != -1) && (oglas.kategorijaID != 7)'> <!-- Ne smije da stoji !==, nego samo != -->
                     <label for="podkategorije1">Odaberite podkategoruju</label>
                     <select id="podkategorije1" class="custom-select">
-                        <option value="-1" selected>Razno</option>
-                        <option value="1">Podkategorija 1</option>
-                        <option value="2">Podkategorija 2</option>
-                        <option value="3">Podkategorija 3</option>
+                        <option value="-1" selected>Izaberite...</option>
+                        <option *ngFor='let e of podkategorije' value="{{e.id}}">{{e.naziv}}</option>
                     </select>
                 </div>
                 <br>

@@ -2,6 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Kategorija } from 'src/app/models/Kategorija';
 import { Oglas } from 'src/app/models/Oglas';
+import { Podkategorija } from 'src/app/models/Podkategorija';
 import { AuthService } from 'src/app/services/auth.service';
 import { OglasiService } from 'src/app/services/oglasi.service';
 
@@ -19,6 +20,9 @@ export class KorisnikAdmNovComponent implements OnInit {
 
   @Input('korisnikID')
   korisnikID: number;
+
+  @Input('podkategorije')
+  podkategorije: Podkategorija[];
 
   constructor(private oglasiService: OglasiService, 
               private authService: AuthService, 
