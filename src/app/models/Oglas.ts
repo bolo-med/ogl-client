@@ -6,6 +6,7 @@ export class Oglas {
     datumVazenja: string;
     arhiviran: number;
     kategorijaID: number;
+    podkategorijaID: number;
     korisnikID: number;
 
 }

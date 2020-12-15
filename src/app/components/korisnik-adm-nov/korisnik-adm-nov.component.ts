@@ -24,13 +24,15 @@ export class KorisnikAdmNovComponent implements OnInit {
   @Input('podkategorije')
   podkategorije: Podkategorija[];
 
+  podkategorijeIzdvojene: Podkategorija[] = [];
+
   constructor(private oglasiService: OglasiService, 
-              private authService: AuthService, 
-              private router: Router) { }
+              private authService: AuthService) { }
 
   ngOnInit(): void {
     this.oglas.tekst = 'Otkucajte tekst oglasa...';
     this.oglas.kategorijaID = -1;
+    this.oglas.podkategorijaID = -1;
   }
 
   dodajOglas(): void {
@@ -40,7 +42,6 @@ export class KorisnikAdmNovComponent implements OnInit {
         this.oglas.datumVazenja = null;
         this.oglas.datumObjave = new Date().toISOString().split('T')[0];
         this.oglas.korisnikID = this.korisnikID;
-        // console.log(this.oglas);
         this.oglasiService.insertOglas(this.oglas).subscribe(data => {
           if (data.status === 0) {
             alert('Oglas je postavljen!');
@@ -58,6 +59,17 @@ export class KorisnikAdmNovComponent implements OnInit {
     else {
       alert('Niste ulogovani!');
     }
+  }
+
+  izdvojPodkategorije() {
+    this.podkategorijeIzdvojene = [];
+    for (let e of this.podkategorije) {
+      if (e.kategorijaID === +this.oglas.kategorijaID) {
+        this.podkategorijeIzdvojene.push(e);
+      }
+    }
+    console.log(this.podkategorijeIzdvojene);//////////////////////////////////////////////////////////////////////////////
+    console.log(this.oglas.kategorijaID);//////////////////////////////////////////////////////////////////////////////
   }
 
 }
