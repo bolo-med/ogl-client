@@ -31,30 +31,25 @@ export class KorisnikAdmNovComponent implements OnInit {
 
   ngOnInit(): void {
     this.oglas.tekst = 'Otkucajte tekst oglasa...';
-    this.oglas.kategorijaID = -1;
-    this.oglas.podkategorijaID = -1;
+    this.oglas.kategorijaID = 7; // id kategorije - Razno
+    this.oglas.podkategorijaID = 6; // id podkategorije - Razno
   }
 
   dodajOglas(): void {
     if (this.authService.isLoggedIn()) {
-      if (this.oglas.kategorijaID !== -1) {
-        this.oglas.id = null;
-        this.oglas.datumVazenja = null;
-        this.oglas.datumObjave = new Date().toISOString().split('T')[0];
-        this.oglas.korisnikID = this.korisnikID;
-        this.oglasiService.insertOglas(this.oglas).subscribe(data => {
-          if (data.status === 0) {
-            alert('Oglas je postavljen!');
-            this.ngOnInit();
-          }
-          else {
-            alert('Greska pri postavljanju oglasa!');
-          }
-        });
-      }
-      else {
-        console.log('Morate odabrati kategoriju!');
-      }
+      this.oglas.id = null;
+      this.oglas.datumVazenja = null;
+      this.oglas.datumObjave = new Date().toISOString().split('T')[0];
+      this.oglas.korisnikID = this.korisnikID;
+      this.oglasiService.insertOglas(this.oglas).subscribe(data => {
+        if (data.status === 0) {
+          alert('Oglas je postavljen!');
+          this.ngOnInit();
+        }
+        else {
+          alert('Greska pri postavljanju oglasa!');
+        }
+      });
     }
     else {
       alert('Niste ulogovani!');
@@ -64,12 +59,11 @@ export class KorisnikAdmNovComponent implements OnInit {
   izdvojPodkategorije() {
     this.podkategorijeIzdvojene = [];
     for (let e of this.podkategorije) {
-      if (e.kategorijaID === +this.oglas.kategorijaID) {
+      if ((e.id === 6) || (e.kategorijaID === +this.oglas.kategorijaID)) { // 6 je id podkategorije - Razno
         this.podkategorijeIzdvojene.push(e);
       }
     }
-    console.log(this.podkategorijeIzdvojene);//////////////////////////////////////////////////////////////////////////////
-    console.log(this.oglas.kategorijaID);//////////////////////////////////////////////////////////////////////////////
+    this.oglas.podkategorijaID = 6;
   }
 
 }

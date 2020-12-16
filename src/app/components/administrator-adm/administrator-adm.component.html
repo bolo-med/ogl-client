@@ -1,5 +1,24 @@
 <div class="usrnm">{{ korisnickoIme }}</div>
 
-<p>administrator-adm works!</p>
-<p>Imate administratorska prava! Dozvoljen Vam je pristup ovom sadrzaju!</p>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12 col-sm-12 col-md-3 col-lg-3 col-xl-3">
+            <div class="naslov display-4">opcija</div>
+            <br>
+            <ul class="list-group">
+                <li class="list-group-item list-group-item-action list-group-item-info kursor">Kategorije</li>
+                <li class="list-group-item list-group-item-action list-group-item-info kursor">Podkategorije</li>
+                <li class="list-group-item list-group-item-action list-group-item-info kursor">Korisnici</li>
+              </ul>
+        </div>
+        <div class="col-12 col-sm-12 col-md-9 col-lg-9 col-xl-9">
 
+            <div class="naslov display-4">{{naslov}}</div>
+
+            <br>
+
+            <app-administrator-adm-kategorije></app-administrator-adm-kategorije>
+
+        </div>
+    </div>
+</div>

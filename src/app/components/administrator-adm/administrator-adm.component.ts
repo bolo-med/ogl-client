@@ -10,6 +10,7 @@ import { AuthService } from 'src/app/services/auth.service';
 export class AdministratorAdmComponent implements OnInit {
 
   korisnickoIme: string = '';
+  naslov: string = 'kategorije';
 
   constructor(private authService: AuthService, 
               private router: Router) { }
