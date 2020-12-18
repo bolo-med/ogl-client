@@ -11,6 +11,7 @@ export class AdministratorAdmComponent implements OnInit {
 
   korisnickoIme: string = '';
   naslov: string = 'kategorije';
+  kat: boolean = true;
 
   constructor(private authService: AuthService, 
               private router: Router) { }
@@ -25,6 +26,18 @@ export class AdministratorAdmComponent implements OnInit {
       alert('Morate se prijaviti sa administratorskim pravima!');
     }
     
+  }
+
+  katFn() {
+    this.kat = true;
+  }
+
+  podFn() {
+    this.kat = false;
+  }
+
+  korFn() {
+    this.kat = false;
   }
 
 }

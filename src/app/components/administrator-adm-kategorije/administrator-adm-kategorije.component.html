@@ -1,1 +1,55 @@
-<p>administrator-adm-kategorije works!</p>
+<div class="container-fluid">
+    <fieldset [disabled]='(dodKat==true) || (izmKat==true) || (uklKat==true)'>
+        <div class="row">
+            <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-6">
+                <div class="form-group">
+                    <label for="kategorije1">Sve kategorije</label>
+                    <select id="kategorije1" class="custom-select" name="kategorije">
+                        <option>asdfg</option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-6">
+                <br>
+                <div class="container-fluid">
+                    <div class="row mt-2">
+                        <div class="col-4">
+                            <button type="button" class="btn btn-success btn-block" (click)='dodBtn()'>Dodaj</button>
+                        </div>
+                        <div class="col-4">
+                            <button type="button" class="btn btn-warning btn-block" (click)='izmBtn()'>Izmijeni</button>
+                        </div>
+                        <div class="col-4">
+                            <button type="button" class="btn btn-danger btn-block" (click)='uklBtn()'>Ukloni</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </fieldset>
+
+    <br>
+
+    <div class="row" *ngIf='dodKat'>
+        <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-6">
+            <label for="kategorijeDod">Dodaj kategoriju:</label>
+            <input class="form-control" type="text" id="kategorijeDod">
+            <button type="button" class="btn btn-danger mt-2" (click)='cancBtn()'>Otkaži</button>
+        </div>
+    </div>
+    <div class="row" *ngIf='izmKat'>
+        <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-6">
+            <label for="kategorijeIzm">Izmijeni kategoriju:</label>
+            <input class="form-control" type="text" id="kategorijeIzm">
+            <button type="button" class="btn btn-danger mt-2" (click)='cancBtn()'>Otkaži</button>
+        </div>
+    </div>
+    <div class="row" *ngIf='uklKat'>
+        <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-6">
+            <label for="kategorijeUkl">Ukloni kategoriju:</label>
+            <input class="form-control" type="text" id="kategorijeUkl">
+            <button type="button" class="btn btn-danger mt-2" (click)='cancBtn()'>Otkaži</button>
+        </div>
+    </div>
+</div>
+

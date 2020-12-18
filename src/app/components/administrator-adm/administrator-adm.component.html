@@ -6,9 +6,9 @@
             <div class="naslov display-4">opcija</div>
             <br>
             <ul class="list-group">
-                <li class="list-group-item list-group-item-action list-group-item-info kursor">Kategorije</li>
-                <li class="list-group-item list-group-item-action list-group-item-info kursor">Podkategorije</li>
-                <li class="list-group-item list-group-item-action list-group-item-info kursor">Korisnici</li>
+                <li class="list-group-item list-group-item-action list-group-item-info kursor" (click)='katFn()'>Kategorije</li>
+                <li class="list-group-item list-group-item-action list-group-item-info kursor"(click)='podFn()'>Podkategorije</li>
+                <li class="list-group-item list-group-item-action list-group-item-info kursor"(click)='korFn()'>Korisnici</li>
               </ul>
         </div>
         <div class="col-12 col-sm-12 col-md-9 col-lg-9 col-xl-9">
@@ -17,7 +17,7 @@
 
             <br>
 
-            <app-administrator-adm-kategorije></app-administrator-adm-kategorije>
+            <app-administrator-adm-kategorije *ngIf='kat'></app-administrator-adm-kategorije>
 
         </div>
     </div>
