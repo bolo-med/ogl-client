@@ -4,8 +4,9 @@
             <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-6">
                 <div class="form-group">
                     <label for="kategorije1">Sve kategorije</label>
-                    <select id="kategorije1" class="custom-select" name="kategorije">
-                        <option>asdfg</option>
+                    <select id="kategorije1" class="custom-select" name="kategorije" [(ngModel)]='selektovanaKategorija' 
+                                                                                     (ngModelChange)='selektovanaVrijednost()'>
+                        <option *ngFor='let e of kategorije' [ngValue]="e">{{e.naziv}}</option>
                     </select>
                 </div>
             </div>
@@ -14,13 +15,13 @@
                 <div class="container-fluid">
                     <div class="row mt-2">
                         <div class="col-4">
-                            <button type="button" class="btn btn-success btn-block" (click)='dodBtn()'>Dodaj</button>
+                            <button type="button" class="btn btn-info btn-block" (click)='dodBtn()'>Dodaj</button>
                         </div>
                         <div class="col-4">
-                            <button type="button" class="btn btn-warning btn-block" (click)='izmBtn()'>Izmijeni</button>
+                            <button type="button" class="btn btn-info btn-block" (click)='izmBtn()'>Izmijeni</button>
                         </div>
                         <div class="col-4">
-                            <button type="button" class="btn btn-danger btn-block" (click)='uklBtn()'>Ukloni</button>
+                            <button type="button" class="btn btn-info btn-block" (click)='uklBtn()'>Ukloni</button>
                         </div>
                     </div>
                 </div>
@@ -33,7 +34,8 @@
     <div class="row" *ngIf='dodKat'>
         <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-6">
             <label for="kategorijeDod">Dodaj kategoriju:</label>
-            <input class="form-control" type="text" id="kategorijeDod">
+            <input class="form-control" type="text" id="kategorijeDod" [(ngModel)]='kategorija.naziv'>
+            <button type="button" class="btn btn-success mt-2 mr-2" (click)='dodajKategoriju()'>Dodaj</button>
             <button type="button" class="btn btn-danger mt-2" (click)='cancBtn()'>Otkaži</button>
         </div>
     </div>
@@ -41,6 +43,7 @@
         <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-6">
             <label for="kategorijeIzm">Izmijeni kategoriju:</label>
             <input class="form-control" type="text" id="kategorijeIzm">
+            <button type="button" class="btn btn-success mt-2 mr-2" (click)='izmijeniKategoriju()'>Izmijeni</button>
             <button type="button" class="btn btn-danger mt-2" (click)='cancBtn()'>Otkaži</button>
         </div>
     </div>
@@ -48,6 +51,7 @@
         <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-6">
             <label for="kategorijeUkl">Ukloni kategoriju:</label>
             <input class="form-control" type="text" id="kategorijeUkl">
+            <button type="button" class="btn btn-success mt-2 mr-2">Ukloni</button>
             <button type="button" class="btn btn-danger mt-2" (click)='cancBtn()'>Otkaži</button>
         </div>
     </div>

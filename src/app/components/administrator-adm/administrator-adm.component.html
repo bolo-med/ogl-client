@@ -17,7 +17,7 @@
 
             <br>
 
-            <app-administrator-adm-kategorije *ngIf='kat'></app-administrator-adm-kategorije>
+        <app-administrator-adm-kategorije *ngIf='kat && kategorije[0]' [kategorije]='kategorije'></app-administrator-adm-kategorije>
 
         </div>
     </div>
