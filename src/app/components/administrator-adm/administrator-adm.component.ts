@@ -14,37 +14,51 @@ export class AdministratorAdmComponent implements OnInit {
   korisnickoIme: string = '';
   naslov: string = 'kategorije';
   kat: boolean = true;
-  kategorije: Kategorija[] = [];
+  kategorije: Kategorija[];
 
   constructor(private authService: AuthService, 
               private kategorijeService: KategorijeService, 
               private router: Router) { }
 
   ngOnInit(): void {
-
     if (this.authService.isLoggedIn() && (this.authService.getKorisnikDetains().isAdmin === 1)) {
       this.korisnickoIme = this.authService.getUsername();
-      this.kategorijeService.getKategorije().subscribe(data => {
-        this.kategorije = data;
-      });
+      this.preuzmiSveKategorije();
     }
     else {
       this.router.navigateByUrl('/');
       alert('Morate se prijaviti sa administratorskim pravima!');
     }
-    
+  }
+
+  preuzmiSveKategorije(): boolean {
+    let a = null;
+    this.kategorijeService.getKategorije().subscribe(data => {
+      if (data.status === 0) {
+        this.kategorije = data.data;
+        a = true;
+        return a;
+      }
+      else {
+        this.kategorije = null;
+        return false;
+      }
+    });
   }
 
   katFn() {
     this.kat = true;
+    this.naslov = 'kategorije';
   }
 
   podFn() {
     this.kat = false;
+    this.naslov = 'podkategorije';
   }
 
   korFn() {
     this.kat = false;
+    this.naslov = 'korisnici';
   }
 
 }

@@ -14,11 +14,19 @@ export class KategorijeService {
   constructor(private http: HttpClient) { }
 
   public getKategorije() {
-    return this.http.get<Kategorija[]>(this.serviceUrl);
+    return this.http.get<OperationResponse>(this.serviceUrl);
   }
 
   public insertKategorija(kategorija: Kategorija) {
     return this.http.post<OperationResponse>(this.serviceUrl, kategorija);
+  }
+
+  public updateKategorija(kategorija: Kategorija) {
+    return this.http.put<OperationResponse>(this.serviceUrl, kategorija);
+  }
+
+  public deleteKategorija(id: number) {
+    return this.http.delete<OperationResponse>(`${this.serviceUrl}/${id}`);
   }
 
 }

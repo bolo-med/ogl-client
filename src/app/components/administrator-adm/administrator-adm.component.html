@@ -10,15 +10,14 @@
                 <li class="list-group-item list-group-item-action list-group-item-info kursor"(click)='podFn()'>Podkategorije</li>
                 <li class="list-group-item list-group-item-action list-group-item-info kursor"(click)='korFn()'>Korisnici</li>
               </ul>
+              <br><br><br>
         </div>
+        
         <div class="col-12 col-sm-12 col-md-9 col-lg-9 col-xl-9">
-
             <div class="naslov display-4">{{naslov}}</div>
-
             <br>
-
-        <app-administrator-adm-kategorije *ngIf='kat && kategorije[0]' [kategorije]='kategorije'></app-administrator-adm-kategorije>
-
+            <app-administrator-adm-kategorije *ngIf='kat && kategorije' [kategorije]='kategorije'></app-administrator-adm-kategorije>
         </div>
     </div>
 </div>
+

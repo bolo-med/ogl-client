@@ -25,8 +25,8 @@ export class AdministratorAdmKategorijeComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    console.log(this.kategorije);
-    this.selektovanaKategorija = this.kategorije[0];
+    this.prvaKategorija();
+    this.cancBtn();
   }
 
   dodBtn() {
@@ -53,34 +53,72 @@ export class AdministratorAdmKategorijeComponent implements OnInit {
     this.uklKat = false;
   }
 
+  prvaKategorija() {
+    if (this.kategorije.length > 0) {
+      this.selektovanaKategorija = this.kategorije[0];
+    }
+    else {
+      this.selektovanaKategorija = new Kategorija();
+    }
+  }
+
   dodajKategoriju() {
     if (confirm('Dodati kategoriju?')) {
+      console.log('prije: ' + this.kategorije.length);////////////////////////////////////////////
       this.kategorija.id = null;
       this. kategorijeService.insertKategorija(this.kategorija).subscribe(data => {
         if (data.status === 0) {
-          alert('Dodali ste kategoriju!');
+          alert('Kategorija je dodata.');
           this.kategorija = new Kategorija();
-          this.cancBtn();
-          this.parent.ngOnInit();
+          if (this.parent.preuzmiSveKategorije()) {
+            this.ngOnInit();
+            console.log('posle: ' + this.kategorije.length);////////////////////////////////////////////
+          }
         }
         else {
           alert('Greska pri dodavanju kategorije!');
           this.kategorija = new Kategorija();
-          this.cancBtn();
-          this.parent.ngOnInit();
+          this.ngOnInit();
         }
       });
     }
   }
 
   izmijeniKategoriju() {
-
+    if (confirm('Izmijeniti kategoriju?')) {
+      this.kategorijeService.updateKategorija(this.selektovanaKategorija).subscribe(data => {
+        if (data.status === 0) {
+          alert('Kategorija je izmijenjena.');
+          this.parent.preuzmiSveKategorije();
+          this.ngOnInit();
+        }
+        else {
+          alert('Greska pri izmjeni kategorije!');
+          this.ngOnInit();
+        }
+      });
+    }
   }
 
-  selektovanaVrijednost() {
-    console.log(this.selektovanaKategorija);
-    
+  ukloniKategoriju() {
+    if (confirm('Ukloniti kategoriju?')) {
+      this.kategorijeService.deleteKategorija(this.selektovanaKategorija.id).subscribe(data => {
+        if (data.status === 0) {
+          alert('Kategorija je uklonjena.');
+          this.parent.preuzmiSveKategorije();
+          this.ngOnInit();
+        }
+        else {
+          alert('Greska pri uklanjanju kategorije!');
+          this.ngOnInit()
+        }
+      });
+    }
   }
+
+  // selektovanaKategorijaNaziv() {
+  //   console.log('selektovana vrijednost: ' + this.selektovanaKategorija.naziv);
+  // }
 
 }
 

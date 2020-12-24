@@ -4,8 +4,7 @@
             <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-6">
                 <div class="form-group">
                     <label for="kategorije1">Sve kategorije</label>
-                    <select id="kategorije1" class="custom-select" name="kategorije" [(ngModel)]='selektovanaKategorija' 
-                                                                                     (ngModelChange)='selektovanaVrijednost()'>
+                    <select id="kategorije1" class="custom-select" name="kategorije" [(ngModel)]='selektovanaKategorija'>
                         <option *ngFor='let e of kategorije' [ngValue]="e">{{e.naziv}}</option>
                     </select>
                 </div>
@@ -42,7 +41,7 @@
     <div class="row" *ngIf='izmKat'>
         <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-6">
             <label for="kategorijeIzm">Izmijeni kategoriju:</label>
-            <input class="form-control" type="text" id="kategorijeIzm">
+            <input class="form-control" type="text" id="kategorijeIzm" [(ngModel)]='selektovanaKategorija.naziv'>
             <button type="button" class="btn btn-success mt-2 mr-2" (click)='izmijeniKategoriju()'>Izmijeni</button>
             <button type="button" class="btn btn-danger mt-2" (click)='cancBtn()'>Otkaži</button>
         </div>
@@ -50,8 +49,8 @@
     <div class="row" *ngIf='uklKat'>
         <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-6">
             <label for="kategorijeUkl">Ukloni kategoriju:</label>
-            <input class="form-control" type="text" id="kategorijeUkl">
-            <button type="button" class="btn btn-success mt-2 mr-2">Ukloni</button>
+            <input class="form-control" type="text" id="kategorijeUkl" disabled [(ngModel)]='selektovanaKategorija.naziv'>
+            <button type="button" class="btn btn-success mt-2 mr-2" (click)='ukloniKategoriju()'>Ukloni</button>
             <button type="button" class="btn btn-danger mt-2" (click)='cancBtn()'>Otkaži</button>
         </div>
     </div>

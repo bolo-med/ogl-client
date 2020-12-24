@@ -35,7 +35,7 @@ export class KorisnikAdmComponent implements OnInit {
       this.korisnickoIme = this.authService.getUsername();
       this.korisnikID = this.authService.getKorisnikDetains().id;
       this.kategorijeService.getKategorije().subscribe(data => {
-        this.kategorije = data;
+        this.kategorije = data.data;
       });
       this.podkategorijeService.getPodkategorije().subscribe(data => {
         this.podkategorije = data;
