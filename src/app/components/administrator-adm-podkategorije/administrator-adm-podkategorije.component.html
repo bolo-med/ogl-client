@@ -1,0 +1,34 @@
+<div class="container-fluid">
+    <fieldset>
+        <div class="row">
+            <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-6">
+                <div class="form-group">
+                    <label for="podkategorije1">Sve podkategorije</label>
+                    <select id="podkategorije1" class="custom-select" name="podkategorije" [(ngModel)]='odabranaStavka'>
+                        <option [ngValue]='prvaStavka'>{{prvaStavka.naziv}}</option>
+                        <option *ngFor='let e of podkategorije' [ngValue]='e'>{{e.naziv}}</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-6">
+                <br>
+                <div class="container-fluid">
+                    <div class="row mt-2">
+                        <div class="col-4">
+                            <button type="button" class="btn btn-info btn-block">Dodaj</button>
+                        </div>
+                        <div class="col-4">
+                            <button type="button" class="btn btn-info btn-block">Izmijeni</button>
+                        </div>
+                        <div class="col-4">
+                            <button type="button" class="btn btn-info btn-block">Ukloni</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </fieldset>
+</div>
+
+<br><br><br><div>Odabrana podkategorija: {{odabranaStavka.naziv}}</div>

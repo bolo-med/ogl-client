@@ -1,5 +1,7 @@
 import { Component, Host, Input, OnInit } from '@angular/core';
+import { Observable } from 'rxjs';
 import { Kategorija } from 'src/app/models/Kategorija';
+import { OperationResponse } from 'src/app/models/OperationResponse';
 import { KategorijeService } from 'src/app/services/kategorije.service';
 import { AdministratorAdmComponent } from '../administrator-adm/administrator-adm.component';
 
@@ -15,6 +17,7 @@ export class AdministratorAdmKategorijeComponent implements OnInit {
   uklKat: boolean = false;
   kategorija: Kategorija = new Kategorija();
   selektovanaKategorija: Kategorija = new Kategorija();
+  prvaStavka: any;
 
   @Input('kategorije')
   kategorije: Kategorija[];
@@ -25,7 +28,7 @@ export class AdministratorAdmKategorijeComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.prvaKategorija();
+    this.postaviPrvuStavku();
     this.cancBtn();
   }
 
@@ -53,27 +56,23 @@ export class AdministratorAdmKategorijeComponent implements OnInit {
     this.uklKat = false;
   }
 
-  prvaKategorija() {
-    if (this.kategorije.length > 0) {
-      this.selektovanaKategorija = this.kategorije[0];
-    }
-    else {
-      this.selektovanaKategorija = new Kategorija();
-    }
+  postaviPrvuStavku() {
+    this.prvaStavka = {
+      id: -1,
+      naziv: 'Odaberite...'
+    };
+    this.selektovanaKategorija = this.prvaStavka;
   }
 
   dodajKategoriju() {
     if (confirm('Dodati kategoriju?')) {
-      console.log('prije: ' + this.kategorije.length);////////////////////////////////////////////
       this.kategorija.id = null;
-      this. kategorijeService.insertKategorija(this.kategorija).subscribe(data => {
+      this.kategorijeService.insertKategorija(this.kategorija).subscribe(data => {
         if (data.status === 0) {
           alert('Kategorija je dodata.');
           this.kategorija = new Kategorija();
-          if (this.parent.preuzmiSveKategorije()) {
-            this.ngOnInit();
-            console.log('posle: ' + this.kategorije.length);////////////////////////////////////////////
-          }
+          this.parent.preuzmiSveKategorije();
+          this.ngOnInit();
         }
         else {
           alert('Greska pri dodavanju kategorije!');
@@ -115,10 +114,6 @@ export class AdministratorAdmKategorijeComponent implements OnInit {
       });
     }
   }
-
-  // selektovanaKategorijaNaziv() {
-  //   console.log('selektovana vrijednost: ' + this.selektovanaKategorija.naziv);
-  // }
 
 }
 
