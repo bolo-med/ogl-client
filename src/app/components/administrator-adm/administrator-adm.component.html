@@ -17,7 +17,8 @@
             <div class="naslov display-4">{{naslov}}</div>
             <br>
             <app-administrator-adm-kategorije *ngIf='kat && kategorije' [kategorije] = 'kategorije'></app-administrator-adm-kategorije>
-            <app-administrator-adm-podkategorije *ngIf='podkat' [podkategorije]='podkategorije'></app-administrator-adm-podkategorije>
+            <app-administrator-adm-podkategorije *ngIf='podkat' [podkategorije]='podkategorije' 
+                                                                [kategorije]='kategorije'></app-administrator-adm-podkategorije>
         </div>
     </div>
 </div>

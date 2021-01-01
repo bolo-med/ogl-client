@@ -1,11 +1,23 @@
 <div class="container-fluid">
-    <fieldset>
+    <fieldset [disabled]='dodPodkat'>
+        <div class="row">
+            <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-6">
+                <label for="kategorije1">Sve kategorije</label>
+                <select id="kategorije1" name="kategorije" class="custom-select" [(ngModel)]='odabranaKategorija' 
+                                                                                 (ngModelChange)='filtrirajPodkategorije()'>
+                    <option [ngValue]='prvaKategorija'>{{prvaKategorija.naziv}}</option>
+                    <option *ngFor='let e of kategorije' [ngValue]='e'>{{e.naziv}}</option>
+                </select>
+            </div>
+        </div>
+        <br>
         <div class="row">
             <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-6">
                 <div class="form-group">
-                    <label for="podkategorije1">Sve podkategorije</label>
-                    <select id="podkategorije1" class="custom-select" name="podkategorije" [(ngModel)]='odabranaStavka'>
-                        <option [ngValue]='prvaStavka'>{{prvaStavka.naziv}}</option>
+                    <label for="podkategorije1">Pripadajuće podkategorije</label>
+                    <select id="podkategorije1" class="custom-select" name="podkategorije" [(ngModel)]='odabranaPodkategorija' 
+                                                                                           [disabled]='odabranaKategorija.id == -1'>
+                        <option [ngValue]='prvaPodkategorija'>{{prvaPodkategorija.naziv}}</option>
                         <option *ngFor='let e of podkategorije' [ngValue]='e'>{{e.naziv}}</option>
                     </select>
                 </div>
@@ -16,19 +28,47 @@
                 <div class="container-fluid">
                     <div class="row mt-2">
                         <div class="col-4">
-                            <button type="button" class="btn btn-info btn-block">Dodaj</button>
+                            <button type="button" class="btn btn-info btn-block" [disabled]='odabranaKategorija.id==-1' 
+                                                                                 (click)='dodPodkategoriju()'>Dodaj</button>
                         </div>
                         <div class="col-4">
-                            <button type="button" class="btn btn-info btn-block">Izmijeni</button>
+                            <button type="button" class="btn btn-info btn-block" [disabled]='odabranaPodkategorija.id==-1'>Izmijeni</button>
                         </div>
                         <div class="col-4">
-                            <button type="button" class="btn btn-info btn-block">Ukloni</button>
+                            <button type="button" class="btn btn-info btn-block" [disabled]='odabranaPodkategorija.id==-1'>Ukloni</button>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </fieldset>
+
+    <br>
+
+    <div class="row" *ngIf='dodPodkat'>
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-6">
+                    <label for="katIzab">Pripadajuća kategorija:</label>
+                    <input type="text" id="katIzab" class="form-control" disabled [(ngModel)]='odabranaKategorija.naziv'>
+                </div>
+            </div>
+            <br>
+            <div class="row">
+                <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-6">
+                    <label for="podkat">Upišite ime nove podkategorije:</label>
+                    <input type="text" id="podkat" class="form-control">
+                </div>
+            </div>
+            <br>
+            <div class="row">
+                <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-6">
+                    <button type="button" class="btn btn-success mt-2 mr-2">Dodaj</button>
+                    <button type="button" class="btn btn-danger mt-2" (click)='dugmeOtkazi()'>Otkaži</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
 </div>
 
-<br><br><br><div>Odabrana podkategorija: {{odabranaStavka.naziv}}</div>
