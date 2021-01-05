@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Kategorija } from 'src/app/models/Kategorija';
-import { Podkategorija } from 'src/app/models/Podkategorija';
+import { Potkategorija } from 'src/app/models/Potkategorija';
 import { AuthService } from 'src/app/services/auth.service';
 import { KategorijeService } from 'src/app/services/kategorije.service';
-import { PodkategorijeService } from 'src/app/services/podkategorije.service';
+import { PotkategorijeService } from 'src/app/services/potkategorije.service';
 
 @Component({
   selector: 'app-administrator-adm',
@@ -16,20 +16,20 @@ export class AdministratorAdmComponent implements OnInit {
   korisnickoIme: string = '';
   naslov: string = 'kategorije';
   kat: boolean = true;
-  podkat: boolean = false;
+  potkat: boolean = false;
   kategorije: Kategorija[];
-  podkategorije: Podkategorija[];
+  potkategorije: Potkategorija[];
 
   constructor(private authService: AuthService, 
               private kategorijeService: KategorijeService, 
-              private podkategorijeService: PodkategorijeService, 
+              private potkategorijeService: PotkategorijeService, 
               private router: Router) { }
 
   ngOnInit(): void {
     if (this.authService.isLoggedIn() && (this.authService.getKorisnikDetains().isAdmin === 1)) {
       this.korisnickoIme = this.authService.getUsername();
       this.preuzmiSveKategorije();
-      this.preuzmiSvePodkategorije();
+      this.preuzmiSvePotkategorije();
     }
     else {
       this.router.navigateByUrl('/');
@@ -48,27 +48,27 @@ export class AdministratorAdmComponent implements OnInit {
     });
   }
 
-  preuzmiSvePodkategorije() {
-    this.podkategorijeService.getPodkategorije().subscribe(data => {
-      this.podkategorije = data;
+  preuzmiSvePotkategorije() {
+    this.potkategorijeService.getPotkategorije().subscribe(data => {
+      this.potkategorije = data;
     });
   }
 
   katFn() {
     this.kat = true;
-    this.podkat = false;
+    this.potkat = false;
     this.naslov = 'kategorije';
   }
 
-  podFn() {
+  potFn() {
     this.kat = false;
-    this.podkat = true;
-    this.naslov = 'podkategorije';
+    this.potkat = true;
+    this.naslov = 'potkategorije';
   }
 
   korFn() {
     this.kat = false;
-    this.podkat = false;
+    this.potkat = false;
     this.naslov = 'korisnici';
   }
 
