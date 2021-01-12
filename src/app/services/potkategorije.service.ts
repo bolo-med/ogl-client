@@ -21,5 +21,7 @@ export class PotkategorijeService {
     return this.http.post<OperationResponse>(this.serviceUrl, potkategorija);
   }
 
+  
+
 }
 

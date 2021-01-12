@@ -1,5 +1,5 @@
 <div class="container-fluid">
-    <fieldset [disabled]='dodPotkat'>
+    <fieldset [disabled]='dodPotkat || izmPotkat'>
         <div class="row">
             <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-6">
                 <label for="kategorije1">Sve kategorije</label>
@@ -16,7 +16,8 @@
                 <div class="form-group">
                     <label for="potkategorije1">Pripadajuće potkategorije</label>
                     <select id="potkategorije1" class="custom-select" name="potkategorije" [(ngModel)]='odabranaPotkategorija' 
-                                                                                           [disabled]='odabranaKategorija.id == -1'>
+                                                                                           [disabled]='odabranaKategorija.id == -1' 
+                                                                                           (ngModelChange)='potkatNazivFn()'>
                         <option [ngValue]='prvaPotkategorija'>{{prvaPotkategorija.naziv}}</option>
                         <option *ngFor='let e of filtriranePotkategorije' [ngValue]='e'>{{e.naziv}}</option>
                     </select>
@@ -32,7 +33,8 @@
                                                                                  (click)='dodPotkategoriju()'>Dodaj</button>
                         </div>
                         <div class="col-4">
-                            <button type="button" class="btn btn-info btn-block" [disabled]='odabranaPotkategorija.id==-1'>Izmijeni</button>
+                            <button type="button" class="btn btn-info btn-block" [disabled]='odabranaPotkategorija.id==-1' 
+                                                                                 (click)='izmPotkategoriju()'>Izmijeni</button>
                         </div>
                         <div class="col-4">
                             <button type="button" class="btn btn-info btn-block" [disabled]='odabranaPotkategorija.id==-1'>Ukloni</button>
@@ -49,15 +51,15 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-6">
-                    <label for="katIzab">Pripadajuća kategorija:</label>
-                    <input type="text" id="katIzab" class="form-control" disabled [(ngModel)]='odabranaKategorija.naziv'>
+                    <label for="katIzab1">Pripadajuća kategorija:</label>
+                    <input type="text" id="katIzab1" class="form-control" disabled [(ngModel)]='odabranaKategorija.naziv'>
                 </div>
             </div>
             <br>
             <div class="row">
                 <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-6">
-                    <label for="potkat">Upišite ime nove potkategorije:</label>
-                    <input type="text" id="potkat" class="form-control" [(ngModel)]='nazivNovePotkategorije'>
+                    <label for="potkat1">Upišite ime nove potkategorije:</label>
+                    <input type="text" id="potkat1" class="form-control" [(ngModel)]='nazivNovePotkategorije'>
                 </div>
             </div>
             <br>
@@ -70,5 +72,46 @@
         </div>
     </div>
 
+    <div class="row" *ngIf='izmPotkat'>
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-6">
+                    <label for="katIzab2">Izaberite kategoriju:</label>
+                    <select>
+                        <option *ngFor='let e of kategorije' [ngValue]='e.id' 
+                                                             [selected]='e.id==odabranaKategorija.id' >{{e.naziv}}</option>
+                    </select>
+                </div>
+            </div>
+            <br>
+            <div class="row">
+                <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-6">
+                    <label for="potkat2">Izmijenite ime potkategorije:</label>
+                    <input type="text" id="potkat2" class="form-control" [(ngModel)]='nazivPotkatIzm'>
+                </div>
+            </div>
+            <br>
+            <div class="row">
+                <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-6">
+                    <button type="button" class="btn btn-success mt-2 mr-2" (click)='izmijeniPotkategoriju()'>Izmijeni</button>
+                    <button type="button" class="btn btn-danger mt-2" (click)='dugmeOtkazi()'>Otkaži</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<div>
+    Potkategorija
+    <div>
+        id: {{odabranaPotkategorija.id}}
+    </div>
+    <div>
+        katId: {{odabranaPotkategorija.kategorijaID}}
+    </div>
+    <div>
+        naziv: {{odabranaPotkategorija.naziv}}
+    </div>
 </div>
 

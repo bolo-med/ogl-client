@@ -16,8 +16,11 @@ export class AdministratorAdmPotkategorijeComponent implements OnInit {
   prvaPotkategorija: Potkategorija = new Potkategorija();
   prvaKategorija: Kategorija = new Kategorija();
   dodPotkat: boolean = false;
+  izmPotkat: boolean = false;
   filtriranePotkategorije: Potkategorija[] = [];
-  nazivNovePotkategorije = '';
+  nazivNovePotkategorije: string = '';
+  nazivPotkatIzm: string = '';
+  izabrIdKat: number = -1;
 
   @Input('potkategorije')
   potkategorije: Potkategorija[];
@@ -54,8 +57,14 @@ export class AdministratorAdmPotkategorijeComponent implements OnInit {
     this.dodPotkat = true;
   }
 
+  izmPotkategoriju() {
+    this.izmPotkat = true;
+  }
+
   dugmeOtkazi() {
     this.dodPotkat = false;
+    this.nazivNovePotkategorije = '';
+    this.izmPotkat = false;
   }
 
   filtrirajPotkategorije() {
@@ -88,6 +97,20 @@ export class AdministratorAdmPotkategorijeComponent implements OnInit {
     }
 
     this.nazivNovePotkategorije = '';
+  }
+
+  izmijeniPotkategoriju() {
+    let izmPot: Potkategorija = new Potkategorija();
+    // izmPot = this.odabranaPotkategorija; // Obje promenljive sadrze referencu ka istom objektu.
+    izmPot.id = this.odabranaPotkategorija.id;
+    izmPot.kategorijaID = +this.izabrIdKat;
+    izmPot.naziv = this.nazivPotkatIzm;
+    console.log(izmPot);
+    
+  }
+
+  potkatNazivFn() {
+    this.nazivPotkatIzm = this.odabranaPotkategorija.naziv;
   }
 
 }
