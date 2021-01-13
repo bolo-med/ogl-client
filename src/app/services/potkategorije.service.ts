@@ -21,7 +21,13 @@ export class PotkategorijeService {
     return this.http.post<OperationResponse>(this.serviceUrl, potkategorija);
   }
 
-  
+  public updatePotkategorija(p: Potkategorija) {
+    return this.http.put<OperationResponse>(this.serviceUrl, p);
+  }
+
+  public deletePotkategorija(id: number) {
+    return this.http.delete<OperationResponse>(`${this.serviceUrl}/${id}`);
+  }
 
 }
 

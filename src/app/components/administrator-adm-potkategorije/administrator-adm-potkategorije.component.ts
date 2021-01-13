@@ -17,6 +17,7 @@ export class AdministratorAdmPotkategorijeComponent implements OnInit {
   prvaKategorija: Kategorija = new Kategorija();
   dodPotkat: boolean = false;
   izmPotkat: boolean = false;
+  uklPotkat: boolean = false;
   filtriranePotkategorije: Potkategorija[] = [];
   nazivNovePotkategorije: string = '';
   nazivPotkatIzm: string = '';
@@ -58,13 +59,19 @@ export class AdministratorAdmPotkategorijeComponent implements OnInit {
   }
 
   izmPotkategoriju() {
+    this.nazivPotkatIzm = this.odabranaPotkategorija.naziv;
     this.izmPotkat = true;
+  }
+
+  uklPotkategoriju() {
+    this.uklPotkat = true;
   }
 
   dugmeOtkazi() {
     this.dodPotkat = false;
     this.nazivNovePotkategorije = '';
     this.izmPotkat = false;
+    this.uklPotkat = false;
   }
 
   filtrirajPotkategorije() {
@@ -77,6 +84,9 @@ export class AdministratorAdmPotkategorijeComponent implements OnInit {
         };
       }
     }
+
+    /////////////////////////////////////////////////////////////
+    this.izabrIdKat = this.odabranaKategorija.id;
   }
 
   dodajPotkategoriju() {
@@ -100,17 +110,46 @@ export class AdministratorAdmPotkategorijeComponent implements OnInit {
   }
 
   izmijeniPotkategoriju() {
-    let izmPot: Potkategorija = new Potkategorija();
-    // izmPot = this.odabranaPotkategorija; // Obje promenljive sadrze referencu ka istom objektu.
-    izmPot.id = this.odabranaPotkategorija.id;
-    izmPot.kategorijaID = +this.izabrIdKat;
-    izmPot.naziv = this.nazivPotkatIzm;
-    console.log(izmPot);
-    
+    if (confirm('Izmijeniti potkategoriju?')) {
+      let izmPot: Potkategorija = new Potkategorija();
+      // izmPot = this.odabranaPotkategorija; // Obje promenljive sadrze referencu ka istom objektu.
+      izmPot.id = this.odabranaPotkategorija.id;
+      izmPot.kategorijaID = +this.izabrIdKat;
+      izmPot.naziv = this.nazivPotkatIzm;
+      this.potkategorijeService.updatePotkategorija(izmPot).subscribe(data => {
+        if (data.status === 0) {
+          alert('Potkategorija je izmijenjena?');
+          this.parent.preuzmiSvePotkategorije();
+          this.filtrirajPotkategorije();
+          this.dugmeOtkazi();
+          this.ngOnInit();
+        }
+        else {
+          alert('Greska pri izmjeni potkategorije!');
+          this.dugmeOtkazi();
+          this.ngOnInit();
+        }
+      });
+    }
   }
 
-  potkatNazivFn() {
-    this.nazivPotkatIzm = this.odabranaPotkategorija.naziv;
+  ukloniPotkategoriju() {
+    if (confirm('Ukloniti potkategoriju?')) {
+      this.potkategorijeService.deletePotkategorija(this.odabranaPotkategorija.id).subscribe(data => {
+        if (data.status === 0) {
+          alert('Potkategorija je ulonjena.');
+          this.parent.preuzmiSvePotkategorije();
+          this.filtrirajPotkategorije();
+          this.dugmeOtkazi();
+          this.ngOnInit();
+        }
+        else {
+          alert('Greska pri uklanjanju potkategorije!');
+          this.dugmeOtkazi();
+          this.ngOnInit();
+        }
+      });
+    }
   }
 
 }

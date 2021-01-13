@@ -1,7 +1,5 @@
 import { Component, Host, Input, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
 import { Kategorija } from 'src/app/models/Kategorija';
-import { OperationResponse } from 'src/app/models/OperationResponse';
 import { KategorijeService } from 'src/app/services/kategorije.service';
 import { AdministratorAdmComponent } from '../administrator-adm/administrator-adm.component';
 
@@ -18,6 +16,7 @@ export class AdministratorAdmKategorijeComponent implements OnInit {
   kategorija: Kategorija = new Kategorija();
   selektovanaKategorija: Kategorija = new Kategorija();
   prvaStavka: any;
+  izmijenjeniNaziv: string = '';
 
   @Input('kategorije')
   kategorije: Kategorija[];
@@ -39,6 +38,7 @@ export class AdministratorAdmKategorijeComponent implements OnInit {
   }
 
   izmBtn() {
+    this.izmijenjeniNaziv = this.selektovanaKategorija.naziv;
     this.dodKat = false;
     this.izmKat = true;
     this.uklKat = false;
@@ -85,7 +85,10 @@ export class AdministratorAdmKategorijeComponent implements OnInit {
 
   izmijeniKategoriju() {
     if (confirm('Izmijeniti kategoriju?')) {
-      this.kategorijeService.updateKategorija(this.selektovanaKategorija).subscribe(data => {
+      let izmKateg: Kategorija = new Kategorija();
+      izmKateg.id = this.selektovanaKategorija.id;
+      izmKateg.naziv = this.izmijenjeniNaziv;
+      this.kategorijeService.updateKategorija(izmKateg).subscribe(data => {
         if (data.status === 0) {
           alert('Kategorija je izmijenjena.');
           this.parent.preuzmiSveKategorije();
