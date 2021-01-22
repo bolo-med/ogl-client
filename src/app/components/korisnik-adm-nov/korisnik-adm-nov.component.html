@@ -14,7 +14,7 @@
                 </div>
                 <div class="form-group">
                     <label for="kategorije1">Odaberite kategoruju</label>
-                    <select id="kategorije1" name="kategorije" class="custom-select" [(ngModel)]='oglas.kategorijaID' (ngModelChange)="izdvojPodkategorije()">
+                    <select id="kategorije1" name="kategorije" class="custom-select" [(ngModel)]='oglas.kategorijaID' (ngModelChange)="izdvojPotkategorije()">
                         <!--Postoji i varijanta (change) umjesto (ngModelChange).-->
                         <!--(ngModelChange) ne bi moglo da se koristi bez ngModel direktive.-->
                         <!--(ngModelChange) se aktivira pri promjeni vrijednosti promjenljive koja je povezana sa [(ngModel)].-->

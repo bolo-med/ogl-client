@@ -31,7 +31,7 @@ export class KorisnikAdmNovComponent implements OnInit {
   ngOnInit(): void {
     this.oglas.tekst = 'Otkucajte tekst oglasa...';
     this.oglas.kategorijaID = 7; // id kategorije - Razno
-    this.oglas.podkategorijaID = 6; // id podkategorije - Razno
+    this.oglas.potkategorijaID = 6; // id podkategorije - Razno
   }
 
   dodajOglas(): void {
@@ -55,14 +55,14 @@ export class KorisnikAdmNovComponent implements OnInit {
     }
   }
 
-  izdvojPodkategorije() {
+  izdvojPotkategorije() {
     this.podkategorijeIzdvojene = [];
     for (let e of this.podkategorije) {
-      if ((e.id === 6) || (e.kategorijaID === +this.oglas.kategorijaID)) { // 6 je id podkategorije - Razno
+      if ((e.id === 6) || (e.kategorijaID === +this.oglas.kategorijaID)) { // 6 je id potkategorije - Razno
         this.podkategorijeIzdvojene.push(e);
       }
     }
-    this.oglas.podkategorijaID = 6;
+    this.oglas.potkategorijaID = 6;
   }
 
 }
