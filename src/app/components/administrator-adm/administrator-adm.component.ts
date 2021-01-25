@@ -26,7 +26,7 @@ export class AdministratorAdmComponent implements OnInit {
               private router: Router) { }
 
   ngOnInit(): void {
-    if (this.authService.isLoggedIn() && (this.authService.getKorisnikDetains().isAdmin === 1)) {
+    if (this.authService.isLoggedIn() && (this.authService.getKorisnikDetails().isAdmin === 1)) {
       this.korisnickoIme = this.authService.getUsername();
       this.preuzmiSveKategorije();
       this.preuzmiSvePotkategorije();

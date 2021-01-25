@@ -30,12 +30,12 @@ export class AuthService {
   }
 
   isLoggedIn() {
-    let korisnik = this.getKorisnikDetains();
+    let korisnik = this.getKorisnikDetails();
     if (!korisnik) return false;
     return new Date(korisnik.expiry) > new Date();
   }
 
-  getKorisnikDetains() {
+  getKorisnikDetails() {
     let token = window.localStorage.getItem('ogl-token');
     if (!token) return false;
     let usrHash = token.split('.')[1];
@@ -45,7 +45,7 @@ export class AuthService {
 
   getUsername(): string {
     if (this.isLoggedIn()) {
-      return `Prijavljeni ste kao: ${this.getKorisnikDetains().username}`;
+      return `Prijavljeni ste kao: ${this.getKorisnikDetails().username}`;
     }
     else {
       return '';
