@@ -8,7 +8,7 @@ import { AuthService } from 'src/app/services/auth.service';
 })
 export class AppComponent {
 
-  title = 'ogl-client';
+  // title = 'ogl-client';
 
   constructor(private authService: AuthService) {}
 
