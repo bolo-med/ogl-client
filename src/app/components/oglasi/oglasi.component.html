@@ -8,7 +8,7 @@
         <div class="col-12 col-sm-12 col-md-9 col-lg-9 col-xl-9">
             <p class="naslov display-4">oglasi</p>
             <div class="container-fluid">
-                <div class="row oglas" *ngFor='let e of oglasi'>
+                <div class="row okvir-oglasa" *ngFor='let e of oglasi' (click)="clickOgl(e.id)">
                     <div class="col-12 col-sm-12 col-md-8 col-lg-8 col-xl-8">
                         <p>{{e.naslov}}</p>
                         <p>{{e.tekst}}</p>
@@ -20,8 +20,9 @@
                     </div>
                     <div class="container-fluid">
                         <div class="row">
-                            <div class="col-12 col-sm-12 col-md-2 col-lg-2 col-xl-2">
-                                <button type="button" class="btn btn-info btn-block">Opširnije...</button>
+                            <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                                <button type="button" class="btn btn-info btn-block mt-2" 
+                                                      *ngIf="oglKliknut && (e.id == oglKliknutId)">Opširnije...</button>
                             </div>
                         </div>
                     </div>

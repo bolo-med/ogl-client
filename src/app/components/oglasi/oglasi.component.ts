@@ -12,6 +12,8 @@ export class OglasiComponent implements OnInit {
 
   oglasi: Oglas[];
   korisnickoIme: string = '';
+  oglKliknut: boolean;
+  oglKliknutId: number;
 
   constructor(private oglasiService: OglasiService, 
               private authService: AuthService) {
@@ -26,6 +28,8 @@ export class OglasiComponent implements OnInit {
       this.oglasi = this.oglasiAktuelni(data);
     });
 
+    this.oglKliknut = false;
+    this.oglKliknutId = -1;
   }
 
   oglasiAktuelni(ogl: Oglas[]): Oglas[] {
@@ -36,6 +40,24 @@ export class OglasiComponent implements OnInit {
       }
     }
     return oglAkt;
+  }
+
+  clickOgl(id: number) {
+    if (this.oglKliknutId !== id) {
+      this.oglKliknutId = id;
+      this.oglKliknut = true;
+    }
+    else if (this.oglKliknutId === id && this.oglKliknut === false) {
+      this.oglKliknut = true;
+    }
+    else {
+      this.oglKliknut = false;
+    }
+  }
+
+  klikNaOpsirnije() {
+    console.log('kliknuto opsirnije');
+    
   }
 
 }
