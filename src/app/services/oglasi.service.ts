@@ -17,6 +17,10 @@ export class OglasiService {
     return this.http.get<Oglas[]>(this.serviceUrl);
   }
 
+  public getOglasByID(id: number) {
+    return this.http.get<OperationResponse>(`${this.serviceUrl}/${id}`);
+  }
+
   public insertOglas(oglas: Oglas) {
     return this.http.post<OperationResponse>(this.serviceUrl, oglas);
   }

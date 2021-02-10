@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Oglas } from './../../models/Oglas';
 import { OglasiService } from 'src/app/services/oglasi.service';
 import { AuthService } from 'src/app/services/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-oglasi',
@@ -14,9 +15,11 @@ export class OglasiComponent implements OnInit {
   korisnickoIme: string = '';
   oglKliknut: boolean;
   oglKliknutId: number;
+  izabraniOglas: Oglas;
 
   constructor(private oglasiService: OglasiService, 
-              private authService: AuthService) {
+              private authService: AuthService, 
+              private router: Router) {
     this.oglasi = [];
   }
 
@@ -30,6 +33,7 @@ export class OglasiComponent implements OnInit {
 
     this.oglKliknut = false;
     this.oglKliknutId = -1;
+    this.izabraniOglas = new Oglas();
   }
 
   oglasiAktuelni(ogl: Oglas[]): Oglas[] {
@@ -55,9 +59,8 @@ export class OglasiComponent implements OnInit {
     }
   }
 
-  klikNaOpsirnije() {
-    console.log('kliknuto opsirnije');
-    
+  proslediId(id: number) {
+    this.router.navigateByUrl('/oglas/' + id);
   }
 
 }

@@ -17,6 +17,7 @@ import { KorisnikAdmArhivaComponent } from './components/korisnik-adm-arhiva/kor
 import { KorisnikAdmAktuelniComponent } from './components/korisnik-adm-aktuelni/korisnik-adm-aktuelni.component';
 import { AdministratorAdmKategorijeComponent } from './components/administrator-adm-kategorije/administrator-adm-kategorije.component';
 import { AdministratorAdmPotkategorijeComponent } from './components/administrator-adm-potkategorije/administrator-adm-potkategorije.component';
+import { OglasComponent } from './components/oglas/oglas.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,8 @@ import { AdministratorAdmPotkategorijeComponent } from './components/administrat
     KorisnikAdmArhivaComponent,
     KorisnikAdmAktuelniComponent,
     AdministratorAdmKategorijeComponent,
-    AdministratorAdmPotkategorijeComponent
+    AdministratorAdmPotkategorijeComponent,
+    OglasComponent
   ],
   imports: [
     BrowserModule,
