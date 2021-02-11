@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
 import { Kategorija } from 'src/app/models/Kategorija';
 import { KategorijeService } from 'src/app/services/kategorije.service';
-import { Potkategorija } from 'src/app/models/Potkategorija';
+import { Podkategorija } from 'src/app/models/Podkategorija';
 import { PotkategorijeService } from 'src/app/services/potkategorije.service';
 
 @Component({
@@ -17,7 +17,7 @@ export class KorisnikAdmComponent implements OnInit {
   naslov: string = 'Dodajte nov oglas';
   kategorije: Kategorija[];
   korisnikID: number = -1;
-  podkategorije: Potkategorija[];
+  podkategorije: Podkategorija[];
 
   oglNov: boolean = true;
   oglAkt: boolean = false;

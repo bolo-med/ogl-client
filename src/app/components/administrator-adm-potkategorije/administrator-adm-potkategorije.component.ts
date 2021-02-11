@@ -1,5 +1,5 @@
 import { Component, Host, Input, OnInit } from '@angular/core';
-import { Potkategorija } from 'src/app/models/Potkategorija';
+import { Podkategorija } from 'src/app/models/Podkategorija';
 import { Kategorija } from 'src/app/models/Kategorija';
 import { AdministratorAdmComponent } from '../administrator-adm/administrator-adm.component';
 import { PotkategorijeService } from 'src/app/services/potkategorije.service';
@@ -11,20 +11,20 @@ import { PotkategorijeService } from 'src/app/services/potkategorije.service';
 })
 export class AdministratorAdmPotkategorijeComponent implements OnInit {
 
-  odabranaPotkategorija: Potkategorija = new Potkategorija();
+  odabranaPotkategorija: Podkategorija = new Podkategorija();
   odabranaKategorija: Kategorija = new Kategorija();
-  prvaPotkategorija: Potkategorija = new Potkategorija();
+  prvaPotkategorija: Podkategorija = new Podkategorija();
   prvaKategorija: Kategorija = new Kategorija();
   dodPotkat: boolean = false;
   izmPotkat: boolean = false;
   uklPotkat: boolean = false;
-  filtriranePotkategorije: Potkategorija[] = [];
+  filtriranePotkategorije: Podkategorija[] = [];
   nazivNovePotkategorije: string = '';
   nazivPotkatIzm: string = '';
   izabrIdKat: number = -1;
 
   @Input('potkategorije')
-  potkategorije: Potkategorija[];
+  potkategorije: Podkategorija[];
 
   @Input('kategorije')
   kategorije: Kategorija[];
@@ -90,7 +90,7 @@ export class AdministratorAdmPotkategorijeComponent implements OnInit {
   }
 
   dodajPotkategoriju() {
-    let novaPotkategotija: Potkategorija = new Potkategorija();
+    let novaPotkategotija: Podkategorija = new Podkategorija();
     novaPotkategotija.id = null;
     novaPotkategotija.kategorijaID = this.odabranaKategorija.id;
     novaPotkategotija.naziv = this.nazivNovePotkategorije;
@@ -111,7 +111,7 @@ export class AdministratorAdmPotkategorijeComponent implements OnInit {
 
   izmijeniPotkategoriju() {
     if (confirm('Izmijeniti potkategoriju?')) {
-      let izmPot: Potkategorija = new Potkategorija();
+      let izmPot: Podkategorija = new Podkategorija();
       // izmPot = this.odabranaPotkategorija; // Obje promenljive sadrze referencu ka istom objektu.
       izmPot.id = this.odabranaPotkategorija.id;
       izmPot.kategorijaID = +this.izabrIdKat;

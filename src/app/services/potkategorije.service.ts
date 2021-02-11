@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
-import { Potkategorija } from 'src/app/models/Potkategorija';
+import { Podkategorija } from 'src/app/models/Podkategorija';
 import { OperationResponse } from '../models/OperationResponse';
 
 @Injectable({
@@ -14,14 +14,14 @@ export class PotkategorijeService {
   constructor(private http: HttpClient) { }
 
   public getPotkategorije() {
-    return this.http.get<Potkategorija[]>(this.serviceUrl);
+    return this.http.get<Podkategorija[]>(this.serviceUrl);
   };
 
-  public insertPotkategorija(potkategorija: Potkategorija) {
+  public insertPotkategorija(potkategorija: Podkategorija) {
     return this.http.post<OperationResponse>(this.serviceUrl, potkategorija);
   }
 
-  public updatePotkategorija(p: Potkategorija) {
+  public updatePotkategorija(p: Podkategorija) {
     return this.http.put<OperationResponse>(this.serviceUrl, p);
   }
 

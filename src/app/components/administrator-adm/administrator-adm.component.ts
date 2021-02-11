@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Kategorija } from 'src/app/models/Kategorija';
-import { Potkategorija } from 'src/app/models/Potkategorija';
+import { Podkategorija } from 'src/app/models/Podkategorija';
 import { AuthService } from 'src/app/services/auth.service';
 import { KategorijeService } from 'src/app/services/kategorije.service';
 import { PotkategorijeService } from 'src/app/services/potkategorije.service';
@@ -18,7 +18,7 @@ export class AdministratorAdmComponent implements OnInit {
   kat: boolean = true;
   potkat: boolean = false;
   kategorije: Kategorija[];
-  potkategorije: Potkategorija[];
+  potkategorije: Podkategorija[];
 
   constructor(private authService: AuthService, 
               private kategorijeService: KategorijeService, 

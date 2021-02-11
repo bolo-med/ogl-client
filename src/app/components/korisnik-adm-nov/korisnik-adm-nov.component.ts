@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Kategorija } from 'src/app/models/Kategorija';
 import { Oglas } from 'src/app/models/Oglas';
-import { Potkategorija } from 'src/app/models/Potkategorija';
+import { Podkategorija } from 'src/app/models/Podkategorija';
 import { AuthService } from 'src/app/services/auth.service';
 import { OglasiService } from 'src/app/services/oglasi.service';
 
@@ -21,16 +21,17 @@ export class KorisnikAdmNovComponent implements OnInit {
   korisnikID: number;
 
   @Input('podkategorije')
-  podkategorije: Potkategorija[];
+  podkategorije: Podkategorija[];
 
-  podkategorijeIzdvojene: Potkategorija[] = [];
+  podkategorijeIzdvojene: Podkategorija[] = [];
 
   constructor(private oglasiService: OglasiService, 
               private authService: AuthService) { }
 
   ngOnInit(): void {
-    this.oglas.tekst = 'Otkucajte tekst oglasa...';
-    this.oglas.kategorijaID = 7; // id kategorije - Razno
+    this.oglas.naslov = '';
+    this.oglas.tekst = '';
+    this.oglas.kategorijaID = -1;
     this.oglas.potkategorijaID = 6; // id podkategorije - Razno
   }
 
@@ -58,11 +59,14 @@ export class KorisnikAdmNovComponent implements OnInit {
   izdvojPotkategorije() {
     this.podkategorijeIzdvojene = [];
     for (let e of this.podkategorije) {
-      if ((e.id === 6) || (e.kategorijaID === +this.oglas.kategorijaID)) { // 6 je id potkategorije - Razno
+      if ((e.id === 6) || (e.kategorijaID === +this.oglas.kategorijaID)) { // 6 je id podkategorije - Razno
         this.podkategorijeIzdvojene.push(e);
       }
     }
-    this.oglas.potkategorijaID = 6;
+    this.oglas.potkategorijaID = -1;
+
+    console.log('kategorija id = ' + this.oglas.kategorijaID); /////////////////////////////////
+    
   }
 
 }
