@@ -1,5 +1,4 @@
 export class Oglas {
-
     id: number;
     naslov: string;
     tekst: string;
@@ -9,6 +8,6 @@ export class Oglas {
     kategorijaID: number;
     podkategorijaID: number;
     korisnikID: number;
-
+    fotografija: string;
 }
 

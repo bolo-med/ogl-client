@@ -4,6 +4,8 @@ import { Oglas } from 'src/app/models/Oglas';
 import { Podkategorija } from 'src/app/models/Podkategorija';
 import { AuthService } from 'src/app/services/auth.service';
 import { OglasiService } from 'src/app/services/oglasi.service';
+import { environment } from 'src/environments/environment';
+import { FileUploader } from 'ng2-file-upload';
 
 @Component({
   selector: 'app-korisnik-adm-nov',
@@ -13,6 +15,12 @@ import { OglasiService } from 'src/app/services/oglasi.service';
 export class KorisnikAdmNovComponent implements OnInit {
 
   oglas: Oglas = new Oglas();
+  apiUrl = environment.apiUrl;
+
+  uploader: FileUploader = new FileUploader({
+    itemAlias: 'img',
+    url: `${this.apiUrl}/upload`
+  });
 
   @Input('kategorije')
   kategorije: Kategorija[];
@@ -33,6 +41,22 @@ export class KorisnikAdmNovComponent implements OnInit {
     this.oglas.tekst = '';
     this.oglas.kategorijaID = -1;
     this.oglas.podkategorijaID = -1;
+
+    this.uploader.onAfterAddingAll = (file) => {
+      file.withCredentials = false;
+      this.uploader.uploadAll();
+    };
+
+    this.uploader.onCompleteItem = (item: any, response: any, status: any, headers: any) => {
+      response = JSON.parse(response);
+      if(response.status === 0) {
+        alert('Fajl je aploudovan!');
+        this.oglas.fotografija = response.filename;
+      }
+      else {
+        alert('Fajl nije aploudovan!');
+      }
+    };
   }
 
   dodajOglas(): void {

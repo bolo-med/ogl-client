@@ -38,6 +38,18 @@
                         <option *ngFor='let e of podkategorijeIzdvojene' value="{{e.id}}">{{e.naziv}}</option>
                     </select>
                 </div>
+                <div class="form-group">
+                    <label>Odaberite 1. forografiju</label>
+                    <input type="file" class="form-control-file" ng2FileSelect [uploader]='uploader'>
+                </div>
+                <div class="form-group">
+                    <label>Odaberite 2. forografiju</label>
+                    <input type="file" class="form-control-file">
+                </div>
+                <div class="form-group">
+                    <label>Odaberite 3. forografiju</label>
+                    <input type="file" class="form-control-file">
+                </div>
                 <br>
                 <button type="submit" class="form-control btn btn-primary" (click)='dodajOglas()'>Dodaj oglas</button>
             </form>
