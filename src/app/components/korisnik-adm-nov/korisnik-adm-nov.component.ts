@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, ElementRef, Input, OnInit } from '@angular/core';///////////////////////////////////////
 import { Kategorija } from 'src/app/models/Kategorija';
 import { Oglas } from 'src/app/models/Oglas';
 import { Podkategorija } from 'src/app/models/Podkategorija';
@@ -6,6 +6,7 @@ import { AuthService } from 'src/app/services/auth.service';
 import { OglasiService } from 'src/app/services/oglasi.service';
 import { environment } from 'src/environments/environment';
 import { FileUploader } from 'ng2-file-upload';
+import { ViewChild } from '@angular/core'; /////////////////////////////////////////////////////////////////
 
 @Component({
   selector: 'app-korisnik-adm-nov',
@@ -13,6 +14,9 @@ import { FileUploader } from 'ng2-file-upload';
   styleUrls: ['./korisnik-adm-nov.component.scss']
 })
 export class KorisnikAdmNovComponent implements OnInit {
+
+  @ViewChild('fajl1', {static: false})/////////////////////////////////////////////////////////////////////////
+  inputVar: ElementRef;//////////////////////////////////////////////////////////////////////////////////////
 
   oglas: Oglas = new Oglas();
   apiUrl = environment.apiUrl;
@@ -91,6 +95,12 @@ export class KorisnikAdmNovComponent implements OnInit {
     }
     this.oglas.podkategorijaID = -1;
   }
+
+  //////////////////////////////////////////////////////////////////////////////////////
+  reset() {
+    this.inputVar.nativeElement.value = "";
+  }
+  //////////////////////////////////////////////////////////////////////////////////////
 
 }
 

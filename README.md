@@ -32,5 +32,6 @@ To get more help on the Angular CLI use `ng help` or go check out the [Angular C
 Responsivni dizajn;\
 [ngValue] - da tag option moze da smijesta objekte u atribut value;\
 Prosledjivanje vrijednosti medju komponentama, preko url-a (ActivatedRoute);\
+Resetovati vrijednost elementa za unos fajla (ViewChild, ElementRef);\
 ...
 
