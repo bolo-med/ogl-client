@@ -1,4 +1,4 @@
-import { Component, ElementRef, Input, OnInit } from '@angular/core';///////////////////////////////////////
+import { Component, ElementRef, Input, OnInit } from '@angular/core';
 import { Kategorija } from 'src/app/models/Kategorija';
 import { Oglas } from 'src/app/models/Oglas';
 import { Podkategorija } from 'src/app/models/Podkategorija';
@@ -6,7 +6,7 @@ import { AuthService } from 'src/app/services/auth.service';
 import { OglasiService } from 'src/app/services/oglasi.service';
 import { environment } from 'src/environments/environment';
 import { FileUploader } from 'ng2-file-upload';
-import { ViewChild } from '@angular/core'; /////////////////////////////////////////////////////////////////
+import { ViewChild } from '@angular/core';
 
 @Component({
   selector: 'app-korisnik-adm-nov',
@@ -15,11 +15,13 @@ import { ViewChild } from '@angular/core'; /////////////////////////////////////
 })
 export class KorisnikAdmNovComponent implements OnInit {
 
-  @ViewChild('fajl1', {static: false})/////////////////////////////////////////////////////////////////////////
-  inputVar: ElementRef;//////////////////////////////////////////////////////////////////////////////////////
+  @ViewChild('fajl1', {static: false})
+  inputFajl1: ElementRef;
 
   oglas: Oglas = new Oglas();
   apiUrl = environment.apiUrl;
+  izborFajlaPolje: string = '';
+  brFajlova: number = 1;
 
   uploader: FileUploader = new FileUploader({
     itemAlias: 'img',
@@ -55,7 +57,20 @@ export class KorisnikAdmNovComponent implements OnInit {
       response = JSON.parse(response);
       if(response.status === 0) {
         alert('Fajl je aploudovan!');
-        this.oglas.fotografija = response.filename;
+        switch (this.izborFajlaPolje) {
+          case 'fajl1': {
+            this.oglas.foto1 = response.filename;
+            break;
+          }
+          case 'fajl2': {
+            this.oglas.foto2 = response.filename;
+            break;
+          }
+          case 'fajl3': {
+            this.oglas.foto3 = response.filename;
+            break;
+          }
+        }
       }
       else {
         alert('Fajl nije aploudovan!');
@@ -96,11 +111,20 @@ export class KorisnikAdmNovComponent implements OnInit {
     this.oglas.podkategorijaID = -1;
   }
 
-  //////////////////////////////////////////////////////////////////////////////////////
   reset() {
-    this.inputVar.nativeElement.value = "";
+    this.inputFajl1.nativeElement.value = '';
+    this.oglas.foto1 = null;
   }
-  //////////////////////////////////////////////////////////////////////////////////////
+
+  /////////////////////////////////////////////
+  promjena(fajlBr: string) {
+    this.izborFajlaPolje = fajlBr;
+    console.log(this.izborFajlaPolje);
+  }
+
+  brFajlovaFn() {
+    this.brFajlova++;
+  }
 
 }
 

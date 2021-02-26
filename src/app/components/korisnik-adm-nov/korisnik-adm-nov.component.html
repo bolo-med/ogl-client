@@ -38,18 +38,49 @@
                         <option *ngFor='let e of podkategorijeIzdvojene' value="{{e.id}}">{{e.naziv}}</option>
                     </select>
                 </div>
-                <div class="form-group">
-                    <label>Odaberite 1. forografiju</label>
-                    <input #fajl1 type="file" class="form-control-file" ng2FileSelect [uploader]='uploader'>
-                    <button type="submit" (click)='reset()'>Ukloni fajl</button>
-                </div>
-                <div class="form-group">
-                    <label>Odaberite 2. forografiju</label>
-                    <input type="file" class="form-control-file">
-                </div>
-                <div class="form-group">
-                    <label>Odaberite 3. forografiju</label>
-                    <input type="file" class="form-control-file">
+
+                <div class="container-fluid pl-0">
+                    <div class="row mt-3">
+                        <div class="col-8 col-sm-8 col-md-8 col-lg-8 col-xl-8">
+                            <label>Odaberite 1. fotografiju</label>
+                            <input #fajl1 type="file" class="form-control-file" ng2FileSelect [uploader]='uploader'
+                                                                                              (change)="promjena('fajl1')">
+                        </div>
+                        <div class="col-2 col-sm-2 col-md-2 col-lg-2 col-xl-2 text-right pr-0">
+                            <br>
+                            <button type="submit" class="btn btn-success form-control" *ngIf="oglas.foto1" (click)="brFajlovaFn()">+</button>
+                        </div>
+                        <div class="col-2 col-sm-2 col-md-2 col-lg-2 col-xl-2 text-right pr-0">
+                            <br>
+                            <button type="submit" class="btn btn-danger form-control" *ngIf="oglas.foto1" (click)='reset()'>-</button>
+                        </div>
+                    </div>
+                    <div class="row mt-3" *ngIf='brFajlova >= 2'>
+                        <div class="col-8 col-sm-8 col-md-8 col-lg-8 col-xl-8">
+                            <label>Odaberite 2. fotografiju</label>
+                            <input #fajl2 type="file" class="form-control-file" ng2FileSelect [uploader]='uploader'
+                                                                                              (change)="promjena('fajl2')">
+                        </div>
+                        <div class="col-2 col-sm-2 col-md-2 col-lg-2 col-xl-2 text-right pr-0">
+                            <br>
+                            <button type="submit" class="btn btn-success form-control" *ngIf="oglas.foto2" (click)="brFajlovaFn()">+</button>
+                        </div>
+                        <div class="col-2 col-sm-2 col-md-2 col-lg-2 col-xl-2 text-right pr-0">
+                            <br>
+                            <button type="submit" class="btn btn-danger" *ngIf="oglas.foto2" (click)='reset()'>-</button>
+                        </div>
+                    </div>
+                    <div class="row mt-3" *ngIf='brFajlova >= 3'>
+                        <div class="col-8 col-sm-8 col-md-8 col-lg-8 col-xl-8">
+                            <label>Odaberite 3. fotografiju</label>
+                            <input #fajl2 type="file" class="form-control-file" ng2FileSelect [uploader]='uploader'
+                                                                                              (change)="promjena('fajl3')">
+                        </div>
+                        <div class="col-4 col-sm-4 col-md-4 col-lg-4 col-xl-4 text-right pr-0">
+                            <br>
+                            <button type="submit" class="btn btn-danger" *ngIf="oglas.foto3" (click)='reset()'>Ukloni</button>
+                        </div>
+                    </div>
                 </div>
                 <br>
                 <button type="submit" class="form-control btn btn-primary" (click)='dodajOglas()'>Dodaj oglas</button>
