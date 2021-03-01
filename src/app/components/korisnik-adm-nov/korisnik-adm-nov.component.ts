@@ -18,10 +18,17 @@ export class KorisnikAdmNovComponent implements OnInit {
   @ViewChild('fajl1', {static: false})
   inputFajl1: ElementRef;
 
+  @ViewChild('fajl2', {static: false})
+  inputFajl2: ElementRef;
+
+  @ViewChild('fajl3', {static: false})
+  inputFajl3: ElementRef;
+
   oglas: Oglas = new Oglas();
   apiUrl = environment.apiUrl;
   izborFajlaPolje: string = '';
-  brFajlova: number = 1;
+  brFajlova: number = 0;
+  brInp: number = 0; // Broj prikazanih input elemenata za upload fotografija.
 
   uploader: FileUploader = new FileUploader({
     itemAlias: 'img',
@@ -57,6 +64,7 @@ export class KorisnikAdmNovComponent implements OnInit {
       response = JSON.parse(response);
       if(response.status === 0) {
         alert('Fajl je aploudovan!');
+        this.brFajlova++;
         switch (this.izborFajlaPolje) {
           case 'fajl1': {
             this.oglas.foto1 = response.filename;
@@ -111,19 +119,35 @@ export class KorisnikAdmNovComponent implements OnInit {
     this.oglas.podkategorijaID = -1;
   }
 
-  reset() {
+  resFajl1() {
     this.inputFajl1.nativeElement.value = '';
     this.oglas.foto1 = null;
+    this.brFajlova--;
   }
 
-  /////////////////////////////////////////////
-  promjena(fajlBr: string) {
-    this.izborFajlaPolje = fajlBr;
-    console.log(this.izborFajlaPolje);
+  resFajl2() {
+    this.inputFajl2.nativeElement.value = '';
+    this.oglas.foto2 = null;
+    this.brFajlova--;
+  }
+
+  resFajl3() {
+    this.inputFajl3.nativeElement.value = '';
+    this.oglas.foto3 = null;
+    this.brFajlova--;
+  }
+
+  promjena(f: string) {
+    this.izborFajlaPolje = f;
+    console.log(this.izborFajlaPolje);////////////////////////////////////////////////////////////////////
   }
 
   brFajlovaFn() {
     this.brFajlova++;
+  }
+
+  noviInput() {
+    this.brInp++;
   }
 
 }
