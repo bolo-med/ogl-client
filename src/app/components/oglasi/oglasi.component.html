@@ -16,7 +16,9 @@
                         <p>Kateg.: {{e.kategorijaID}} / Potkateg.: {{e.potkategorijaID}} / Autor: {{e.korisnikID}}</p>
                     </div>
                     <div class="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
-                        <img class="img-fluid img-thumbnail" src="./../../../assets/slike/no-image-available.png" alt="nema slike">
+                        <!-- <img class="img-fluid img-thumbnail" src="./../../../assets/slike/no-image-available.png" alt="nema slike"> -->
+                        <!-- <img class="img-fluid img-thumbnail" src='{{apiUrl}}/{{e.foto01}}' alt="nema slike"> -->
+                        <img class="img-fluid img-thumbnail" [src]="e.foto01 ? apiUrl + '/' + e.foto01 : './../../../assets/slike/no-image-available.png'" alt="nema slike">
                     </div>
                     <div class="container-fluid">
                         <div class="row">

@@ -40,51 +40,37 @@
                 </div>
 
                 <div class="container-fluid pl-0">
-                    <div>
-                        <button class="btn btn-success" [disabled]='(brInp>=3) || (brInp==1 && !oglas.foto1) || 
-                                                                    (brInp==2 && !oglas.foto2)' (click)="noviInput()">+</button>
-                        Dodajte propratnu fotografiju ({{brInp}}/3)
-                    </div>
-                    <div class="row mt-3" *ngIf='brInp >= 1'>
-                        <div class="col-8 col-sm-8 col-md-8 col-lg-8 col-xl-8">
+                    <div class="row mt-3">
+                        <div class="col-10 col-sm-10 col-md-10 col-lg-10 col-xl-10">
                             <label>Odaberite 1. fotografiju</label>
-                            <input #fajl1 type="file" class="form-control-file" ng2FileSelect [uploader]='uploader'
+                            <input #fajl1 type="file" class="form-control-file" ng2FileSelect [uploader]='uploader' 
                                                                                               (change)="promjena('fajl1')">
                         </div>
                         <div class="col-2 col-sm-2 col-md-2 col-lg-2 col-xl-2 text-right pr-0">
-                            <!-- <br>
-                            <button type="submit" class="btn btn-success form-control" *ngIf="oglas.foto1">+</button> -->
-                        </div>
-                        <div class="col-2 col-sm-2 col-md-2 col-lg-2 col-xl-2 text-right pr-0">
                             <br>
-                            <button type="submit" class="btn btn-danger form-control" *ngIf="oglas.foto1" (click)='resFajl1()'>-</button>
+                            <button type="submit" class="btn btn-danger form-control" *ngIf="oglas.foto01" (click)='resFajl1()'>-</button>
                         </div>
                     </div>
-                    <div class="row mt-3" *ngIf='brInp >= 2'>
-                        <div class="col-8 col-sm-8 col-md-8 col-lg-8 col-xl-8">
+                    <div class="row mt-3">
+                        <div class="col-10 col-sm-10 col-md-10 col-lg-10 col-xl-10">
                             <label>Odaberite 2. fotografiju</label>
-                            <input #fajl2 type="file" class="form-control-file" ng2FileSelect [uploader]='uploader'
+                            <input #fajl2 type="file" class="form-control-file" ng2FileSelect [uploader]='uploader' 
                                                                                               (change)="promjena('fajl2')">
                         </div>
                         <div class="col-2 col-sm-2 col-md-2 col-lg-2 col-xl-2 text-right pr-0">
-                            <!-- <br>
-                            <button type="submit" class="btn btn-success form-control" *ngIf="oglas.foto2">+</button> -->
+                            <br>
+                            <button type="submit" class="btn btn-danger form-control" *ngIf="oglas.foto02" (click)='resFajl2()'>-</button>
+                        </div>
+                    </div>
+                    <div class="row mt-3">
+                        <div class="col-10 col-sm-10 col-md-10 col-lg-10 col-xl-10">
+                            <label>Odaberite 3. fotografiju</label>
+                            <input #fajl3 type="file" class="form-control-file" ng2FileSelect [uploader]='uploader' 
+                                                                                              (change)="promjena('fajl3')">
                         </div>
                         <div class="col-2 col-sm-2 col-md-2 col-lg-2 col-xl-2 text-right pr-0">
                             <br>
-                            <button type="submit" class="btn btn-danger form-control" *ngIf="oglas.foto2" (click)='resFajl2()'>-</button>
-                        </div>
-                    </div>
-                    <div class="row mt-3" *ngIf='brInp >= 3'>
-                        <div class="col-8 col-sm-8 col-md-8 col-lg-8 col-xl-8">
-                            <label>Odaberite 3. fotografiju</label>
-                            <input #fajl3 type="file" class="form-control-file" ng2FileSelect [uploader]='uploader'
-                                                                                              (change)="promjena('fajl3')">
-                        </div>
-                        <div class="col-2 col-sm-2 col-md-2 col-lg-2 col-xl-2 text-right pr-0"></div>
-                        <div class="col-4 col-sm-4 col-md-4 col-lg-4 col-xl-4 text-right pr-0">
-                            <br>
-                            <button type="submit" class="btn btn-danger form-control" *ngIf="oglas.foto3" (click)='resFajl3()'>-</button>
+                            <button type="submit" class="btn btn-danger form-control" *ngIf="oglas.foto03" (click)='resFajl3()'>-</button>
                         </div>
                     </div>
                 </div>
@@ -97,11 +83,9 @@
 </div>
 
 <p>
-    1. {{oglas.foto1}}
+    1. {{oglas.foto01 ? oglas.foto01 : 'nema slike'}}
     <br>
-    2. {{oglas.foto2}}
+    2. {{oglas.foto02}}
     <br>
-    3. {{oglas.foto3}}
-    <br>
-    br. fajlova: {{brFajlova}}
+    3. {{oglas.foto03}}
 </p>

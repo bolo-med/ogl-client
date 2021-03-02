@@ -3,6 +3,7 @@ import { Oglas } from './../../models/Oglas';
 import { OglasiService } from 'src/app/services/oglasi.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { Router } from '@angular/router';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-oglasi',
@@ -16,6 +17,7 @@ export class OglasiComponent implements OnInit {
   oglKliknut: boolean;
   oglKliknutId: number;
   izabraniOglas: Oglas;
+  apiUrl = environment.apiUrl;
 
   constructor(private oglasiService: OglasiService, 
               private authService: AuthService, 

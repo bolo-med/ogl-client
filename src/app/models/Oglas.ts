@@ -8,8 +8,8 @@ export class Oglas {
     kategorijaID: number;
     podkategorijaID: number;
     korisnikID: number;
-    foto1: string;
-    foto2: string;
-    foto3: string;
+    foto01: string;
+    foto02: string;
+    foto03: string;
 }
 

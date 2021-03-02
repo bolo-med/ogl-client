@@ -27,7 +27,6 @@ export class KorisnikAdmNovComponent implements OnInit {
   oglas: Oglas = new Oglas();
   apiUrl = environment.apiUrl;
   izborFajlaPolje: string = '';
-  brFajlova: number = 0;
   brInp: number = 0; // Broj prikazanih input elemenata za upload fotografija.
 
   uploader: FileUploader = new FileUploader({
@@ -64,18 +63,17 @@ export class KorisnikAdmNovComponent implements OnInit {
       response = JSON.parse(response);
       if(response.status === 0) {
         alert('Fajl je aploudovan!');
-        this.brFajlova++;
         switch (this.izborFajlaPolje) {
           case 'fajl1': {
-            this.oglas.foto1 = response.filename;
+            this.oglas.foto01 = response.filename;
             break;
           }
           case 'fajl2': {
-            this.oglas.foto2 = response.filename;
+            this.oglas.foto02 = response.filename;
             break;
           }
           case 'fajl3': {
-            this.oglas.foto3 = response.filename;
+            this.oglas.foto03 = response.filename;
             break;
           }
         }
@@ -89,6 +87,9 @@ export class KorisnikAdmNovComponent implements OnInit {
   dodajOglas(): void {
     if (this.authService.isLoggedIn()) {
       this.oglas.id = null;
+      if (!this.oglas.foto01) this.oglas.foto01 = null;
+      if (!this.oglas.foto02) this.oglas.foto02 = null;
+      if (!this.oglas.foto03) this.oglas.foto03 = null;
       this.oglas.datumObjave = new Date().toISOString().split('T')[0];
       this.oglas.datumVazenja = null;
       this.oglas.kategorijaID = +this.oglas.kategorijaID;
@@ -120,34 +121,22 @@ export class KorisnikAdmNovComponent implements OnInit {
   }
 
   resFajl1() {
-    this.inputFajl1.nativeElement.value = '';
-    this.oglas.foto1 = null;
-    this.brFajlova--;
+    this.inputFajl1.nativeElement.value = ''; // Prazan string je false
+    this.oglas.foto01 = null;
   }
 
   resFajl2() {
     this.inputFajl2.nativeElement.value = '';
-    this.oglas.foto2 = null;
-    this.brFajlova--;
+    this.oglas.foto02 = null;
   }
 
   resFajl3() {
     this.inputFajl3.nativeElement.value = '';
-    this.oglas.foto3 = null;
-    this.brFajlova--;
+    this.oglas.foto03 = null;
   }
 
   promjena(f: string) {
     this.izborFajlaPolje = f;
-    console.log(this.izborFajlaPolje);////////////////////////////////////////////////////////////////////
-  }
-
-  brFajlovaFn() {
-    this.brFajlova++;
-  }
-
-  noviInput() {
-    this.brInp++;
   }
 
 }
