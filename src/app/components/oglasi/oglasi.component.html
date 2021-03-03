@@ -9,16 +9,16 @@
             <p class="naslov display-4">oglasi</p>
             <div class="container-fluid">
                 <div class="row okvir-oglasa" *ngFor='let e of oglasi' (click)="clickOgl(e.id)">
-                    <div class="col-12 col-sm-12 col-md-8 col-lg-8 col-xl-8 lead">
+                    <div class="col-12 col-sm-12 col-md-7 col-lg-7 col-xl-7 lead">
                         <p>{{e.naslov}}</p>
                         <p>{{e.tekst}}</p>
                         <br>
-                        <p>Kateg.: {{e.kategorijaID}} / Potkateg.: {{e.potkategorijaID}} / Autor: {{e.korisnikID}}</p>
+                        <p>Kateg: {{e.kategorijaID}} / Podkateg: {{e.potkategorijaID}} / Autor: {{e.korisnikID}}</p>
                     </div>
-                    <div class="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
-                        <!-- <img class="img-fluid img-thumbnail" src="./../../../assets/slike/no-image-available.png" alt="nema slike"> -->
-                        <!-- <img class="img-fluid img-thumbnail" src='{{apiUrl}}/{{e.foto01}}' alt="nema slike"> -->
-                        <img class="img-fluid img-thumbnail" [src]="e.foto01 ? apiUrl + '/' + e.foto01 : './../../../assets/slike/no-image-available.png'" alt="nema slike">
+                    <div class="col-12 col-sm-12 col-md-5 col-lg-5 col-xl-5">
+                        <img class="img-fluid img-thumbnail mx-auto d-block" 
+                             [src]="e.foto01 ? apiUrl + '/' + e.foto01 : './../../../assets/slike/no-image-available.png'" 
+                             alt="nema slike">
                     </div>
                     <div class="container-fluid">
                         <div class="row">

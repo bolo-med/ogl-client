@@ -7,6 +7,9 @@
 
     -webkit-transition: 0.3s;
     transition: 0.3s;
+
+    /*height: 300px;*/
+    /*overflow: hidden;*/
 }
 
 .okvir-oglasa:hover {
@@ -14,3 +17,15 @@
     cursor: pointer;
 }
 
+img {
+    // max-height: 250px;
+    // min-height: 250px;
+    height: 250px;
+    width: auto;
+}
+
+@media(max-width: 800px) {
+    img {
+        height: auto;
+    }
+}
