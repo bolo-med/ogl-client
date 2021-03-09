@@ -7,9 +7,9 @@ import { OperationResponse } from '../models/OperationResponse';
 @Injectable({
   providedIn: 'root'
 })
-export class PotkategorijeService {
+export class PotkategorijeService { // poTkategorije - gramaticka greska
 
-  serviceUrl = `${environment.apiUrl}/podkategorije`; // Gramaticka greska!
+  serviceUrl = `${environment.apiUrl}/podkategorije`;
 
   constructor(private http: HttpClient) { }
 

@@ -4,6 +4,10 @@ import { OglasiService } from 'src/app/services/oglasi.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { Router } from '@angular/router';
 import { environment } from 'src/environments/environment';
+import { KategorijeService } from 'src/app/services/kategorije.service';
+import { Kategorija } from 'src/app/models/Kategorija';
+import { Podkategorija } from 'src/app/models/Podkategorija';
+import { PotkategorijeService } from 'src/app/services/potkategorije.service';
 
 @Component({
   selector: 'app-oglasi',
@@ -18,10 +22,16 @@ export class OglasiComponent implements OnInit {
   oglKliknutId: number;
   izabraniOglas: Oglas;
   apiUrl = environment.apiUrl;
+  kategorije: Kategorija[] = [];
+  kategorijeChecked: any[] = [];
+  podkategorije: Podkategorija[] = [];
+  podkategorijeIzabrane: Podkategorija[] = [];
 
   constructor(private oglasiService: OglasiService, 
               private authService: AuthService, 
-              private router: Router) {
+              private router: Router, 
+              private kategorijeService: KategorijeService, 
+              private podkategorijeService: PotkategorijeService) {
     this.oglasi = [];
   }
 
@@ -31,6 +41,17 @@ export class OglasiComponent implements OnInit {
 
     this.oglasiService.getOglasi().subscribe(data => {
       this.oglasi = this.oglasiAktuelni(data);
+    });
+
+    this.kategorijeService.getKategorije().subscribe(data => {
+      if (data.status === 0) {
+        this.kategorije = data.data;
+        this.konvertujTipKategorije(this.kategorije);
+      }
+    });
+
+    this.podkategorijeService.getPotkategorije().subscribe(data => {
+      this.podkategorije = data;
     });
 
     this.oglKliknut = false;
@@ -63,6 +84,38 @@ export class OglasiComponent implements OnInit {
 
   proslediId(id: number) {
     this.router.navigateByUrl('/oglas/' + id);
+  }
+
+  konvertujTipKategorije(kategorije: Kategorija[]): void {
+    let i: number = 0;
+    for (let kat of kategorije) {
+      this.kategorijeChecked[i] = {
+        id: kat.id,
+        naziv: kat.naziv,
+        checked: false
+      };
+      i++;
+    }
+  }
+
+  chkboxChange(i: number): void {
+    this.kategorijeChecked[i].checked = !this.kategorijeChecked[i].checked;
+    this.podkategorijeIzabrane = [];
+    for (let kat of this.kategorijeChecked) {
+      if (kat.checked) {
+        for (let podkat of this.podkategorije) {
+          if (podkat.kategorijaID === kat.id) {
+            this.podkategorijeIzabrane.push(podkat);
+          }
+        }
+      }
+    }
+    // for (let k of this.kategorijeChecked) {
+    //   if (k.checked) {
+    //     console.log(k.naziv);
+    //   }
+    // }
+    // console.log('-------------------------');
   }
 
 }

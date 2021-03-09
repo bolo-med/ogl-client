@@ -3,7 +3,29 @@
 <div class="container-fluid">
     <div class="row">
         <div class="col-12 col-sm-12 col-md-3 col-lg-3 col-xl-3">
-            <div class="naslov display-4">filter</div>
+            <h1 class="naslov display-4">filter</h1>
+            <div>
+                <br>
+                <h4>kategorije</h4>
+                <form>
+                    <div class="checkbox" *ngFor='let kategorija of kategorijeChecked; index as i'>
+                        <label><input type="checkbox" value="" (change)='chkboxChange(i)'>{{kategorija.naziv}}</label>
+                    </div>
+                </form>
+            </div>
+            <div>
+                <br>
+                <h4>podkategorije</h4>
+                <form>
+                    <div class="checkbox" *ngFor='let podkategorija of podkategorijeIzabrane'>
+                        <label><input type="checkbox" value="">{{podkategorija.naziv}}</label>
+                    </div>
+                </form>
+            </div>
+            <div>
+                <br>
+                <h4>autor</h4>
+            </div>
         </div>
         <div class="col-12 col-sm-12 col-md-9 col-lg-9 col-xl-9">
             <p class="naslov display-4">oglasi</p>
