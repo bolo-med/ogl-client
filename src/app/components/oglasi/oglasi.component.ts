@@ -26,6 +26,7 @@ export class OglasiComponent implements OnInit {
   kategorijeChecked: any[] = [];
   podkategorije: Podkategorija[] = [];
   podkategorijeIzabrane: Podkategorija[] = [];
+  oglasiIzabrani: Oglas[] = [];
 
   constructor(private oglasiService: OglasiService, 
               private authService: AuthService, 
@@ -41,6 +42,7 @@ export class OglasiComponent implements OnInit {
 
     this.oglasiService.getOglasi().subscribe(data => {
       this.oglasi = this.oglasiAktuelni(data);
+      this.oglasiIzabrani = this.oglasi;
     });
 
     this.kategorijeService.getKategorije().subscribe(data => {
@@ -100,6 +102,11 @@ export class OglasiComponent implements OnInit {
 
   chkboxChange(i: number): void {
     this.kategorijeChecked[i].checked = !this.kategorijeChecked[i].checked;
+    this.izaberiPodkategorije();
+    this.izaberiOglase();
+  }
+
+  izaberiPodkategorije() {
     this.podkategorijeIzabrane = [];
     for (let kat of this.kategorijeChecked) {
       if (kat.checked) {
@@ -110,12 +117,33 @@ export class OglasiComponent implements OnInit {
         }
       }
     }
-    // for (let k of this.kategorijeChecked) {
-    //   if (k.checked) {
-    //     console.log(k.naziv);
-    //   }
-    // }
-    // console.log('-------------------------');
+  }
+
+  izaberiOglase() {
+    this.oglasiIzabrani = [];
+    if (this.isSveKategorijeOdcekirane()) {
+      this.oglasiIzabrani = this.oglasi;
+    }
+    else {
+      for (let ogl of this.oglasi) {
+        for (let kat of this.kategorijeChecked) {
+          if (kat.checked) {
+            if (kat.id === ogl.kategorijaID) {
+              this.oglasiIzabrani.push(ogl);
+            }
+          }
+        }
+      }
+    }
+  }
+
+  isSveKategorijeOdcekirane(): boolean {
+    for (let kat of this.kategorijeChecked) {
+      if (kat.checked) {
+        return false;
+      }
+    }
+    return true;
   }
 
 }

@@ -49,7 +49,8 @@ export class AdministratorAdmPotkategorijeComponent implements OnInit {
     this.prvaPotkategorija = {
       id: -1,
       kategorijaID: -1,
-      naziv: 'Odaberite...'
+      naziv: 'Odaberite...',
+      kategorija: null
     };
     this.odabranaPotkategorija = this.prvaPotkategorija;
   }
