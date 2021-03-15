@@ -9,7 +9,7 @@
                 <h4>kategorije</h4>
                 <form>
                     <div class="checkbox" *ngFor='let kategorija of kategorijeChecked; index as i'>
-                        <label><input type="checkbox" value="" (change)='chkboxChange(i)'> {{kategorija.naziv}}</label>
+                        <label><input type="checkbox" value="" (change)='kategorijeChanged(i)'> {{kategorija.naziv}}</label>
                     </div>
                 </form>
             </div>
@@ -17,8 +17,11 @@
                 <br>
                 <h4>podkategorije</h4>
                 <form>
-                    <div class="checkbox" *ngFor='let podkategorija of podkategorijeIzabrane'>
-                        <label><input type="checkbox" value=""> {{podkategorija.kategorija.naziv}} / {{podkategorija.naziv}}</label>
+                    <div class="checkbox" *ngFor='let podkategorija of podkategorijeIzabrane; index as i'>
+                        <label>
+                            <input type="checkbox" value="" (change)='podkatChanged(i)'> 
+                            {{podkategorija.kategorija.naziv}} / {{podkategorija.naziv}}
+                        </label>
                     </div>
                 </form>
             </div>
@@ -30,12 +33,12 @@
         <div class="col-12 col-sm-12 col-md-9 col-lg-9 col-xl-9">
             <p class="naslov display-4">oglasi</p>
             <div class="container-fluid">
-                <div class="row okvir-oglasa" *ngFor='let e of oglasiIzabrani' (click)="clickOgl(e.id)">
+                <div class="row okvir-oglasa" *ngFor='let e of oglasiPoKategorijama' (click)="clickOgl(e.id)">
                     <div class="col-12 col-sm-12 col-md-7 col-lg-7 col-xl-7 lead">
                         <p>{{e.naslov}}</p>
                         <p>{{e.tekst}}</p>
                         <br>
-                        <p>Kateg: {{e.kategorijaID}} | Podkateg: {{e.podkategorijaID}} | Autor: {{e.korisnikID}}</p>
+                        <p>Kateg: {{e.kategorija.naziv}} | Podkateg: {{e.podkategorija.naziv}} | Autor: {{e.korisnik.username}}</p>
                     </div>
                     <div class="col-12 col-sm-12 col-md-5 col-lg-5 col-xl-5">
                         <img class="img-fluid img-thumbnail mx-auto d-block" 

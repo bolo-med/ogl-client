@@ -1,3 +1,7 @@
+import { Kategorija } from "./Kategorija";
+import { Korisnik } from "./Korisnik";
+import { Podkategorija } from "./Podkategorija";
+
 export class Oglas {
     id: number;
     naslov: string;
@@ -11,5 +15,9 @@ export class Oglas {
     foto01: string;
     foto02: string;
     foto03: string;
+
+    kategorija: Kategorija;
+    podkategorija: Podkategorija;
+    korisnik: Korisnik; //Testirati unos novog oglasa!
 }
 
