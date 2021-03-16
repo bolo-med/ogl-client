@@ -23,11 +23,14 @@ export class OglasiComponent implements OnInit {
   izabraniOglas: Oglas;
   apiUrl = environment.apiUrl;
   kategorije: Kategorija[] = [];
-  kategorijeChecked: any[] = [];
+  kategorijeChecked: any[] = []; // kategorije sa dodatnom kolonom - checked
   podkategorije: Podkategorija[] = [];
-  podkategorijeIzabrane: Podkategorija[] = [];
+  podkategorijeIzabrane: any[] = [];
   oglasiPoKategorijama: Oglas[] = [];
   podkategorijeIzabraneChecked: any[] = [];
+  oglasiIzabrani: Oglas[] = [];
+  podkategorijeChecked: any[] = []; // Podkategorije sa dodatnom kolonom - checked
+  oglasiPoPodkategorijama: Oglas[] = [];
 
   constructor(private oglasiService: OglasiService, 
               private authService: AuthService, 
@@ -43,18 +46,20 @@ export class OglasiComponent implements OnInit {
 
     this.oglasiService.getOglasi().subscribe(data => {
       this.oglasi = this.oglasiAktuelni(data);
+      this.oglasiIzabrani = this.oglasi;
       this.oglasiPoKategorijama = this.oglasi;
     });
 
     this.kategorijeService.getKategorije().subscribe(data => {
       if (data.status === 0) {
         this.kategorije = data.data;
-        this.konvertujTipKategorije(this.kategorije);
+        this.kategorijeChecked = this.konvertujTipKategorije(this.kategorije);
       }
     });
 
     this.podkategorijeService.getPotkategorije().subscribe(data => {
       this.podkategorije = data;
+      this.podkategorijeChecked = this.konvertujTipPodkatekorije(this.podkategorije);
     });
 
     this.oglKliknut = false;
@@ -89,16 +94,30 @@ export class OglasiComponent implements OnInit {
     this.router.navigateByUrl('/oglas/' + id);
   }
 
-  konvertujTipKategorije(kategorije: Kategorija[]): void {
-    let i: number = 0;
+  konvertujTipKategorije(kategorije: Kategorija[]): any[] {
+    let kChk: any[] = [];
     for (let kat of kategorije) {
-      this.kategorijeChecked[i] = {
+      kChk.push({
         id: kat.id,
         naziv: kat.naziv,
         checked: false
-      };
-      i++;
+      });
     }
+    return kChk;
+  }
+
+  konvertujTipPodkatekorije(podkategorije: Podkategorija[]): any[] {
+    let podkChk: any[] = [];
+    for (let podkat of podkategorije) {
+      podkChk.push({
+        id: podkat.id,
+        kategorijaID: podkat.kategorijaID,
+        naziv: podkat.naziv,
+        kategorija: podkat.kategorija,
+        checked: false
+      });
+    }
+    return podkChk;
   }
 
   kategorijeChanged(i: number): void {
@@ -111,29 +130,16 @@ export class OglasiComponent implements OnInit {
     this.podkategorijeIzabrane = [];
     for (let kat of this.kategorijeChecked) {
       if (kat.checked) {
-        for (let podkat of this.podkategorije) {
+        for (let podkat of this.podkategorijeChecked) {
           if (podkat.kategorijaID === kat.id) {
             this.podkategorijeIzabrane.push(podkat);
           }
         }
       }
     }
-    this.konvertujTipPodkategorije();
   }
 
-  konvertujTipPodkategorije() {
-    for (let podkatIzabr of this.podkategorijeIzabrane) {
-      this.podkategorijeIzabraneChecked.push({
-        id: podkatIzabr.id,
-        kategorijaID: podkatIzabr.kategorijaID,
-        naziv: podkatIzabr.naziv,
-        kategorija: podkatIzabr.kategorija,
-        checked: false
-      });
-    }
-  }
-
-  izaberiPoKategorijama() {
+  izaberiPoKategorijama(): void {
     this.oglasiPoKategorijama = [];
     if (this.isSveKategorijeOdcekirane()) {
       this.oglasiPoKategorijama = this.oglasi;
@@ -149,6 +155,13 @@ export class OglasiComponent implements OnInit {
         }
       }
     }
+    /////////////////////////////////////////////////////////////////////////
+    for (let o of this.oglasiPoKategorijama) {
+      console.log(o.kategorija.naziv);
+      console.log(' ');
+    }
+    ////////////////////////////////////////////////////////////////////////
+    // this.izaberiOglase(this.oglasiPoKategorijama, this.oglasiPoPodkategorijama);
   }
 
   isSveKategorijeOdcekirane(): boolean {
@@ -161,17 +174,43 @@ export class OglasiComponent implements OnInit {
   }
 
   podkatChanged(i: number) {
-    this.podkategorijeIzabraneChecked[i].checked = !this.podkategorijeIzabraneChecked[i].checked;
-    let ogl: Oglas[] = this.oglasiPoKategorijama;
-    this.oglasiPoKategorijama = [];
-    for (let pkat of this.podkategorijeIzabraneChecked) {
-      if (pkat.checked === true) {
-        for (let o of ogl) {
-          if (pkat.id === o.podkategorijaID) {
-            this.oglasiPoKategorijama.push(o);
+    this.podkategorijeIzabrane[i].checked = !this.podkategorijeIzabrane[i].checked;
+    this.izaberiPoPodkategorijama();
+  }
+
+  izaberiPoPodkategorijama() {
+    if (this.isAllPodkatCheckedUnckecked()) {
+      this.oglasiPoPodkategorijama = this.oglasiPoKategorijama;
+    }
+    else {
+      this.oglasiPoPodkategorijama = [];
+      for (let ogl of this.oglasiPoKategorijama) {
+        for (let podkat of this.podkategorijeIzabrane) {
+          if (ogl.podkategorijaID === podkat.id) {
+            this.oglasiPoPodkategorijama.push(ogl);
           }
         }
       }
+    }
+    this.oglasiIzabrani = this.oglasiPoPodkategorijama;
+  }
+
+  isAllPodkatCheckedUnckecked(): boolean {
+    if (this.podkategorijeIzabrane[0].checked === true) {
+      for (let podkat of this.podkategorijeIzabrane) {
+        if (podkat.checked === false) {
+          return false;
+        }
+      }
+      return true;
+    }
+    else {
+      for (let podkat of this.podkategorijeIzabrane) {
+        if (podkat.checked === true) {
+          return false;
+        }
+      }
+      return true;
     }
   }
 
