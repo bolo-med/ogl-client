@@ -140,7 +140,9 @@ export class OglasiComponent implements OnInit {
   }
 
   izaberiPoKategorijama(): void {
+
     this.oglasiPoKategorijama = [];
+
     if (this.isSveKategorijeOdcekirane()) {
       this.oglasiPoKategorijama = this.oglasi;
     }
@@ -150,18 +152,16 @@ export class OglasiComponent implements OnInit {
           if (kat.checked) {
             if (kat.id === ogl.kategorijaID) {
               this.oglasiPoKategorijama.push(ogl);
+              break;
             }
           }
         }
       }
     }
-    /////////////////////////////////////////////////////////////////////////
-    for (let o of this.oglasiPoKategorijama) {
-      console.log(o.kategorija.naziv);
-      console.log(' ');
+
+    if (this.isAllPodkatCheckedUnckecked()) {
+      this.oglasiIzabrani = this.oglasiPoKategorijama;
     }
-    ////////////////////////////////////////////////////////////////////////
-    // this.izaberiOglase(this.oglasiPoKategorijama, this.oglasiPoPodkategorijama);
   }
 
   isSveKategorijeOdcekirane(): boolean {
@@ -196,6 +196,7 @@ export class OglasiComponent implements OnInit {
   }
 
   isAllPodkatCheckedUnckecked(): boolean {
+    if (this.podkategorijeIzabrane)
     if (this.podkategorijeIzabrane[0].checked === true) {
       for (let podkat of this.podkategorijeIzabrane) {
         if (podkat.checked === false) {

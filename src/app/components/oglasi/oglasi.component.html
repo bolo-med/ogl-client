@@ -9,7 +9,10 @@
                 <h4>kategorije</h4>
                 <form>
                     <div class="checkbox" *ngFor='let kategorija of kategorijeChecked; index as i'>
-                        <label><input type="checkbox" value="" (change)='kategorijeChanged(i)'> {{kategorija.naziv}}</label>
+                        <label>
+                            <input type="checkbox" value="" (change)='kategorijeChanged(i)'>
+                            <span class="kategorijeBoja"> {{kategorija.naziv}}</span>
+                        </label>
                     </div>
                 </form>
             </div>
@@ -20,7 +23,8 @@
                     <div class="checkbox" *ngFor='let podkategorija of podkategorijeIzabrane; index as i'>
                         <label>
                             <input type="checkbox" value="" (change)='podkatChanged(i)'> 
-                            {{podkategorija.kategorija.naziv}} / {{podkategorija.naziv}}
+                            <span class="kategorijeBoja"> {{podkategorija.kategorija.naziv}}</span> / 
+                            <span class="podkategorijeBoja">{{podkategorija.naziv}}</span>
                         </label>
                     </div>
                 </form>
