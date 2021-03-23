@@ -59,7 +59,7 @@ export class OglasiComponent implements OnInit {
 
     this.podkategorijeService.getPotkategorije().subscribe(data => {
       this.podkategorije = data;
-      this.podkategorijeChecked = this.konvertujTipPodkatekorije(this.podkategorije);
+      this.podkategorijeChecked = this.konvertujTipPodkatekorije();
     });
 
     this.oglKliknut = false;
@@ -106,18 +106,33 @@ export class OglasiComponent implements OnInit {
     return kChk;
   }
 
-  konvertujTipPodkatekorije(podkategorije: Podkategorija[]): any[] {
+  konvertujTipPodkatekorije(): any[] {
+    let preostalePodkategorije: Podkategorija[] = this.izbaciPodkategorije();
     let podkChk: any[] = [];
-    for (let podkat of podkategorije) {
+    for (let podkat of preostalePodkategorije) {
       podkChk.push({
         id: podkat.id,
         kategorijaID: podkat.kategorijaID,
         naziv: podkat.naziv,
         kategorija: podkat.kategorija,
-        checked: false
+        checked: true
       });
     }
     return podkChk;
+  }
+
+  // Odbacuje sve podkategorije za koje ne postoji nijedan oglas
+  izbaciPodkategorije(): Podkategorija[] {
+    let preostalePodkategorije: Podkategorija[] = [];
+    for (let p of this.podkategorije) {
+      for (let o of this.oglasi) {
+        if (p.id === o.podkategorijaID) {
+          preostalePodkategorije.push(p);
+          break;
+        }
+      }
+    }
+    return preostalePodkategorije;
   }
 
   kategorijeChanged(i: number): void {
@@ -159,9 +174,7 @@ export class OglasiComponent implements OnInit {
       }
     }
 
-    if (this.isAllPodkatCheckedUnckecked()) {
-      this.oglasiIzabrani = this.oglasiPoKategorijama;
-    }
+    this.izaberiPoPodkategorijama();
   }
 
   isSveKategorijeOdcekirane(): boolean {
@@ -178,26 +191,35 @@ export class OglasiComponent implements OnInit {
     this.izaberiPoPodkategorijama();
   }
 
-  izaberiPoPodkategorijama() {
+  izaberiPoPodkategorijama(): void {
+
     if (this.isAllPodkatCheckedUnckecked()) {
+
       this.oglasiPoPodkategorijama = this.oglasiPoKategorijama;
     }
     else {
+
       this.oglasiPoPodkategorijama = [];
+
       for (let ogl of this.oglasiPoKategorijama) {
         for (let podkat of this.podkategorijeIzabrane) {
-          if (ogl.podkategorijaID === podkat.id) {
-            this.oglasiPoPodkategorijama.push(ogl);
+          if (podkat.checked) {
+            if (ogl.podkategorijaID === podkat.id) {
+              this.oglasiPoPodkategorijama.push(ogl);
+            }
           }
         }
       }
     }
+
     this.oglasiIzabrani = this.oglasiPoPodkategorijama;
   }
 
   isAllPodkatCheckedUnckecked(): boolean {
-    if (this.podkategorijeIzabrane)
-    if (this.podkategorijeIzabrane[0].checked === true) {
+    if (this.podkategorijeIzabrane.length < 1) {
+      return true;
+    } 
+    else if (this.podkategorijeIzabrane[0].checked === true) {
       for (let podkat of this.podkategorijeIzabrane) {
         if (podkat.checked === false) {
           return false;
