@@ -18,7 +18,7 @@
             </div>
             <div>
                 <br>
-                <h4>podkategorije</h4>
+                <h4 *ngIf='podkategorijeIzabrane.length > 0'>podkategorije</h4>
                 <form>
                     <div class="checkbox" *ngFor='let podkategorija of podkategorijeIzabrane; index as i'>
                         <label>
@@ -29,10 +29,10 @@
                     </div>
                 </form>
             </div>
-            <div>
+            <!-- <div>
                 <br>
                 <h4>autor</h4>
-            </div>
+            </div> -->
         </div>
         <div class="col-12 col-sm-12 col-md-9 col-lg-9 col-xl-9">
             <p class="naslov display-4">oglasi</p>

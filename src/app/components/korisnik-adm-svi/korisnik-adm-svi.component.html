@@ -1,1 +1,13 @@
-<p>korisnik-adm-svi works!</p>
+<div class="container-fluid">
+    <div class="row okvir-oglasa" *ngFor='let o of oglasi'>
+        <div class="col-12 col-sm-12 col-md-7 col-lg-7 col-xl-7 lead">
+            <p>{{o.naslov}}</p>
+            <p>{{o.tekst}}</p>
+            <br>
+            <p>Kateg: {{o.kategorija.naziv}} | Podkateg: {{o.podkategorija.naziv}} | Autor: {{o.korisnik.username}}</p>
+        </div>
+        <div class="col-12 col-sm-12 col-md-5 col-lg-5 col-xl-5">
+            <img class="" [src]="o.foto01 ? apiUrl + '/' + o.foto01 : './../../../assets/slike/no-image-available.png'" alt="nema slike">
+        </div>
+    </div>
+</div>

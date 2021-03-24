@@ -5,6 +5,8 @@ import { Kategorija } from 'src/app/models/Kategorija';
 import { KategorijeService } from 'src/app/services/kategorije.service';
 import { Podkategorija } from 'src/app/models/Podkategorija';
 import { PotkategorijeService } from 'src/app/services/potkategorije.service';
+import { Oglas } from 'src/app/models/Oglas';
+import { OglasiService } from 'src/app/services/oglasi.service';
 
 @Component({
   selector: 'app-korisnik-adm',
@@ -18,6 +20,7 @@ export class KorisnikAdmComponent implements OnInit {
   kategorije: Kategorija[];
   korisnikID: number = -1;
   podkategorije: Podkategorija[];
+  korisnikoviOglasi: Oglas[] = [];
 
   oglNov: boolean = true;
   oglAkt: boolean = false;
@@ -27,7 +30,8 @@ export class KorisnikAdmComponent implements OnInit {
   constructor(private authService: AuthService, 
               private router: Router, 
               private kategorijeService: KategorijeService, 
-              private potkategorijeService: PotkategorijeService) { }
+              private potkategorijeService: PotkategorijeService, 
+              private oglasiService: OglasiService) { }
 
   ngOnInit(): void {
 
@@ -40,6 +44,9 @@ export class KorisnikAdmComponent implements OnInit {
       this.potkategorijeService.getPotkategorije().subscribe(data => {
         this.podkategorije = data;
       });
+      this.oglasiService.getOglasi().subscribe(data => {
+        this.korisnikoviOglasi = this.izdvojKorisnikoveOglase(data);
+      });
     }
     else {
       this.router.navigateByUrl('/');
@@ -47,6 +54,16 @@ export class KorisnikAdmComponent implements OnInit {
     }
 
   }
+
+  izdvojKorisnikoveOglase(sviOglasi: Oglas[]): Oglas[] {
+    let usrOgl: Oglas[] = []
+    for (let o of sviOglasi) {
+      if (o.korisnikID === this.korisnikID) {
+        usrOgl.push(o);
+      }
+    }
+    return usrOgl;
+  } 
 
   novFn(): void {
     this.oglNov = true;
