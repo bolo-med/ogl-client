@@ -4,6 +4,7 @@ import { AdministratorAdmComponent } from './components/administrator-adm/admini
 import { KorisnikAdmComponent } from './components/korisnik-adm/korisnik-adm.component';
 import { OglasComponent } from './components/oglas/oglas.component';
 import { OglasiComponent } from './components/oglasi/oglasi.component';
+import { PocetnaComponent } from './components/pocetna/pocetna.component';
 import { PrijavaComponent } from './components/prijava/prijava.component';
 import { RegistracijaComponent } from './components/registracija/registracija.component';
 
@@ -32,6 +33,10 @@ const routes: Routes = [
   {
     path: 'oglas/:id',
     component: OglasComponent
+  },
+  {
+    path: '',
+    component: PocetnaComponent
   }
 ];
 

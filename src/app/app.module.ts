@@ -19,6 +19,7 @@ import { AdministratorAdmKategorijeComponent } from './components/administrator-
 import { AdministratorAdmPotkategorijeComponent } from './components/administrator-adm-potkategorije/administrator-adm-potkategorije.component';
 import { OglasComponent } from './components/oglas/oglas.component';
 import { FileUploadModule } from 'ng2-file-upload';
+import { PocetnaComponent } from './components/pocetna/pocetna.component';
 
 @NgModule({
   declarations: [
@@ -34,7 +35,8 @@ import { FileUploadModule } from 'ng2-file-upload';
     KorisnikAdmAktuelniComponent,
     AdministratorAdmKategorijeComponent,
     AdministratorAdmPotkategorijeComponent,
-    OglasComponent
+    OglasComponent,
+    PocetnaComponent
   ],
   imports: [
     BrowserModule,
