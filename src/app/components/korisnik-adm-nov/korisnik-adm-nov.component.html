@@ -40,6 +40,18 @@
                 </div>
 
                 <div class="container-fluid pl-0">
+                    <div class="row">Izaberite slike:</div>
+                    <div class="row mt-3" *ngFor='let e of fotografije'>
+                        <div class="col-10 col-sm-10 col-md-10 col-lg-10 col-xl-10">
+                            <input type="file">
+                        </div>
+                        <div class="col-2 col-sm-2 col-md-2 col-lg-2 col-xl-2 text-right pr-0">
+                            <button type="submit">Dodaj</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- <div class="container-fluid pl-0">
                     <div class="row mt-3">
                         <div class="col-10 col-sm-10 col-md-10 col-lg-10 col-xl-10">
                             <label>Odaberite 1. fotografiju</label>
@@ -73,7 +85,7 @@
                             <button type="submit" class="btn btn-danger form-control" *ngIf="oglas.foto03" (click)='resFajl3()'>-</button>
                         </div>
                     </div>
-                </div>
+                </div> -->
                 <br>
                 <button type="submit" class="form-control btn btn-primary" (click)='dodajOglas()'>Dodaj oglas</button>
             </form>

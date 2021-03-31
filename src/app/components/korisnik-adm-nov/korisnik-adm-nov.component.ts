@@ -28,6 +28,7 @@ export class KorisnikAdmNovComponent implements OnInit {
   apiUrl = environment.apiUrl;
   izborFajlaPolje: string = '';
   brInp: number = 0; // Broj prikazanih input elemenata za upload fotografija.
+  fotografije: string[] = [];
 
   uploader: FileUploader = new FileUploader({
     itemAlias: 'img',
@@ -46,13 +47,15 @@ export class KorisnikAdmNovComponent implements OnInit {
   podkategorijeIzdvojene: Podkategorija[] = [];
 
   constructor(private oglasiService: OglasiService, 
-              private authService: AuthService) { }
+              private authService: AuthService) {}
 
   ngOnInit(): void {
     this.oglas.naslov = '';
     this.oglas.tekst = '';
     this.oglas.kategorijaID = -1;
     this.oglas.podkategorijaID = -1;
+
+    this.formirajPrazanNiz();
 
     this.uploader.onAfterAddingAll = (file) => {
       file.withCredentials = false;
@@ -137,6 +140,12 @@ export class KorisnikAdmNovComponent implements OnInit {
 
   promjena(f: string) {
     this.izborFajlaPolje = f;
+  }
+
+  formirajPrazanNiz() {
+    for (let i = 1; i <= 10; i++) {
+      this.fotografije.push('');
+    }
   }
 
 }
