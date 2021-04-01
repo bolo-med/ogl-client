@@ -40,52 +40,30 @@
                 </div>
 
                 <div class="container-fluid pl-0">
-                    <div class="row">Izaberite slike:</div>
-                    <div class="row mt-3" *ngFor='let e of fotografije'>
-                        <div class="col-10 col-sm-10 col-md-10 col-lg-10 col-xl-10">
-                            <input type="file">
+                    <div class="row form-check ml-1">
+                        <input type="checkbox" class="form-check-input" id="slike" name="chkSlike" value="" [(ngModel)]='slikeChk'>
+                        <label class="form-check-label" for="slike">Slike uz oglas?</label>
+                    </div>
+                    <div *ngIf='slikeChk'>
+                        <div class="row mt-3" *ngFor='let e of fotografije'>
+                            <div class="col-9 col-sm-9 col-md-9 col-lg-9 col-xl-9">
+                                <input type="file" class="form-control-file" ng2FileSelect [uploader]='uploader'>
+                            </div>
+                            <div class="col-3 col-sm-3 col-md-3 col-lg-3 col-xl-3 text-right pr-0">
+                                <button type="submit">Ukloni sliku</button>
+                            </div>
                         </div>
-                        <div class="col-2 col-sm-2 col-md-2 col-lg-2 col-xl-2 text-right pr-0">
-                            <button type="submit">Dodaj</button>
+                        <div class="row mt-3" *ngIf='fotografije.length < 10'>
+                            <div class="col-9 col-sm-9 col-md-9 col-lg-9 col-xl-9">
+                                <input type="file" class="form-control-file" ng2FileSelect [uploader]='uploader'>
+                            </div>
+                            <div class="col-3 col-sm-3 col-md-3 col-lg-3 col-xl-3 text-right pr-0">
+                                <button type="submit">Ukloni sliku</button>
+                            </div>
                         </div>
                     </div>
                 </div>
 
-                <!-- <div class="container-fluid pl-0">
-                    <div class="row mt-3">
-                        <div class="col-10 col-sm-10 col-md-10 col-lg-10 col-xl-10">
-                            <label>Odaberite 1. fotografiju</label>
-                            <input #fajl1 type="file" class="form-control-file" ng2FileSelect [uploader]='uploader' 
-                                                                                              (change)="promjena('fajl1')">
-                        </div>
-                        <div class="col-2 col-sm-2 col-md-2 col-lg-2 col-xl-2 text-right pr-0">
-                            <br>
-                            <button type="submit" class="btn btn-danger form-control" *ngIf="oglas.foto01" (click)='resFajl1()'>-</button>
-                        </div>
-                    </div>
-                    <div class="row mt-3">
-                        <div class="col-10 col-sm-10 col-md-10 col-lg-10 col-xl-10">
-                            <label>Odaberite 2. fotografiju</label>
-                            <input #fajl2 type="file" class="form-control-file" ng2FileSelect [uploader]='uploader' 
-                                                                                              (change)="promjena('fajl2')">
-                        </div>
-                        <div class="col-2 col-sm-2 col-md-2 col-lg-2 col-xl-2 text-right pr-0">
-                            <br>
-                            <button type="submit" class="btn btn-danger form-control" *ngIf="oglas.foto02" (click)='resFajl2()'>-</button>
-                        </div>
-                    </div>
-                    <div class="row mt-3">
-                        <div class="col-10 col-sm-10 col-md-10 col-lg-10 col-xl-10">
-                            <label>Odaberite 3. fotografiju</label>
-                            <input #fajl3 type="file" class="form-control-file" ng2FileSelect [uploader]='uploader' 
-                                                                                              (change)="promjena('fajl3')">
-                        </div>
-                        <div class="col-2 col-sm-2 col-md-2 col-lg-2 col-xl-2 text-right pr-0">
-                            <br>
-                            <button type="submit" class="btn btn-danger form-control" *ngIf="oglas.foto03" (click)='resFajl3()'>-</button>
-                        </div>
-                    </div>
-                </div> -->
                 <br>
                 <button type="submit" class="form-control btn btn-primary" (click)='dodajOglas()'>Dodaj oglas</button>
             </form>
@@ -95,9 +73,5 @@
 </div>
 
 <p>
-    1. {{oglas.foto01 ? oglas.foto01 : 'nema slike'}}
-    <br>
-    2. {{oglas.foto02}}
-    <br>
-    3. {{oglas.foto03}}
+    Cekboks: {{slikeChk}}
 </p>
