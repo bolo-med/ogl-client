@@ -30,6 +30,7 @@ export class KorisnikAdmNovComponent implements OnInit {
   brInp: number = 0; // Broj prikazanih input elemenata za upload fotografija.
   fotografije: string[] = [];
   slikeChk: boolean = false;
+  brInpFil: number = 1;
 
   uploader: FileUploader = new FileUploader({
     itemAlias: 'img',
@@ -56,7 +57,7 @@ export class KorisnikAdmNovComponent implements OnInit {
     this.oglas.kategorijaID = -1;
     this.oglas.podkategorijaID = -1;
 
-    // this.formirajPrazanNiz();
+    this.formirajPrazanNiz();
 
     this.uploader.onAfterAddingAll = (file) => {
       file.withCredentials = false;
@@ -67,7 +68,6 @@ export class KorisnikAdmNovComponent implements OnInit {
       response = JSON.parse(response);
       if(response.status === 0) {
         alert('Fajl je aploudovan!');
-        this.fotografije.push = response.filename;
       }
       else {
         alert('Fajl nije aploudovan!');
@@ -134,10 +134,6 @@ export class KorisnikAdmNovComponent implements OnInit {
     for (let i = 1; i <= 10; i++) {
       this.fotografije.push('');
     }
-  }
-
-  saFotografijom() {
-
   }
 
 }

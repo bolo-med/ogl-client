@@ -45,22 +45,18 @@
                         <label class="form-check-label" for="slike">Slike uz oglas?</label>
                     </div>
                     <div *ngIf='slikeChk'>
-                        <div class="row mt-3" *ngFor='let e of fotografije'>
-                            <div class="col-9 col-sm-9 col-md-9 col-lg-9 col-xl-9">
+                        <div class="row mt-3" *ngFor='let e of fotografije; index as i'>
+                            <div class="col-1 col-sm-1 col-md-1 col-lg-1 col-xl-1 text-right" *ngIf='brInpFil >= (i+1)'>
+                                {{i+1}}.
+                            </div>
+                            <div class="col-9 col-sm-9 col-md-9 col-lg-9 col-xl-9"  *ngIf='brInpFil >= (i+1)'>
                                 <input type="file" class="form-control-file" ng2FileSelect [uploader]='uploader'>
                             </div>
-                            <div class="col-3 col-sm-3 col-md-3 col-lg-3 col-xl-3 text-right pr-0">
-                                <button type="submit">Ukloni sliku</button>
+                            <div class="col-2 col-sm-2 col-md-2 col-lg-2 col-xl-2 text-right pr-0" *ngIf='brInpFil >= (i+1)'>
+                                <button type="submit">Ukloni</button>
                             </div>
                         </div>
-                        <div class="row mt-3" *ngIf='fotografije.length < 10'>
-                            <div class="col-9 col-sm-9 col-md-9 col-lg-9 col-xl-9">
-                                <input type="file" class="form-control-file" ng2FileSelect [uploader]='uploader'>
-                            </div>
-                            <div class="col-3 col-sm-3 col-md-3 col-lg-3 col-xl-3 text-right pr-0">
-                                <button type="submit">Ukloni sliku</button>
-                            </div>
-                        </div>
+                        <div>dodaj jos jednu</div>
                     </div>
                 </div>
 
@@ -72,6 +68,3 @@
     </div>
 </div>
 
-<p>
-    Cekboks: {{slikeChk}}
-</p>
