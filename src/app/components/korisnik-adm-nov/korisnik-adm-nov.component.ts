@@ -31,6 +31,7 @@ export class KorisnikAdmNovComponent implements OnInit {
   fotografije: string[] = [];
   slikeChk: boolean = false;
   brInpFil: number = 1;
+  i: number = -1; // indeks elementa niza fotografije
 
   uploader: FileUploader = new FileUploader({
     itemAlias: 'img',
@@ -67,7 +68,10 @@ export class KorisnikAdmNovComponent implements OnInit {
     this.uploader.onCompleteItem = (item: any, response: any, status: any, headers: any) => {
       response = JSON.parse(response);
       if(response.status === 0) {
+        this.fotografije[this.i] = response.filename;
         alert('Fajl je aploudovan!');
+        console.log(this.fotografije);
+        
       }
       else {
         alert('Fajl nije aploudovan!');
@@ -134,6 +138,16 @@ export class KorisnikAdmNovComponent implements OnInit {
     for (let i = 1; i <= 10; i++) {
       this.fotografije.push('');
     }
+  }
+
+  uvecajBrInpFil() {
+    this.brInpFil++;
+  }
+
+  dajIndex(i: number): void {
+    this.i = i;
+    console.log(this.i);
+    
   }
 
 }
