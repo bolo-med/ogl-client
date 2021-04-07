@@ -15,22 +15,32 @@ import { ViewChild } from '@angular/core';
 })
 export class KorisnikAdmNovComponent implements OnInit {
 
+  /////////////////////////////////////////////////////////////////////////////////
   @ViewChild('fajl1', {static: false})
-  inputFajl1: ElementRef;
-
+  inpF01: ElementRef;
   @ViewChild('fajl2', {static: false})
-  inputFajl2: ElementRef;
-
+  inpF02: ElementRef;
   @ViewChild('fajl3', {static: false})
-  inputFajl3: ElementRef;
+  inpF03: ElementRef;
+  @ViewChild('fajl4', {static: false})
+  inpF04: ElementRef;
+  @ViewChild('fajl5', {static: false})
+  inpF05: ElementRef;
+  @ViewChild('fajl6', {static: false})
+  inpF06: ElementRef;
+  @ViewChild('fajl7', {static: false})
+  inpF07: ElementRef;
+  @ViewChild('fajl8', {static: false})
+  inpF08: ElementRef;
+  @ViewChild('fajl9', {static: false})
+  inpF09: ElementRef;
+  @ViewChild('fajl10', {static: false})
+  inpF10: ElementRef;
+  //////////////////////////////////////////////////////////////////////////////////
 
   oglas: Oglas = new Oglas();
   apiUrl = environment.apiUrl;
-  izborFajlaPolje: string = '';
-  brInp: number = 0; // Broj prikazanih input elemenata za upload fotografija.
   fotografije: string[] = [];
-  slikeChk: boolean = false;
-  brInpFil: number = 1;
   i: number = -1; // indeks elementa niza fotografije
 
   uploader: FileUploader = new FileUploader({
@@ -70,8 +80,7 @@ export class KorisnikAdmNovComponent implements OnInit {
       if(response.status === 0) {
         this.fotografije[this.i] = response.filename;
         alert('Fajl je aploudovan!');
-        console.log(this.fotografije);
-        
+        console.log(this.fotografije);/////////////////////////////////////////////////////////////////////////////
       }
       else {
         alert('Fajl nije aploudovan!');
@@ -115,39 +124,58 @@ export class KorisnikAdmNovComponent implements OnInit {
     this.oglas.podkategorijaID = -1;
   }
 
-  resFajl1() {
-    this.inputFajl1.nativeElement.value = ''; // Prazan string je false
-    this.oglas.foto01 = null;
-  }
-
-  resFajl2() {
-    this.inputFajl2.nativeElement.value = '';
-    this.oglas.foto02 = null;
-  }
-
-  resFajl3() {
-    this.inputFajl3.nativeElement.value = '';
-    this.oglas.foto03 = null;
-  }
-
-  promjena(f: string) {
-    this.izborFajlaPolje = f;
-  }
-
   formirajPrazanNiz() {
     for (let i = 1; i <= 10; i++) {
       this.fotografije.push('');
     }
   }
 
-  uvecajBrInpFil() {
-    this.brInpFil++;
-  }
-
   dajIndex(i: number): void {
     this.i = i;
-    console.log(this.i);
-    
+  }
+
+  resetujInputFile(i: number) {
+    switch (i) {
+      case 1:
+        this.inpF01.nativeElement.value = '';
+        this.fotografije[i-1] = '';
+        break;
+      case 2:
+        this.inpF02.nativeElement.value = '';
+        this.fotografije[i-1] = '';
+        break;
+      case 3:
+        this.inpF03.nativeElement.value = '';
+        this.fotografije[i-1] = '';
+        break;
+      case 4:
+        this.inpF04.nativeElement.value = '';
+        this.fotografije[i-1] = '';
+        break;
+      case 5:
+        this.inpF05.nativeElement.value = '';
+        this.fotografije[i-1] = '';
+        break;
+      case 6:
+        this.inpF06.nativeElement.value = '';
+        this.fotografije[i-1] = '';
+        break;
+      case 7:
+        this.inpF07.nativeElement.value = '';
+        this.fotografije[i-1] = '';
+        break;
+      case 8:
+        this.inpF08.nativeElement.value = '';
+        this.fotografije[i-1] = '';
+        break;
+      case 9:
+        this.inpF09.nativeElement.value = '';
+        this.fotografije[i-1] = '';
+        break;
+      case 10:
+        this.inpF10.nativeElement.value = '';
+        this.fotografije[i-1] = '';
+    }
   }
 
 }
