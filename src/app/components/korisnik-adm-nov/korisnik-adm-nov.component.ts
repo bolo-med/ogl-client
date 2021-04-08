@@ -15,28 +15,12 @@ import { ViewChild } from '@angular/core';
 })
 export class KorisnikAdmNovComponent implements OnInit {
 
-  /////////////////////////////////////////////////////////////////////////////////
   @ViewChild('fajl1', {static: false})
   inpF01: ElementRef;
   @ViewChild('fajl2', {static: false})
   inpF02: ElementRef;
   @ViewChild('fajl3', {static: false})
   inpF03: ElementRef;
-  @ViewChild('fajl4', {static: false})
-  inpF04: ElementRef;
-  @ViewChild('fajl5', {static: false})
-  inpF05: ElementRef;
-  @ViewChild('fajl6', {static: false})
-  inpF06: ElementRef;
-  @ViewChild('fajl7', {static: false})
-  inpF07: ElementRef;
-  @ViewChild('fajl8', {static: false})
-  inpF08: ElementRef;
-  @ViewChild('fajl9', {static: false})
-  inpF09: ElementRef;
-  @ViewChild('fajl10', {static: false})
-  inpF10: ElementRef;
-  //////////////////////////////////////////////////////////////////////////////////
 
   oglas: Oglas = new Oglas();
   apiUrl = environment.apiUrl;
@@ -125,7 +109,7 @@ export class KorisnikAdmNovComponent implements OnInit {
   }
 
   formirajPrazanNiz() {
-    for (let i = 1; i <= 10; i++) {
+    for (let i=1; i<=3; i++) {
       this.fotografije.push('');
     }
   }
@@ -147,35 +131,8 @@ export class KorisnikAdmNovComponent implements OnInit {
       case 3:
         this.inpF03.nativeElement.value = '';
         this.fotografije[i-1] = '';
-        break;
-      case 4:
-        this.inpF04.nativeElement.value = '';
-        this.fotografije[i-1] = '';
-        break;
-      case 5:
-        this.inpF05.nativeElement.value = '';
-        this.fotografije[i-1] = '';
-        break;
-      case 6:
-        this.inpF06.nativeElement.value = '';
-        this.fotografije[i-1] = '';
-        break;
-      case 7:
-        this.inpF07.nativeElement.value = '';
-        this.fotografije[i-1] = '';
-        break;
-      case 8:
-        this.inpF08.nativeElement.value = '';
-        this.fotografije[i-1] = '';
-        break;
-      case 9:
-        this.inpF09.nativeElement.value = '';
-        this.fotografije[i-1] = '';
-        break;
-      case 10:
-        this.inpF10.nativeElement.value = '';
-        this.fotografije[i-1] = '';
     }
+    console.log(this.fotografije);////////////////////////////////////////////////////////////////
   }
 
 }

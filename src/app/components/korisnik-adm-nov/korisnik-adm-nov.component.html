@@ -43,7 +43,7 @@
                     <div class="row">
                         <label class="form-check-label" for="slike">Odaberite slike</label>
                     </div>
-                    <div class="row mt-4" *ngFor='let fotografija of fotografije; index as i'>
+                    <!-- <div class="row mt-4" *ngFor='let fotografija of fotografije; index as i'>
                         <div class="col-1 col-sm-1 col-md-1 col-lg-1 col-xl-1">
                             {{i+1}}.
                         </div>
@@ -52,6 +52,34 @@
                         </div>
                         <div class="col-2 col-sm-2 col-md-2 col-lg-2 col-xl-2 text-right pr-0">
                             <button type="submit" class="btn btn-secondary" (click)='resetujInputFile(i+1)'>Ukloni</button>
+                        </div>
+                    </div> -->
+                    <!-- Problemi u funkcionisanju, kad se elementi generisu preko NgFor. -->
+                    <div class="row mt-4">
+                        <div class="col-1 col-sm-1 col-md-1 col-lg-1 col-xl-1">1.</div>
+                        <div class="col-9 col-sm-9 col-md-9 col-lg-9 col-xl-9">
+                            <input #fajl1 type="file" class="form-control-file" ng2FileSelect [uploader]='uploader' (click)='dajIndex(1-1)'>
+                        </div>
+                        <div class="col-2 col-sm-2 col-md-2 col-lg-2 col-xl-2 text-right pr-0">
+                            <button type="submit" class="btn btn-secondary" [disabled]="fotografije[1-1] == ''" (click)='resetujInputFile(1)'>Ukloni</button>
+                        </div>
+                    </div>
+                    <div class="row mt-4">
+                        <div class="col-1 col-sm-1 col-md-1 col-lg-1 col-xl-1">2.</div>
+                        <div class="col-9 col-sm-9 col-md-9 col-lg-9 col-xl-9">
+                            <input #fajl2 type="file" class="form-control-file" ng2FileSelect [uploader]='uploader' (click)='dajIndex(2-1)'>
+                        </div>
+                        <div class="col-2 col-sm-2 col-md-2 col-lg-2 col-xl-2 text-right pr-0">
+                            <button type="submit" class="btn btn-secondary" [disabled]="fotografije[2-1] == ''" (click)='resetujInputFile(2)'>Ukloni</button>
+                        </div>
+                    </div>
+                    <div class="row mt-4">
+                        <div class="col-1 col-sm-1 col-md-1 col-lg-1 col-xl-1">3.</div>
+                        <div class="col-9 col-sm-9 col-md-9 col-lg-9 col-xl-9">
+                            <input #fajl3 type="file" class="form-control-file" ng2FileSelect [uploader]='uploader' (click)='dajIndex(3-1)'>
+                        </div>
+                        <div class="col-2 col-sm-2 col-md-2 col-lg-2 col-xl-2 text-right pr-0">
+                            <button type="submit" class="btn btn-secondary" [disabled]="fotografije[3-1] == ''" (click)='resetujInputFile(3)'>Ukloni</button>
                         </div>
                     </div>
                 </div>
