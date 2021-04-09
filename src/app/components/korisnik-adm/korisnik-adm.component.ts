@@ -62,8 +62,23 @@ export class KorisnikAdmComponent implements OnInit {
         usrOgl.push(o);
       }
     }
+
+    this.stringToNiz(usrOgl);
+
     return usrOgl;
-  } 
+  }
+
+  stringToNiz(ogl: Oglas[]): void {
+    for (let o of ogl) {
+      if ((o.fotografije === '') || (o.fotografije === undefined)) {
+        o.fotografijeNiz = [];///////////////////////////////////////////////
+        o.fotografijeNiz.push('');
+      }
+      else {
+        o.fotografijeNiz = o.fotografije.split(' ');
+      }
+    }
+  }
 
   novFn(): void {
     this.oglNov = true;

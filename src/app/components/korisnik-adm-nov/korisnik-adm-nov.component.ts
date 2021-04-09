@@ -25,6 +25,7 @@ export class KorisnikAdmNovComponent implements OnInit {
   oglas: Oglas = new Oglas();
   apiUrl = environment.apiUrl;
   fotografije: string[] = [];
+  fotografijeStr: string = '';
   i: number = -1; // indeks elementa niza fotografije
 
   uploader: FileUploader = new FileUploader({
@@ -64,7 +65,6 @@ export class KorisnikAdmNovComponent implements OnInit {
       if(response.status === 0) {
         this.fotografije[this.i] = response.filename;
         alert('Fajl je aploudovan!');
-        console.log(this.fotografije);/////////////////////////////////////////////////////////////////////////////
       }
       else {
         alert('Fajl nije aploudovan!');
@@ -74,10 +74,9 @@ export class KorisnikAdmNovComponent implements OnInit {
 
   dodajOglas(): void {
     if (this.authService.isLoggedIn()) {
+      this.photosToStr();
       this.oglas.id = null;
-      if (!this.oglas.foto01) this.oglas.foto01 = null;
-      if (!this.oglas.foto02) this.oglas.foto02 = null;
-      if (!this.oglas.foto03) this.oglas.foto03 = null;
+      this.oglas.fotografije = this.fotografijeStr;
       this.oglas.datumObjave = new Date().toISOString().split('T')[0];
       this.oglas.datumVazenja = null;
       this.oglas.kategorijaID = +this.oglas.kategorijaID;
@@ -96,6 +95,17 @@ export class KorisnikAdmNovComponent implements OnInit {
     else {
       alert('Niste ulogovani!');
     } 
+  }
+
+  photosToStr() {
+    this.fotografijeStr = '';
+    for (let i=0; i<this.fotografije.length; i++) {
+      if (this.fotografije[i] !== '') {
+        this.fotografijeStr += this.fotografije[i];
+        this.fotografijeStr += ' ';
+      }
+    }
+    this.fotografijeStr = this.fotografijeStr.slice(0, this.fotografijeStr.length-1);
   }
 
   izdvojPodkategorije() {
@@ -132,7 +142,6 @@ export class KorisnikAdmNovComponent implements OnInit {
         this.inpF03.nativeElement.value = '';
         this.fotografije[i-1] = '';
     }
-    console.log(this.fotografije);////////////////////////////////////////////////////////////////
   }
 
 }

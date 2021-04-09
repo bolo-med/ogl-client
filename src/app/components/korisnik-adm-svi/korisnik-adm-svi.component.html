@@ -7,7 +7,9 @@
             <p>Kateg: {{o.kategorija.naziv}} | Podkateg: {{o.podkategorija.naziv}} | Autor: {{o.korisnik.username}}</p>
         </div>
         <div class="col-12 col-sm-12 col-md-5 col-lg-5 col-xl-5">
-            <img class="" [src]="o.foto01 ? apiUrl + '/' + o.foto01 : './../../../assets/slike/no-image-available.png'" alt="nema slike">
+            <img class="" [src]="o.fotografijeNiz[0] ? apiUrl + '/' + o.fotografijeNiz[0] : 
+                                                       './../../../assets/slike/no-image-available.png'" alt="nema slike">
         </div>
     </div>
 </div>
+

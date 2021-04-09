@@ -46,6 +46,7 @@ export class OglasiComponent implements OnInit {
 
     this.oglasiService.getOglasi().subscribe(data => {
       this.oglasi = this.oglasiAktuelni(data);
+      this.stringToNiz(this.oglasi);
       this.oglasiIzabrani = this.oglasi;
       this.oglasiPoKategorijama = this.oglasi;
     });
@@ -65,6 +66,18 @@ export class OglasiComponent implements OnInit {
     this.oglKliknut = false;
     this.oglKliknutId = -1;
     this.izabraniOglas = new Oglas();
+  }
+
+  stringToNiz(ogl: Oglas[]): void {
+    for (let o of ogl) {
+      if ((o.fotografije === '') || (o.fotografije === undefined)) {
+        o.fotografijeNiz = [];///////////////////////////////////////////////
+        o.fotografijeNiz.push('');
+      }
+      else {
+        o.fotografijeNiz = o.fotografije.split(' ');
+      }
+    }
   }
 
   oglasiAktuelni(ogl: Oglas[]): Oglas[] {
