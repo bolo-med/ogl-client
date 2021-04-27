@@ -1,16 +1,27 @@
-import { Component } from '@angular/core';
-import { AuthService } from 'src/app/services/auth.service';
+import { Component, OnInit } from '@angular/core';
+import { AuthService } from './../../services/auth.service';
+import { MessageService } from './../../services/message.service';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
 
   // title = 'ogl-client';
+  usrName: string;
 
-  constructor(private authService: AuthService) {}
+  constructor(public authService: AuthService, public messageService: MessageService) {}
+
+  ngOnInit(): void {
+    if (this.authService.isLoggedIn()) {
+      this.messageService.usrName = this.authService.getUsername();
+    }
+    else {
+      this.messageService.usrName = null;
+    }
+  }
 
   odjavi() {
     this.authService.odjavi();

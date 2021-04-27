@@ -27,7 +27,6 @@ export class AdministratorAdmComponent implements OnInit {
 
   ngOnInit(): void {
     if (this.authService.isLoggedIn() && (this.authService.getKorisnikDetails().isAdmin === 1)) {
-      this.korisnickoIme = this.authService.getUsername();
       this.preuzmiSveKategorije();
       this.preuzmiSvePotkategorije();
     }

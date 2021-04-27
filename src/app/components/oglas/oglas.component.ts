@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Oglas } from 'src/app/models/Oglas';
+import { AuthService } from 'src/app/services/auth.service';
 import { OglasiService } from 'src/app/services/oglasi.service';
 
 @Component({
@@ -15,9 +16,11 @@ export class OglasComponent implements OnInit {
 
   constructor(private activatedRoute: ActivatedRoute, 
               private oglasiService: OglasiService, 
-              private router: Router) { }
+              private router: Router, 
+              private authService: AuthService) { }
 
   ngOnInit(): void {
+    
     this.oglasID = +this.activatedRoute.snapshot.paramMap.get('id');
     this.oglas = new Oglas();
     this.oglasiService.getOglasByID(this.oglasID).subscribe(data => {

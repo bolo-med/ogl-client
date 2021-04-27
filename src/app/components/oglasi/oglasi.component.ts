@@ -8,6 +8,7 @@ import { KategorijeService } from 'src/app/services/kategorije.service';
 import { Kategorija } from 'src/app/models/Kategorija';
 import { Podkategorija } from 'src/app/models/Podkategorija';
 import { PotkategorijeService } from 'src/app/services/potkategorije.service';
+import { MessageService } from 'src/app/services/message.service';
 
 @Component({
   selector: 'app-oglasi',
@@ -17,7 +18,6 @@ import { PotkategorijeService } from 'src/app/services/potkategorije.service';
 export class OglasiComponent implements OnInit {
 
   oglasi: Oglas[];
-  korisnickoIme: string = '';
   oglKliknut: boolean;
   oglKliknutId: number;
   izabraniOglas: Oglas;
@@ -36,13 +36,12 @@ export class OglasiComponent implements OnInit {
               private authService: AuthService, 
               private router: Router, 
               private kategorijeService: KategorijeService, 
-              private podkategorijeService: PotkategorijeService) {
+              private podkategorijeService: PotkategorijeService, 
+              private messageService: MessageService) {
     this.oglasi = [];
   }
 
   ngOnInit(): void {
-
-    this.korisnickoIme = this.authService.getUsername();
 
     this.oglasiService.getOglasi().subscribe(data => {
       this.oglasi = this.oglasiAktuelni(data);
@@ -71,7 +70,7 @@ export class OglasiComponent implements OnInit {
   stringToNiz(ogl: Oglas[]): void {
     for (let o of ogl) {
       if ((o.fotografije === '') || (o.fotografije === undefined)) {
-        o.fotografijeNiz = [];///////////////////////////////////////////////
+        o.fotografijeNiz = [];
         o.fotografijeNiz.push('');
       }
       else {
@@ -104,7 +103,12 @@ export class OglasiComponent implements OnInit {
   }
 
   proslediId(id: number) {
-    this.router.navigateByUrl('/oglas/' + id);
+    if (this.authService.isLoggedIn()) {
+      this.router.navigateByUrl('/oglas/' + id);
+    }
+    else {
+      alert('Niste ulogovani!');
+    }
   }
 
   konvertujTipKategorije(kategorije: Kategorija[]): any[] {

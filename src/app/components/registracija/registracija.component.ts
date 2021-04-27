@@ -11,14 +11,11 @@ import { AuthService } from 'src/app/services/auth.service';
 export class RegistracijaComponent implements OnInit {
 
   korisnik: Korisnik = new Korisnik();
-  korisnickoIme: string = '';
 
   constructor(private authService: AuthService, 
               private router: Router) { }
 
-  ngOnInit(): void {
-    this.korisnickoIme = this.authService.getUsername();
-  }
+  ngOnInit(): void {}
 
   registruj() {
     this.korisnik.id = null;

@@ -15,7 +15,6 @@ import { OglasiService } from 'src/app/services/oglasi.service';
 })
 export class KorisnikAdmComponent implements OnInit {
 
-  korisnickoIme: string = '';
   naslov: string = 'Dodajte nov oglas';
   kategorije: Kategorija[];
   korisnikID: number = -1;
@@ -36,7 +35,6 @@ export class KorisnikAdmComponent implements OnInit {
   ngOnInit(): void {
 
     if (this.authService.isLoggedIn()) {
-      this.korisnickoIme = this.authService.getUsername();
       this.korisnikID = this.authService.getKorisnikDetails().id;
       this.kategorijeService.getKategorije().subscribe(data => {
         this.kategorije = data.data;

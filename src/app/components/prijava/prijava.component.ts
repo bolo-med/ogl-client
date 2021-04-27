@@ -2,6 +2,7 @@ import { Component, Host, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Korisnik } from 'src/app/models/Korisnik';
 import { AuthService } from 'src/app/services/auth.service';
+import { MessageService } from 'src/app/services/message.service';
 
 @Component({
   selector: 'app-prijava',
@@ -11,14 +12,12 @@ import { AuthService } from 'src/app/services/auth.service';
 export class PrijavaComponent implements OnInit {
 
   korisnik: Korisnik = new Korisnik();
-  korisnickoIme = '';
 
   constructor(private authService: AuthService, 
-              private router: Router) {}
+              private router: Router, 
+              private messageService: MessageService) {}
 
-  ngOnInit(): void {
-    this.korisnickoIme = this.authService.getUsername();
-  }
+  ngOnInit(): void {}
 
   prijavi() {
     this.korisnik.id = null;
@@ -28,6 +27,7 @@ export class PrijavaComponent implements OnInit {
     this.authService.login(this.korisnik).subscribe(data => {
       if (data.status === 0) {
         window.localStorage.setItem('ogl-token', data.token);
+        this.messageService.usrName = this.authService.getUsername();///////////////////////////////////////////////////////
         alert('Prijavili ste se!');
         this.router.navigateByUrl('/');
       }
