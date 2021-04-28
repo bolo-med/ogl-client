@@ -1,4 +1,4 @@
-import { Component, Host, OnInit } from '@angular/core';
+import { Component, EventEmitter, Host, OnInit, Output } from '@angular/core';
 import { Router } from '@angular/router';
 import { Korisnik } from 'src/app/models/Korisnik';
 import { AuthService } from 'src/app/services/auth.service';
@@ -12,6 +12,9 @@ import { MessageService } from 'src/app/services/message.service';
 export class PrijavaComponent implements OnInit {
 
   korisnik: Korisnik = new Korisnik();
+
+  @Output()
+  private isAdmin: EventEmitter<number>;
 
   constructor(private authService: AuthService, 
               private router: Router, 
@@ -27,7 +30,10 @@ export class PrijavaComponent implements OnInit {
     this.authService.login(this.korisnik).subscribe(data => {
       if (data.status === 0) {
         window.localStorage.setItem('ogl-token', data.token);
-        this.messageService.usrName = this.authService.getUsername();///////////////////////////////////////////////////////
+        this.messageService.usrName = this.authService.getUsername();
+        ////////////////////////////////////////
+        this.isAdmin.emit(this.authService.getKorisnikDetails().isAdmin);// ovo je undefined. problen sa redosledom izvrsavanja
+        ///////////////////////////////////////
         alert('Prijavili ste se!');
         this.router.navigateByUrl('/');
       }

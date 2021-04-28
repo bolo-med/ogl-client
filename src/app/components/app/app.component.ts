@@ -11,6 +11,7 @@ export class AppComponent implements OnInit {
 
   // title = 'ogl-client';
   usrName: string;
+  isAdmin: number;
 
   constructor(public authService: AuthService, public messageService: MessageService) {}
 
@@ -25,6 +26,11 @@ export class AppComponent implements OnInit {
 
   odjavi() {
     this.authService.odjavi();
+    this.messageService.usrName = null;
+  }
+
+  isAdminis(mark: number): void {
+    this.isAdmin = mark;
   }
   
 }

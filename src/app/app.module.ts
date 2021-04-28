@@ -20,7 +20,6 @@ import { AdministratorAdmPotkategorijeComponent } from './components/administrat
 import { OglasComponent } from './components/oglas/oglas.component';
 import { FileUploadModule } from 'ng2-file-upload';
 import { PocetnaComponent } from './components/pocetna/pocetna.component';
-import { MessageService } from './services/message.service';
 
 @NgModule({
   declarations: [
@@ -46,7 +45,7 @@ import { MessageService } from './services/message.service';
     HttpClientModule,
     FileUploadModule
   ],
-  providers: [MessageService],///////////////////////////////////////////////////////////
+  providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

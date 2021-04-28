@@ -13,19 +13,19 @@
       <li class="nav-item">
         <a class="nav-link" routerLink="/oglasi">Svi oglasi</a>
       </li>
-      <li class="nav-item">
+      <li class="nav-item" *ngIf="!messageService.usrName">
         <a class="nav-link" routerLink="/registracija">Registruj se</a>
       </li>
-      <li class="nav-item">
+      <li class="nav-item" *ngIf="!messageService.usrName">
         <a class="nav-link" routerLink="/prijava">Prijavi se</a>
       </li>
-      <li class="nav-item kursor">
+      <li class="nav-item kursor" *ngIf="messageService.usrName">
         <a class="nav-link" (click)='odjavi()'>Odjavi se</a>
       </li>
-      <li class="nav-item">
+      <li class="nav-item" *ngIf="messageService.usrName">
         <a class="nav-link" routerLink="/korisnik">Korisnik</a>
       </li>
-      <li class="nav-item">
+      <li class="nav-item" *ngIf="messageService.usrName && (isAdmin == 1)">
         <a class="nav-link" routerLink="/administrator">Administrator</a>
       </li>
 
@@ -50,7 +50,7 @@
 </nav>
 
 <div class="container mt-1pct">
-  <div class="usrnm">***{{messageService.usrName}}</div>
-  <router-outlet></router-outlet>
+  <div class="usrnm">{{messageService.usrName}}</div>
+  <router-outlet (isAdmin)='isAdminis($event)'></router-outlet>
 </div>
 
