@@ -13,9 +13,6 @@ export class PrijavaComponent implements OnInit {
 
   korisnik: Korisnik = new Korisnik();
 
-  @Output()
-  private isAdmin: EventEmitter<number>;
-
   constructor(private authService: AuthService, 
               private router: Router, 
               private messageService: MessageService) {}
@@ -30,10 +27,10 @@ export class PrijavaComponent implements OnInit {
     this.authService.login(this.korisnik).subscribe(data => {
       if (data.status === 0) {
         window.localStorage.setItem('ogl-token', data.token);
+        ///////////////////////////////////////////////////////////////
         this.messageService.usrName = this.authService.getUsername();
-        ////////////////////////////////////////
-        this.isAdmin.emit(this.authService.getKorisnikDetails().isAdmin);// ovo je undefined. problen sa redosledom izvrsavanja
-        ///////////////////////////////////////
+        this.messageService.accType = this.authService.getAccountType();
+        //////////////////////////////////////////////////////////////////
         alert('Prijavili ste se!');
         this.router.navigateByUrl('/');
       }

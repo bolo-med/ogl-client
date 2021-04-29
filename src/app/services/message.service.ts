@@ -6,6 +6,7 @@ import { Injectable } from '@angular/core';
 export class MessageService {
 
   public usrName: string = null;
+  public accType: number = null; //tip naloga
 
   constructor() { }
 }

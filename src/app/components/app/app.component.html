@@ -25,7 +25,7 @@
       <li class="nav-item" *ngIf="messageService.usrName">
         <a class="nav-link" routerLink="/korisnik">Korisnik</a>
       </li>
-      <li class="nav-item" *ngIf="messageService.usrName && (isAdmin == 1)">
+      <li class="nav-item" *ngIf="messageService.usrName && (messageService.accType == 1)">
         <a class="nav-link" routerLink="/administrator">Administrator</a>
       </li>
 
@@ -51,6 +51,6 @@
 
 <div class="container mt-1pct">
   <div class="usrnm">{{messageService.usrName}}</div>
-  <router-outlet (isAdmin)='isAdminis($event)'></router-outlet>
+  <router-outlet></router-outlet>
 </div>
 

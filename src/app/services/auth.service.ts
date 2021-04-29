@@ -47,5 +47,9 @@ export class AuthService {
     return this.getKorisnikDetails().username;
   }
 
+  getAccountType(): number {
+    return this.getKorisnikDetails().isAdmin;
+  }
+
 }
 

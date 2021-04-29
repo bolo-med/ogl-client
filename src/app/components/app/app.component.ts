@@ -18,19 +18,17 @@ export class AppComponent implements OnInit {
   ngOnInit(): void {
     if (this.authService.isLoggedIn()) {
       this.messageService.usrName = this.authService.getUsername();
+      this.messageService.accType = this.authService.getAccountType();
     }
     else {
       this.messageService.usrName = null;
+      this.messageService.accType = null;
     }
   }
 
   odjavi() {
     this.authService.odjavi();
     this.messageService.usrName = null;
-  }
-
-  isAdminis(mark: number): void {
-    this.isAdmin = mark;
   }
   
 }
