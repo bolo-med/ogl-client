@@ -4,27 +4,45 @@
     <div class="row">
         <div class="col-12 col-sm-12 col-md-3 col-lg-3 col-xl-3"></div>
         <div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
-            <form>
-                <div class="form-group">
+            <form (ngSubmit)='registruj(registrForma)' #registrForma="ngForm">
+                <div class="form-group registr-ime">
                     <label for="ime1">Ime</label>
-                    <input type="text" class="form-control" id="ime1" placeholder="Unesite ime" [(ngModel)]='korisnik.ime' name="ime">
+                    <input type="text" class="form-control" id="ime1" placeholder="Unesite ime" 
+                           [(ngModel)]='korisnik.ime' name="ime" required minlength="2" #regIme='ngModel'>
+                    <div class="form-text text-danger" *ngIf='regIme.invalid && regIme.dirty'>
+                        <div *ngIf='regIme.errors.required'>polje je obavezno</div>
+                        <div *ngIf='regIme.errors.minlength'>polje mora sadrzati majmanje 2 karaktera</div>
+                    </div>
                 </div>
-                <div class="form-group">
+                <div class="form-group registr-prezime">
                     <label for="prezime1">Prezime</label>
-                    <input type="text" class="form-control" id="prezime1" placeholder="Unesite prezime" [(ngModel)]='korisnik.prezime' name="prezime">
+                    <input type="text" class="form-control" id="prezime1" placeholder="Unesite prezime" 
+                           [(ngModel)]='korisnik.prezime' name="prezime" required minlength="2" #regPrez='ngModel'>
+                    <div class="form-text text-danger" *ngIf='regPrez.invalid && regPrez.dirty'>
+                        <div *ngIf='regPrez.errors.required'>polje je obavezno</div>
+                        <div *ngIf='regPrez.errors.minlength'>polje mora sadrzati majmanje 2 karaktera</div>
+                    </div>
                 </div>
-                <div class="form-group">
+                <div class="form-group registr-korisnicko">
                     <label for="korisn-ime1">Korisničko ime</label>
                     <input type="text" class="form-control" id="korisn-ime1" placeholder="Unesite korisničko ime" 
-                                                                             [(ngModel)]='korisnik.username' name="usrnam">
+                           [(ngModel)]='korisnik.username' name="usrnam" required minlength="3" #regKorisn='ngModel'>
+                    <div class="form-text text-danger" *ngIf='regKorisn.invalid && regKorisn.dirty'>
+                        <div *ngIf='regKorisn.errors.required'>polje je obavezno</div>
+                        <div *ngIf='regKorisn.errors.minlength'>polje mora sadrzati majmanje 3 karaktera</div>
+                    </div>
                 </div>
-                <div class="form-group">
-                  <label for="exampleInputPassword1">Lozinka</label>
-                  <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Unesite lozinku" 
-                                                                                         [(ngModel)]='korisnik.password' name="passwrd">
+                <div class="form-group registr-lozinka">
+                    <label for="passwrd1">Lozinka</label>
+                    <input type="password" class="form-control" id="passwrd1" placeholder="Unesite lozinku" 
+                           [(ngModel)]='korisnik.password' name="passwrd" required minlength="8" #regLoz='ngModel'>
+                    <div class="form-text text-danger" *ngIf='regLoz.invalid && regLoz.dirty'>
+                        <div *ngIf='regLoz.errors.required'>polje je obavezno</div>
+                        <div *ngIf='regLoz.errors.minlength'>polje mora sadrzati majmanje 8 karaktera</div>
+                    </div>
                 </div>
                 <br>
-                <button type="submit" class="form-control btn btn-primary" (click)='registruj()'>Registruj se</button>
+                <button type="submit" class="form-control btn btn-primary" [disabled]='!registrForma.valid'>Registruj se</button>
             </form>
         </div>
         <div class="col-12 col-sm-12 col-md-3 col-lg-3 col-xl-3"></div>

@@ -1,0 +1,24 @@
+.registr-ime .ng-invalid,
+.registr-prezime .ng-invalid,
+.registr-korisnicko .ng-invalid,
+.registr-lozinka .ng-invalid {
+    border: solid 1px red;
+}
+
+.registr-ime .ng-untouched, 
+.registr-prezime .ng-untouched,
+.registr-korisnicko .ng-untouched,
+.registr-lozinka .ng-untouched {
+    border: solid 1px LightGray;
+}
+
+.registr-ime .ng-pristine, 
+.registr-prezime .ng-pristine,
+.registr-korisnicko .ng-pristine,
+.registr-lozinka .ng-pristine {
+    border: solid 1px LightGray;
+}
+
+div.form-text.text-danger {
+    font-size: small;
+}
