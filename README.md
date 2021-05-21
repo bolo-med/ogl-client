@@ -35,5 +35,6 @@ Prosledjivanje vrijednosti medju komponentama, preko url-a (ActivatedRoute).\
 Resetovati vrijednost elementa za unos fajla (ViewChild, ElementRef).\
 Public polje servisa, kao globalna promenljiva.\
 Stanje (Angularove ugrađene CSS klase) i validacija (Template Reference Variables) elementa forme.\
+Direktiva routerLinkActive za primjenu CSS stila na stavke menija, da oznaci ucitanu komponentu.\
 ...
 

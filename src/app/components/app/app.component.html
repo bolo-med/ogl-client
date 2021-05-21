@@ -11,22 +11,22 @@
         <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
       </li> -->
       <li class="nav-item">
-        <a class="nav-link" routerLink="/oglasi">Svi oglasi</a>
+        <a class="nav-link" routerLink="/oglasi" routerLinkActive="active">Svi oglasi</a>
       </li>
       <li class="nav-item" *ngIf="!messageService.usrName">
-        <a class="nav-link" routerLink="/registracija">Registruj se</a>
+        <a class="nav-link" routerLink="/registracija" routerLinkActive="active">Registruj se</a>
       </li>
       <li class="nav-item" *ngIf="!messageService.usrName">
-        <a class="nav-link" routerLink="/prijava">Prijavi se</a>
+        <a class="nav-link" routerLink="/prijava" routerLinkActive="active">Prijavi se</a>
       </li>
       <li class="nav-item kursor" *ngIf="messageService.usrName">
         <a class="nav-link" (click)='odjavi()'>Odjavi se</a>
       </li>
       <li class="nav-item" *ngIf="messageService.usrName">
-        <a class="nav-link" routerLink="/korisnik">Korisnik</a>
+        <a class="nav-link" routerLink="/korisnik" routerLinkActive="active">Korisnik</a>
       </li>
       <li class="nav-item" *ngIf="messageService.usrName && (messageService.accType == 1)">
-        <a class="nav-link" routerLink="/administrator">Administrator</a>
+        <a class="nav-link" routerLink="/administrator" routerLinkActive="active">Administrator</a>
       </li>
 
       <!-- <li class="nav-item">
