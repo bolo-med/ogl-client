@@ -3,20 +3,14 @@
         <div class="col-12 col-sm-12 col-md-3 col-lg-3 col-xl-3">
             <div class="naslov display-4">opcija</div>
             <br>
-            <ul class="list-group">
-                <li class="list-group-item list-group-item-action list-group-item-info kursor" (click)='katFn()'>Kategorije</li>
-                <li class="list-group-item list-group-item-action list-group-item-info kursor"(click)='potFn()'>Potkategorije</li>
-                <li class="list-group-item list-group-item-action list-group-item-info kursor"(click)='korFn()'>Korisnici</li>
-              </ul>
-              <br><br><br>
+            <a routerLink="/administrator/kategorije" class="list-group-item list-group-item-action list-group-item-info">Kategorije</a>
+            <a routerLink="/administrator/podkategorije" class="list-group-item list-group-item-action list-group-item-info">Podkategorije</a>
+            <a routerLink="" class="list-group-item list-group-item-action list-group-item-info">Korisnici</a>
+            <br><br><br>
         </div>
         
         <div class="col-12 col-sm-12 col-md-9 col-lg-9 col-xl-9">
-            <div class="naslov display-4">{{naslov}}</div>
-            <br>
-            <app-administrator-adm-kategorije *ngIf='kat && kategorije' [kategorije] = 'kategorije'></app-administrator-adm-kategorije>
-            <app-administrator-adm-potkategorije *ngIf='potkat' [potkategorije]='potkategorije' 
-                                                                [kategorije]='kategorije'></app-administrator-adm-potkategorije>
+            <router-outlet></router-outlet>
         </div>
     </div>
 </div>

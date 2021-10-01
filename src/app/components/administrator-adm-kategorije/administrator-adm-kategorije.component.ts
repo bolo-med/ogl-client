@@ -1,7 +1,7 @@
-import { Component, Host, Input, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { FormGroup } from '@angular/forms';
 import { Kategorija } from 'src/app/models/Kategorija';
 import { KategorijeService } from 'src/app/services/kategorije.service';
-import { AdministratorAdmComponent } from '../administrator-adm/administrator-adm.component';
 
 @Component({
   selector: 'app-administrator-adm-kategorije',
@@ -15,20 +15,21 @@ export class AdministratorAdmKategorijeComponent implements OnInit {
   uklKat: boolean = false;
   kategorija: Kategorija = new Kategorija();
   selektovanaKategorija: Kategorija = new Kategorija();
-  prvaStavka: any;
+  prvaStavka: Kategorija = new Kategorija();
   izmijenjeniNaziv: string = '';
 
-  @Input('kategorije')
   kategorije: Kategorija[];
+  potvrdio: boolean;
 
-  constructor(private kategorijeService: KategorijeService, 
-              @Host() private parent: AdministratorAdmComponent) {
+  constructor(private kategorijeService: KategorijeService) {
     this.kategorija.naziv = '';
   }
 
   ngOnInit(): void {
+    this.preuzmiSveKategorije();
     this.postaviPrvuStavku();
     this.cancBtn();
+    this.potvrdio = false;
   }
 
   dodBtn() {
@@ -54,13 +55,12 @@ export class AdministratorAdmKategorijeComponent implements OnInit {
     this.dodKat = false;
     this.izmKat = false;
     this.uklKat = false;
+    this.potvrdio = false;
   }
 
   postaviPrvuStavku() {
-    this.prvaStavka = {
-      id: -1,
-      naziv: 'Odaberite...'
-    };
+    this.prvaStavka.id = -1;
+    this.prvaStavka.naziv = 'Odaberite...';
     this.selektovanaKategorija = this.prvaStavka;
   }
 
@@ -71,7 +71,6 @@ export class AdministratorAdmKategorijeComponent implements OnInit {
         if (data.status === 0) {
           alert('Kategorija je dodata.');
           this.kategorija = new Kategorija();
-          this.parent.preuzmiSveKategorije();
           this.ngOnInit();
         }
         else {
@@ -91,7 +90,6 @@ export class AdministratorAdmKategorijeComponent implements OnInit {
       this.kategorijeService.updateKategorija(izmKateg).subscribe(data => {
         if (data.status === 0) {
           alert('Kategorija je izmijenjena.');
-          this.parent.preuzmiSveKategorije();
           this.ngOnInit();
         }
         else {
@@ -107,7 +105,6 @@ export class AdministratorAdmKategorijeComponent implements OnInit {
       this.kategorijeService.deleteKategorija(this.selektovanaKategorija.id).subscribe(data => {
         if (data.status === 0) {
           alert('Kategorija je uklonjena.');
-          this.parent.preuzmiSveKategorije();
           this.ngOnInit();
         }
         else {
@@ -115,6 +112,32 @@ export class AdministratorAdmKategorijeComponent implements OnInit {
           this.ngOnInit()
         }
       });
+    }
+  }
+
+  preuzmiSveKategorije() {
+    this.kategorijeService.getKategorije().subscribe(data => {
+      if (data.status === 0) {
+        this.kategorije = data.data;
+      }
+      else {
+        this.kategorije = null;
+      }
+    });
+  }
+
+  potvrdi(form: FormGroup) {
+    this.potvrdio = true;
+    if (form.valid) {
+      if (form.controls['dodaj']) {
+        this.dodajKategoriju();
+      }
+      else if (form.controls['izmijeni']) {
+        this.izmijeniKategoriju();
+      }
+      else if (form.controls['ukloni']) {
+        this.ukloniKategoriju();
+      }
     }
   }
 

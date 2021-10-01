@@ -1,5 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import { AdministratorAdmKategorijeComponent } from './components/administrator-adm-kategorije/administrator-adm-kategorije.component';
+import { AdministratorAdmPotkategorijeComponent } from './components/administrator-adm-potkategorije/administrator-adm-potkategorije.component';
 import { AdministratorAdmComponent } from './components/administrator-adm/administrator-adm.component';
 import { KorisnikAdmComponent } from './components/korisnik-adm/korisnik-adm.component';
 import { OglasComponent } from './components/oglas/oglas.component';
@@ -24,7 +26,12 @@ const routes: Routes = [
   },
   {
     path: 'administrator',
-    component: AdministratorAdmComponent
+    component: AdministratorAdmComponent,
+    children: [
+      {path: '', pathMatch: 'full', redirectTo: 'kategorije'},
+      {path: 'kategorije', component: AdministratorAdmKategorijeComponent},
+      {path: 'podkategorije', component: AdministratorAdmPotkategorijeComponent}
+    ]
   },
   {
     path: 'prijava',

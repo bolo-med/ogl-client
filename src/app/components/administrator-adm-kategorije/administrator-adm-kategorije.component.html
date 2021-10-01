@@ -1,64 +1,73 @@
-<div class="container-fluid">
-    <fieldset [disabled]='(dodKat==true) || (izmKat==true) || (uklKat==true)'>
-        <div class="row">
-            <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-6">
-                <div class="form-group">
-                    <label for="kategorije1">Sve kategorije</label>
-                    <select id="kategorije1" class="custom-select" name="kategorije" [(ngModel)]='selektovanaKategorija'>
-                        <option [ngValue]='prvaStavka'>{{prvaStavka.naziv}}</option>
-                        <option *ngFor='let e of kategorije' [ngValue]="e">{{e.naziv}}</option>
-                    </select>
+<form #f="ngForm" (ngSubmit)="potvrdi(f.form)">
+    <div class="container-fluid">
+        <div class="naslov display-4">kategorije</div>
+        <br>
+        <fieldset [disabled]='(dodKat==true) || (izmKat==true) || (uklKat==true)'>
+            <div class="row">
+                <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-6">
+                    <div class="form-group">
+                        <label for="kategorije1">Sve kategorije</label>
+                        <select id="kategorije1" class="custom-select" name="kategorija" [(ngModel)]='selektovanaKategorija'>
+                            <option [ngValue]='prvaStavka'>{{prvaStavka.naziv}}</option>
+                            <option *ngFor='let e of kategorije' [ngValue]="e">{{e.naziv}}</option>
+                        </select>
+                    </div>
                 </div>
-            </div>
-            <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-6">
-                <br>
-                <div class="container-fluid">
-                    <div class="row mt-2">
-                        <div class="col-4">
-                            <button type="button" class="btn btn-info btn-block" (click)='dodBtn()'>Dodaj</button>
-                        </div>
-                        <div class="col-4">
-                            <button type="button" class="btn btn-info btn-block" (click)='izmBtn()' 
-                                                                                [disabled]='selektovanaKategorija.id==-1'>Izmijeni</button>
-                        </div>
-                        <div class="col-4">
-                            <button type="button" class="btn btn-info btn-block" (click)='uklBtn()' 
-                                                                                [disabled]='selektovanaKategorija.id==-1'>Ukloni</button>
+                <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-6">
+                    <br>
+                    <div class="container-fluid">
+                        <div class="row mt-2">
+                            <div class="col-4">
+                                <button type="button" class="btn btn-info btn-block" (click)='dodBtn()'>Dodaj</button>
+                            </div>
+                            <div class="col-4">
+                                <button type="button" class="btn btn-info btn-block" (click)='izmBtn()' 
+                                                                                    [disabled]='selektovanaKategorija.id==-1'>Izmijeni</button>
+                            </div>
+                            <div class="col-4">
+                                <button type="button" class="btn btn-info btn-block" (click)='uklBtn()' 
+                                                                                    [disabled]='selektovanaKategorija.id==-1'>Ukloni</button>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </fieldset>
+        </fieldset>
 
-    <br>
+        <br>
 
-    <div class="row" *ngIf='dodKat'>
-        <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-6">
-            <label for="kategorijeDod">Dodaj kategoriju:</label>
-            <input class="form-control" type="text" id="kategorijeDod" [(ngModel)]='kategorija.naziv'>
-            <br>
-            <button type="button" class="btn btn-success mt-2 mr-2" (click)='dodajKategoriju()'>Dodaj kategoriju</button>
-            <button type="button" class="btn btn-danger mt-2" (click)='cancBtn()'>Otkaži</button>
+        <div class="row" *ngIf='dodKat'>
+            <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-6">
+                <label for="lDodaj">Dodaj kategoriju:</label>
+                <input id="lDodaj" class="form-control" type="text" name="dodaj" [(ngModel)]='kategorija.naziv' #vDodaj="ngModel" required>
+                <div class="alert alert-danger" role="alert" 
+                     *ngIf="vDodaj.control.hasError('required') && (vDodaj.touched || potvrdio)">Ovo polje je obavezno!</div>
+                <br>
+                <button type="submit" class="btn btn-success mt-2 mr-2">Dodaj</button>
+                <button type="button" class="btn btn-danger mt-2" (click)='cancBtn()'>Otkaži</button>
+            </div>
+        </div>
+        <div class="row" *ngIf='izmKat'>
+            <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-6">
+                <label for="kategorijeIzm">Izmijeni kategoriju:</label>
+                <input id="kategorijeIzm" class="form-control" type="text" name="izmijeni" 
+                       [(ngModel)]='izmijenjeniNaziv' #vIzmijeni="ngModel" required>
+                <div class="alert alert-danger" role="alert" 
+                     *ngIf="vIzmijeni.control.hasError('required')">Ovo polje je obavezno!</div>
+                <br>
+                <button type="submit" class="btn btn-success mt-2 mr-2">Izmijeni</button>
+                <button type="button" class="btn btn-danger mt-2" (click)='cancBtn()'>Otkaži</button>
+            </div>
+        </div>
+        <div class="row" *ngIf='uklKat'>
+            <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-6">
+                <label for="kategorijeUkl">Ukloni kategoriju:</label>
+                <input id="kategorijeUkl" class="form-control" type="text" disabled [(ngModel)]='selektovanaKategorija.naziv' name="ukloni">
+                <br>
+                <button type="button" class="btn btn-success mt-2 mr-2" (click)='ukloniKategoriju()'>Ukloni</button>
+                <button type="button" class="btn btn-danger mt-2" (click)='cancBtn()'>Otkaži</button>
+            </div>
         </div>
     </div>
-    <div class="row" *ngIf='izmKat'>
-        <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-6">
-            <label for="kategorijeIzm">Izmijeni kategoriju:</label>
-            <input class="form-control" type="text" id="kategorijeIzm" [(ngModel)]='izmijenjeniNaziv'>
-            <br>
-            <button type="button" class="btn btn-success mt-2 mr-2" (click)='izmijeniKategoriju()'>Izmijeni kategoriju</button>
-            <button type="button" class="btn btn-danger mt-2" (click)='cancBtn()'>Otkaži</button>
-        </div>
-    </div>
-    <div class="row" *ngIf='uklKat'>
-        <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-6">
-            <label for="kategorijeUkl">Ukloni kategoriju:</label>
-            <input class="form-control" type="text" id="kategorijeUkl" disabled [(ngModel)]='selektovanaKategorija.naziv'>
-            <br>
-            <button type="button" class="btn btn-success mt-2 mr-2" (click)='ukloniKategoriju()'>Ukloni kategoriju</button>
-            <button type="button" class="btn btn-danger mt-2" (click)='cancBtn()'>Otkaži</button>
-        </div>
-    </div>
-</div>
+</form>
 

@@ -1,8 +1,9 @@
-import { Component, Host, Input, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Podkategorija } from 'src/app/models/Podkategorija';
 import { Kategorija } from 'src/app/models/Kategorija';
-import { AdministratorAdmComponent } from '../administrator-adm/administrator-adm.component';
 import { PotkategorijeService } from 'src/app/services/potkategorije.service';
+import { KategorijeService } from 'src/app/services/kategorije.service';
+import { FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-administrator-adm-potkategorije',
@@ -11,141 +12,161 @@ import { PotkategorijeService } from 'src/app/services/potkategorije.service';
 })
 export class AdministratorAdmPotkategorijeComponent implements OnInit {
 
-  odabranaPotkategorija: Podkategorija = new Podkategorija();
+  odabranaPodkategorija: Podkategorija = new Podkategorija();
   odabranaKategorija: Kategorija = new Kategorija();
-  prvaPotkategorija: Podkategorija = new Podkategorija();
+  prvaPodkategorija: Podkategorija = new Podkategorija();
   prvaKategorija: Kategorija = new Kategorija();
-  dodPotkat: boolean = false;
-  izmPotkat: boolean = false;
-  uklPotkat: boolean = false;
-  filtriranePotkategorije: Podkategorija[] = [];
-  nazivNovePotkategorije: string = '';
-  nazivPotkatIzm: string = '';
-  izabrIdKat: number = -1;
-
-  @Input('potkategorije')
-  potkategorije: Podkategorija[];
-
-  @Input('kategorije')
+  btnDodaj: boolean = false;
+  btnDodajKliknuto: boolean = false;
+  btnIzmijeni: boolean = false;
+  btnUkloni: boolean = false;
+  filtriranePodkategorije: Podkategorija[] = [];
+  nazivNovePodkategorije: string = '';
+  nazivPodkatIzm: string = '';
   kategorije: Kategorija[];
+  podkategorije: Podkategorija[];
+  kategorijaPromjena: Kategorija = new Kategorija();
 
-  constructor(@Host() private parent: AdministratorAdmComponent, 
-              private potkategorijeService: PotkategorijeService) {}
+  constructor(private kategorijeServis: KategorijeService, 
+              private podkategorijeServis: PotkategorijeService) {}
 
   ngOnInit(): void {
+    this.dajSveKategorije();
+    this.dajSvePodkategorije();
     this.postaviPrvuKategoriju();
-    this.postaviPrvuPotkategoriju();
+    this.postaviPrvuPodkategoriju();
+  }
+
+  dajSveKategorije() {
+    this.kategorijeServis.getKategorije().subscribe(data => {
+      if (data.status === 0) {
+        this.kategorije = data.data;
+      }
+      else {
+        this.kategorije = null;
+      }
+    });
+  }
+
+  dajSvePodkategorije() {
+    this.podkategorijeServis.getPotkategorije().subscribe(data => {
+      if (data) {
+        this.podkategorije = data;
+      }
+      else {
+        this.podkategorije = null;
+      }
+    });
   }
 
   postaviPrvuKategoriju() {
-    this.prvaKategorija = {
-      id: -1,
-      naziv: 'Odaberite...'
-    };
+    this.prvaKategorija.id = -1;
+    this.prvaKategorija.naziv = 'Odaberite...';
     this.odabranaKategorija = this.prvaKategorija;
   }
 
-  postaviPrvuPotkategoriju() {
-    this.prvaPotkategorija = {
-      id: -1,
-      kategorijaID: -1,
-      naziv: 'Odaberite...',
-      kategorija: null
-    };
-    this.odabranaPotkategorija = this.prvaPotkategorija;
+  postaviPrvuPodkategoriju() {
+    this.prvaPodkategorija.id = -1;
+    this.prvaPodkategorija.kategorijaID = -1;
+    this.prvaPodkategorija.naziv = 'Odaberite...';
+    this.prvaPodkategorija.kategorija = null;
+    this.odabranaPodkategorija = this.prvaPodkategorija;
   }
 
-  dodPotkategoriju() {
-    this.dodPotkat = true;
+  btnDodajFn() {
+    this.btnDodaj = true;
   }
 
-  izmPotkategoriju() {
-    this.nazivPotkatIzm = this.odabranaPotkategorija.naziv;
-    this.izmPotkat = true;
+  btnIzmijeniFn() {
+    this.kategorijaPromjena = this.odabranaKategorija;
+    this.nazivPodkatIzm = this.odabranaPodkategorija.naziv;
+    this.btnIzmijeni = true;
   }
 
-  uklPotkategoriju() {
-    this.uklPotkat = true;
+  btnUkloniFn() {
+    this.btnUkloni = true;
   }
 
   dugmeOtkazi() {
-    this.dodPotkat = false;
-    this.nazivNovePotkategorije = '';
-    this.izmPotkat = false;
-    this.uklPotkat = false;
+    this.btnDodaj = false;
+    this.btnIzmijeni = false;
+    this.btnUkloni = false;
+    this.nazivNovePodkategorije = '';
+    this.btnDodajKliknuto = false;
   }
 
-  filtrirajPotkategorije() {
-    this.odabranaPotkategorija = this.prvaPotkategorija;
-    this.filtriranePotkategorije = [];
+  filtrirajPodkategorije() {
+    this.filtriranePodkategorije = [];
+    this.odabranaPodkategorija = this.prvaPodkategorija;
     if (this.odabranaKategorija.id > 0) {
-      for (let e of this.potkategorije) {
-        if (e.kategorijaID === this.odabranaKategorija.id) {
-          this.filtriranePotkategorije.push(e);
-        };
+      for (let p of this.podkategorije) {
+        if (p.kategorijaID === this.odabranaKategorija.id) {
+          this.filtriranePodkategorije.push(p);
+        }
       }
     }
-
-    /////////////////////////////////////////////////////////////
-    this.izabrIdKat = this.odabranaKategorija.id;
   }
 
-  dodajPotkategoriju() {
-    let novaPotkategotija: Podkategorija = new Podkategorija();
-    novaPotkategotija.id = null;
-    novaPotkategotija.kategorijaID = this.odabranaKategorija.id;
-    novaPotkategotija.naziv = this.nazivNovePotkategorije;
-
-    if (confirm('Dodati novu potkategoriju?')) {
-      this.potkategorijeService.insertPotkategorija(novaPotkategotija).subscribe(data => {
-        if (data.status === 0) {
-          alert('Podkategorija je dodata.');
-          this.dugmeOtkazi();
-          this.parent.preuzmiSvePotkategorije();
-          this.ngOnInit();
-        }
-      });
+  dodajPodkategoriju(form: FormGroup) {
+    this.btnDodajKliknuto = true;
+    if (form.valid) {
+      let novaPodkategotija: Podkategorija = new Podkategorija();
+      novaPodkategotija.id = null;
+      novaPodkategotija.kategorijaID = this.odabranaKategorija.id;
+      novaPodkategotija.naziv = this.nazivNovePodkategorije;
+      if (confirm('Dodati novu podkategoriju?')) {
+        this.podkategorijeServis.insertPotkategorija(novaPodkategotija).subscribe(data => {
+          if (data.status === 0) {
+            alert('Podkategorija je dodata.');
+            this.dugmeOtkazi();
+            this.filtriranePodkategorije = [];
+            this.ngOnInit();
+          }
+          else {
+            alert('Doslo je do neke greske.');
+            this.dugmeOtkazi();
+            this.ngOnInit();
+          }
+        });
+      }
     }
-
-    this.nazivNovePotkategorije = '';
   }
 
-  izmijeniPotkategoriju() {
-    if (confirm('Izmijeniti potkategoriju?')) {
-      let izmPot: Podkategorija = new Podkategorija();
-      // izmPot = this.odabranaPotkategorija; // Obje promenljive sadrze referencu ka istom objektu.
-      izmPot.id = this.odabranaPotkategorija.id;
-      izmPot.kategorijaID = +this.izabrIdKat;
-      izmPot.naziv = this.nazivPotkatIzm;
-      this.potkategorijeService.updatePotkategorija(izmPot).subscribe(data => {
+  izmijeniPodkategoriju(form: FormGroup) {
+    if (form.valid) {
+      if (confirm('Izmijeniti podkategoriju?')) {
+        let izmijenjenaPodkategorija: Podkategorija = new Podkategorija();
+        izmijenjenaPodkategorija.id = this.odabranaPodkategorija.id;
+        izmijenjenaPodkategorija.kategorijaID = this.kategorijaPromjena.id;
+        izmijenjenaPodkategorija.naziv = this.nazivPodkatIzm;
+        this.podkategorijeServis.updatePotkategorija(izmijenjenaPodkategorija).subscribe(data => {
+          if (data.status === 0) {
+            alert('Podkategorija je izmijenjena.');
+            this.filtriranePodkategorije = [];
+            this.dugmeOtkazi();
+            this.ngOnInit();
+          }
+          else {
+            alert('Greska pri izmjeni podkategorije!');
+            this.dugmeOtkazi();
+            this.ngOnInit();
+          }
+        });
+      }
+    }
+  }
+
+  ukloniPodkategoriju() {
+    if (confirm('Ukloniti podkategoriju?')) {
+      this.podkategorijeServis.deletePotkategorija(this.odabranaPodkategorija.id).subscribe(data => {
         if (data.status === 0) {
-          alert('Potkategorija je izmijenjena?');
-          this.parent.preuzmiSvePotkategorije();
-          this.filtrirajPotkategorije();
+          alert('Podkategorija je uklonjena.');
+          this.filtriranePodkategorije = [];
           this.dugmeOtkazi();
           this.ngOnInit();
         }
         else {
-          alert('Greska pri izmjeni potkategorije!');
-          this.dugmeOtkazi();
-          this.ngOnInit();
-        }
-      });
-    }
-  }
-
-  ukloniPotkategoriju() {
-    if (confirm('Ukloniti potkategoriju?')) {
-      this.potkategorijeService.deletePotkategorija(this.odabranaPotkategorija.id).subscribe(data => {
-        if (data.status === 0) {
-          alert('Potkategorija je ulonjena.');
-          this.parent.preuzmiSvePotkategorije();
-          this.filtrirajPotkategorije();
-          this.dugmeOtkazi();
-          this.ngOnInit();
-        }
-        else {
-          alert('Greska pri uklanjanju potkategorije!');
+          alert('Greska pri uklanjanju podkategorije!');
           this.dugmeOtkazi();
           this.ngOnInit();
         }
