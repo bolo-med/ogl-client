@@ -7,6 +7,8 @@ import { OglasiService } from 'src/app/services/oglasi.service';
 import { environment } from 'src/environments/environment';
 import { FileUploader } from 'ng2-file-upload';
 import { ViewChild } from '@angular/core';
+import { KategorijeService } from 'src/app/services/kategorije.service';
+import { PotkategorijeService } from 'src/app/services/potkategorije.service';
 
 @Component({
   selector: 'app-korisnik-adm-nov',
@@ -33,21 +35,32 @@ export class KorisnikAdmNovComponent implements OnInit {
     url: `${this.apiUrl}/upload`
   });
 
-  @Input('kategorije')
+  // @Input('kategorije')
+  // kategorije: Kategorija[];
+
+  // @Input('korisnikID')
+  // korisnikID: number;
+
+  // @Input('podkategorije')
+  // podkategorije: Podkategorija[];
+
   kategorije: Kategorija[];
-
-  @Input('korisnikID')
-  korisnikID: number;
-
-  @Input('podkategorije')
   podkategorije: Podkategorija[];
+  korisnikID: number;
 
   podkategorijeIzdvojene: Podkategorija[] = [];
 
   constructor(private oglasiService: OglasiService, 
-              private authService: AuthService) {}
+              private authService: AuthService, 
+              private kategorijeServis: KategorijeService, 
+              private podkategorijeServis: PotkategorijeService) {}
 
   ngOnInit(): void {
+
+    this.kategorijeServis.getKategorije().subscribe(data => this.kategorije = data.data);
+    this.podkategorijeServis.getPotkategorije().subscribe(data => this.podkategorije = data);
+    this.korisnikID = this.authService.getKorisnikDetails().id;
+
     this.oglas.naslov = '';
     this.oglas.tekst = '';
     this.oglas.kategorijaID = -1;

@@ -1,5 +1,6 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Oglas } from 'src/app/models/Oglas';
+import { OglasiService } from 'src/app/services/oglasi.service';
 import { environment } from 'src/environments/environment';
 
 @Component({
@@ -9,13 +10,15 @@ import { environment } from 'src/environments/environment';
 })
 export class KorisnikAdmSviComponent implements OnInit {
 
+  oglasi: Oglas[];
   apiUrl = environment.apiUrl;
 
-  @Input('korisnikoviOglasi')
-  oglasi: Oglas[];
+  constructor(private oglasiServis: OglasiService) { }
 
-  constructor() { }
-
-  ngOnInit(): void {  }
+  ngOnInit(): void {
+    this.oglasiServis.getOglasi().subscribe(data => {
+      this.oglasi = data;
+    });
+  }
 
 }

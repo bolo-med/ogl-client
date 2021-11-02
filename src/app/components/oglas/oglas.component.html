@@ -1,6 +1,22 @@
 <p class="naslov display-4">oglas</p>
 
-<p class="display-3">{{oglas.naslov}}</p>
+<!-- <p class="display-3">Naslov oglasa: {{oglas.naslov}}</p> -->
 
-<p class="lead">{{oglas.tekst}} ID oglasa je: {{oglas.id}}</p>
+<p class="lead">ID oglasa: {{oglas.id}} </p>
+
+<p class="lead">Naslov oglasa: {{oglas.naslov}} </p>
+
+<p class="lead">Tekst oglasa: {{oglas.tekst}}</p>
+
+<p class="lead">Datum objave: {{oglas.datumObjave}} </p>
+
+<p class="lead">Vazi do: {{oglas.datumVazenja ? oglas.datumVazenja : 'neograniceno'}} </p>
+
+<p class="lead">Arhiviran: {{oglas.arhiviran}} </p>
+
+<p class="lead">Kategorija: {{oglas.kategorija.naziv}} </p>
+
+<p class="lead">Podkategorija: {{oglas.podkategorija.naziv}} </p>
+
+<p class="lead">Autor: {{oglas.korisnik.ime + ' ' + oglas.korisnik.prezime}} </p>
 

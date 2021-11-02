@@ -1,15 +1,20 @@
 <div class="container-fluid">
-    <div class="row okvir-oglasa" *ngFor='let o of oglasi'>
+    <div class="naslov display-4">Svi Vaši oglasi</div>
+    <br><br>
+    <div class="row okvir-oglasa" *ngFor='let oglas of oglasi'>
         <div class="col-12 col-sm-12 col-md-7 col-lg-7 col-xl-7 lead">
-            <p>{{o.naslov}}</p>
-            <p>{{o.tekst}}</p>
+            <p>{{oglas.naslov}}</p>
+            <p>{{oglas.tekst}}</p>
             <br>
-            <p>Kateg: {{o.kategorija.naziv}} | Podkateg: {{o.podkategorija.naziv}} | Autor: {{o.korisnik.username}}</p>
+            <p>Kateg: {{oglas.kategorija.naziv}} | Podkateg: {{oglas.podkategorija.naziv}} | Autor: {{oglas.korisnik.username}}</p>
         </div>
         <div class="col-12 col-sm-12 col-md-5 col-lg-5 col-xl-5">
-            <img class="" [src]="o.fotografijeNiz[0] ? apiUrl + '/' + o.fotografijeNiz[0] : 
+            <img class="" [src]="oglas.fotografije ? apiUrl + '/' + oglas.fotografije : 
                                                        './../../../assets/slike/no-image-available.png'" alt="nema slike">
         </div>
     </div>
+    <pre>
+        {{oglasi | json}}
+    </pre>
 </div>
 

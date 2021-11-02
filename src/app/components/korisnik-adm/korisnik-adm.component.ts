@@ -15,99 +15,14 @@ import { OglasiService } from 'src/app/services/oglasi.service';
 })
 export class KorisnikAdmComponent implements OnInit {
 
-  naslov: string = 'Dodajte nov oglas';
-  kategorije: Kategorija[];
-  korisnikID: number = -1;
-  podkategorije: Podkategorija[];
-  korisnikoviOglasi: Oglas[] = [];
-
-  oglNov: boolean = true;
-  oglAkt: boolean = false;
-  oglArh: boolean = false;
-  oglSvi: boolean = false;
-
   constructor(private authService: AuthService, 
-              private router: Router, 
-              private kategorijeService: KategorijeService, 
-              private potkategorijeService: PotkategorijeService, 
-              private oglasiService: OglasiService) { }
+              private router: Router) { }
 
   ngOnInit(): void {
-
-    if (this.authService.isLoggedIn()) {
-      this.korisnikID = this.authService.getKorisnikDetails().id;
-      this.kategorijeService.getKategorije().subscribe(data => {
-        this.kategorije = data.data;
-      });
-      this.potkategorijeService.getPotkategorije().subscribe(data => {
-        this.podkategorije = data;
-      });
-      this.oglasiService.getOglasi().subscribe(data => {
-        this.korisnikoviOglasi = this.izdvojKorisnikoveOglase(data);
-      });
-    }
-    else {
+    if (!this.authService.isLoggedIn()) {
       this.router.navigateByUrl('/');
-      alert('Morate biti prijavljeni!');
+      alert('Morate se prijaviti!');
     }
-
-  }
-
-  izdvojKorisnikoveOglase(sviOglasi: Oglas[]): Oglas[] {
-    let usrOgl: Oglas[] = []
-    for (let o of sviOglasi) {
-      if (o.korisnikID === this.korisnikID) {
-        usrOgl.push(o);
-      }
-    }
-
-    this.stringToNiz(usrOgl);
-
-    return usrOgl;
-  }
-
-  stringToNiz(ogl: Oglas[]): void {
-    for (let o of ogl) {
-      if ((o.fotografije === '') || (o.fotografije === undefined)) {
-        o.fotografijeNiz = [];///////////////////////////////////////////////
-        o.fotografijeNiz.push('');
-      }
-      else {
-        o.fotografijeNiz = o.fotografije.split(' ');
-      }
-    }
-  }
-
-  novFn(): void {
-    this.oglNov = true;
-    this.oglAkt = false;
-    this.oglArh = false;
-    this.oglSvi = false;
-    this.naslov = 'Dodajte nov oglas';
-  }
-
-  aktFn(): void {
-    this.oglNov = false;
-    this.oglAkt = true;
-    this.oglArh = false;
-    this.oglSvi = false;
-    this.naslov = 'Aktuelni oglasi';
-  }
-
-  arhFn(): void {
-    this.oglNov = false;
-    this.oglAkt = false;
-    this.oglArh = true;
-    this.oglSvi = false;
-    this.naslov = 'Arhivirani oglasi';
-  }
-
-  sviFn(): void {
-    this.oglNov = false;
-    this.oglAkt = false;
-    this.oglArh = false;
-    this.oglSvi = true;
-    this.naslov = 'Svi oglasi';
   }
 
 }
