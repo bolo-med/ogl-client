@@ -3,8 +3,38 @@
         <div class="col-12 col-sm-12 col-md-1 col-lg-1 col-xl-1"></div>
         <div class="col-12 col-sm-12 col-md-10 col-lg-10 col-xl-10">
             <div class="naslov display-4">Dodajte nov oglas</div>
-            <form>
+            <br><br><br>
+            <form [formGroup]="oglasFormGroup">
                 <div class="form-group">
+                    <label for="naslov">Naslov oglasa</label>
+                    <input id="naslov" class="form-control" placeholder="Upisite naslov..." formControlName="naslov">
+                </div>
+                <br>
+                <div class="form-group">
+                    <label for="tekst">Tekst oglasa</label>
+                    <textarea id="tekst" class="form-control" placeholder="Upisite tekst..." formControlName="tekst"></textarea>
+                </div>
+                <br>
+                <div class="form-group">
+                    <label for="datVazenja">Rok važenja oglasa</label>
+                    <input type="date" id="datVazenja" class="form-control" formControlName="datumVazenja">
+                </div>
+                <br>
+                <div class="form-group">
+                    <label for="kateg">Izaberite kategoriju</label>
+                    <select id="kateg" class="form-control" formControlName="kategorijaID">
+                        <option *ngFor="let kategorija of kategorije" [ngValue]="kategorija.id">{{kategorija.naziv}}</option>
+                    </select>
+                </div>
+                <br>
+                <div class="form-group">
+                    <label for="podkateg">Izaberite podkategoriju</label>
+                    <select id="podkateg" class="form-control" formControlName="podkategorijaID">
+                        <option *ngFor="let podkategorija of podkategorije" [ngValue]="podkategorija.id">{{podkategorija.naziv}}</option>
+                    </select>
+                </div>
+                <br>
+                <!-- <div class="form-group">
                     <label for="naslov1">Naslov oglasa</label>
                     <input type="text" class="form-control" id="naslov1" placeholder="naslov..." name="naslov" [(ngModel)]='oglas.naslov'>
                 </div>
@@ -18,7 +48,7 @@
                 <div class="form-group">
                     <label for="kategorije1">Odaberite kategoruju</label>
                     <select id="kategorije1" name="kategorije" class="custom-select" [(ngModel)]='oglas.kategorijaID' 
-                                                                                     (ngModelChange)="izdvojPodkategorije()">
+                                                                                     (ngModelChange)="izdvojPodkategorije()"> -->
                         <!--Postoji i varijanta (change) umjesto (ngModelChange).-->
                         <!--(ngModelChange) ne bi moglo da se koristi bez ngModel direktive.-->
                         <!--(ngModelChange) se aktivira pri promjeni vrijednosti promjenljive koja je povezana sa [(ngModel)].-->
@@ -27,15 +57,16 @@
                         <!-- <option *ngFor='let e of kategorije' value="{{e.id}}" [selected]="e.id == 7">
                                  {{e.naziv}}
                              </option> selected ne sluzi nicemu -->
-                        <option value="-1">odaberite...</option>
+                        <!-- <option value="-1">odaberite...</option>
                         <option *ngFor='let e of kategorije' value="{{e.id}}">{{e.naziv}}</option>
                     </select>
                 </div>
-                <div class="form-group" *ngIf='oglas.kategorijaID != -1'> <!-- Ne smije da stoji !==, nego samo != -->
-                    <label for="podkategorije1">Odaberite podkategoruju</label>
-                    <select id="podkategorije1" class="custom-select" [(ngModel)]='oglas.podkategorijaID' name="podkategorije">
+                <div class="form-group" *ngIf='oglas.kategorijaID != -1'> -->
+                    <!-- Ne smije da stoji !==, nego samo != -->
+                    <!-- <label for="podkategorije1">Odaberite podkategoruju</label>
+                    <select id="podkategorije1" class="custom-select" [(ngModel)]='oglas.podkategorijaID' name="podkategorije"> -->
                         <!--Mora name uz ngModel.-->
-                        <option value="-1">odaberite...</option>
+                        <!-- <option value="-1">odaberite...</option>
                         <option *ngFor='let e of podkategorijeIzdvojene' value="{{e.id}}">{{e.naziv}}</option>
                     </select>
                 </div>
@@ -43,7 +74,7 @@
                 <div class="container-fluid">
                     <div class="row">
                         <label class="form-check-label" for="slike">Odaberite slike</label>
-                    </div>
+                    </div> -->
                     <!-- <div class="row mt-4" *ngFor='let fotografija of fotografije; index as i'>
                         <div class="col-1 col-sm-1 col-md-1 col-lg-1 col-xl-1">
                             {{i+1}}.
@@ -56,7 +87,7 @@
                         </div>
                     </div> -->
                     <!-- Problemi u funkcionisanju, kad se elementi generisu preko NgFor. -->
-                    <div class="row mt-4">
+                    <!-- <div class="row mt-4">
                         <div class="col-1 col-sm-1 col-md-1 col-lg-1 col-xl-1">1.</div>
                         <div class="col-9 col-sm-9 col-md-9 col-lg-9 col-xl-9">
                             <input #fajl1 type="file" class="form-control-file" ng2FileSelect [uploader]='uploader' (click)='dajIndex(1-1)'>
@@ -73,8 +104,8 @@
                         <div class="col-2 col-sm-2 col-md-2 col-lg-2 col-xl-2 text-right pr-0">
                             <button type="submit" class="btn btn-secondary" [disabled]="fotografije[2-1] == ''" (click)='resetujInputFile(2)'>Ukloni</button>
                         </div>
-                    </div>
-                    <div class="row mt-4">
+                    </div> -->
+                    <!-- <div class="row mt-4">
                         <div class="col-1 col-sm-1 col-md-1 col-lg-1 col-xl-1">3.</div>
                         <div class="col-9 col-sm-9 col-md-9 col-lg-9 col-xl-9">
                             <input #fajl3 type="file" class="form-control-file" ng2FileSelect [uploader]='uploader' (click)='dajIndex(3-1)'>
@@ -86,11 +117,20 @@
                 </div>
 
                 <br>
-                <button type="submit" class="form-control btn btn-primary" (click)='dodajOglas()'>Dodaj oglas</button>
+                <button type="submit" class="form-control btn btn-primary" (click)='dodajOglas()'>Dodaj oglas</button> -->
             </form>
         </div>
         <div class="col-12 col-sm-12 col-md-1 col-lg-1 col-xl-1"></div>
     </div>
+
+    <p>
+        ----------------------------------------------------------------
+        <br>
+        Dat. vazenja: {{ oglasFormGroup.controls['datumVazenja'].value }}
+        <br>
+        Kateg. ID: {{ oglasFormGroup.controls['kategorijaID'].value }}
+    </p>
+
 </div>
 
 <br><br><br>

@@ -4,7 +4,7 @@ import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './components/app/app.component';
 
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { OglasiComponent } from './components/oglasi/oglasi.component';
 import { HttpClientModule } from '@angular/common/http';
 import { RegistracijaComponent } from './components/registracija/registracija.component';
@@ -43,7 +43,8 @@ import { PocetnaComponent } from './components/pocetna/pocetna.component';
     AppRoutingModule,
     FormsModule,
     HttpClientModule,
-    FileUploadModule
+    FileUploadModule,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
