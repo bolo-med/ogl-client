@@ -22,15 +22,18 @@
                 <br>
                 <div class="form-group">
                     <label for="kateg">Izaberite kategoriju</label>
-                    <select id="kateg" class="form-control" formControlName="kategorijaID">
-                        <option *ngFor="let kategorija of kategorije" [ngValue]="kategorija.id">{{kategorija.naziv}}</option>
+                    <select id="kateg" class="form-control" formControlName="kategorijaID" (change)="kategProm($event.target.value)">
+                        <option [ngValue]="-1">odaberite...</option>
+                        <option *ngFor="let kategorija of kategorije | nizAbc:'naziv'" [ngValue]="kategorija.id">{{kategorija.naziv}}</option>
                     </select>
                 </div>
                 <br>
                 <div class="form-group">
                     <label for="podkateg">Izaberite podkategoriju</label>
                     <select id="podkateg" class="form-control" formControlName="podkategorijaID">
-                        <option *ngFor="let podkategorija of podkategorije" [ngValue]="podkategorija.id">{{podkategorija.naziv}}</option>
+                        <option [ngValue]="-1">odaberite...</option>
+                        <option *ngFor="let podkategorija of podkategorije | nizFilter:oglasFormGroup.controls['kategorijaID'].value" 
+                                [ngValue]="podkategorija.id">{{podkategorija.naziv}}</option>
                     </select>
                 </div>
                 <br>
@@ -123,13 +126,21 @@
         <div class="col-12 col-sm-12 col-md-1 col-lg-1 col-xl-1"></div>
     </div>
 
-    <p>
+    <!-- <p>
         ----------------------------------------------------------------
         <br>
         Dat. vazenja: {{ oglasFormGroup.controls['datumVazenja'].value }}
         <br>
         Kateg. ID: {{ oglasFormGroup.controls['kategorijaID'].value }}
+        <br>
+        Podkateg. ID: {{ oglasFormGroup.controls['podkategorijaID'].value }}
     </p>
+    <pre>
+        {{ kategorije | nizAbc:'naziv' | json}}
+    </pre>
+    <pre>
+        {{ podkategorije | nizFilter:oglasFormGroup.controls['kategorijaID'].value | json}}
+    </pre> -->
 
 </div>
 

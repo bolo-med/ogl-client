@@ -6,6 +6,7 @@ import { AdministratorAdmComponent } from './components/administrator-adm/admini
 import { KorisnikAdmAktuelniComponent } from './components/korisnik-adm-aktuelni/korisnik-adm-aktuelni.component';
 import { KorisnikAdmArhivaComponent } from './components/korisnik-adm-arhiva/korisnik-adm-arhiva.component';
 import { KorisnikAdmNovComponent } from './components/korisnik-adm-nov/korisnik-adm-nov.component';
+import { KorisnikAdmNovResolver } from './components/korisnik-adm-nov/korisnik-adm-nov.resolver';
 import { KorisnikAdmSviComponent } from './components/korisnik-adm-svi/korisnik-adm-svi.component';
 import { KorisnikAdmComponent } from './components/korisnik-adm/korisnik-adm.component';
 import { OglasComponent } from './components/oglas/oglas.component';
@@ -29,6 +30,7 @@ const routes: Routes = [
     component: KorisnikAdmComponent,
     children: [
       {path: '', pathMatch: 'full', redirectTo: 'nov-oglas'},
+      // {path: 'nov-oglas', component: KorisnikAdmNovComponent, resolve: {katPodkat: KorisnikAdmNovResolver} },
       {path: 'nov-oglas', component: KorisnikAdmNovComponent},
       {path: 'aktuelni-oglasi', component: KorisnikAdmAktuelniComponent},
       {path: 'arhivirani-oglasi', component: KorisnikAdmArhivaComponent},

@@ -1,5 +1,5 @@
 export class Kategorija {
-    id: number;
-    naziv: string;
+    public id: number;
+    public naziv: string;
 }
 

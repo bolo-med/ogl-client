@@ -20,6 +20,9 @@ import { AdministratorAdmPotkategorijeComponent } from './components/administrat
 import { OglasComponent } from './components/oglas/oglas.component';
 import { FileUploadModule } from 'ng2-file-upload';
 import { PocetnaComponent } from './components/pocetna/pocetna.component';
+import { KorisnikAdmNovResolver } from './components/korisnik-adm-nov/korisnik-adm-nov.resolver';
+import { NizAbcPipe } from './pipes/niz-abc.pipe';
+import { NizFilterPipe } from './pipes/niz-filter.pipe';
 
 @NgModule({
   declarations: [
@@ -36,7 +39,9 @@ import { PocetnaComponent } from './components/pocetna/pocetna.component';
     AdministratorAdmKategorijeComponent,
     AdministratorAdmPotkategorijeComponent,
     OglasComponent,
-    PocetnaComponent
+    PocetnaComponent,
+    NizAbcPipe,
+    NizFilterPipe
   ],
   imports: [
     BrowserModule,
@@ -46,7 +51,7 @@ import { PocetnaComponent } from './components/pocetna/pocetna.component';
     FileUploadModule,
     ReactiveFormsModule
   ],
-  providers: [],
+  providers: [KorisnikAdmNovResolver],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

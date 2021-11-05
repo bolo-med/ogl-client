@@ -1,4 +1,4 @@
-import { Component, ElementRef, Input, OnInit } from '@angular/core';
+import { Component, ElementRef, Input, OnDestroy, OnInit } from '@angular/core';
 import { Kategorija } from 'src/app/models/Kategorija';
 import { Oglas } from 'src/app/models/Oglas';
 import { Podkategorija } from 'src/app/models/Podkategorija';
@@ -10,6 +10,8 @@ import { ViewChild } from '@angular/core';
 import { KategorijeService } from 'src/app/services/kategorije.service';
 import { PotkategorijeService } from 'src/app/services/potkategorije.service';
 import { FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
+import { KatPodkat } from 'src/app/models/KatPodkat';
 
 @Component({
   selector: 'app-korisnik-adm-nov',
@@ -24,6 +26,7 @@ export class KorisnikAdmNovComponent implements OnInit {
   danas: string = new Date().toISOString().split('T')[0];
   kategorije: Kategorija[];
   podkategorije: Podkategorija[];
+  // sub: any;
 
   // @ViewChild('fajl1', {static: false})
   // inpF01: ElementRef;
@@ -50,24 +53,38 @@ export class KorisnikAdmNovComponent implements OnInit {
   // podkategorijeIzdvojene: Podkategorija[] = [];
 
   constructor(private oglasiService: OglasiService, 
-              private authService: AuthService, 
+              private authService: AuthService,  
+              private formBuilder: FormBuilder, 
+              private route: ActivatedRoute, 
+              private router: Router, 
               private kategorijeServis: KategorijeService, 
-              private podkategorijeServis: PotkategorijeService, 
-              private formBuilder: FormBuilder) {}
+              private podkategorijeServis: PotkategorijeService) {}
 
   ngOnInit(): void {
 
-    this.kategorijeServis.getKategorije().subscribe(data => {
-      if (data.status === 0){
-        this.kategorije = data.data;
-      }
-    });
+    // Ne moze ni ovo. Pocne da izvrsava tijelo f-je, prije nego sto dobije parametar 'data'. Resolver mi nicemu ne sluzi.
+    // this.sub = this.route.data.subscribe((data: {katPodkat: KatPodkat}) => {
+    //   if (data.katPodkat.kategorije && data.katPodkat.podkategorije) {
+    //     this.kategorije = data.katPodkat.kategorije;
+    //     this.podkategorije = data.katPodkat.podkategorije;
+    //   }
+    //   else {
+    //     alert('Greska sa DB serverom!\nPokušajte kasnije.');
+    //     this.router.navigateByUrl('/');
+    //   }
+    // });
+    // Nece ni ovako.
+    // this.sub = this.route.data.subscribe((data: {katPodkat: KatPodkat}) => {
+    //   this.kategorije = data.katPodkat.kategorije;
+    //   this.podkategorije = data.katPodkat.podkategorije;
+    // });
 
-    this.podkategorijeServis.getPotkategorije().subscribe(podkategorije => this.podkategorije = podkategorije);
+    this.dopremiKatPodkat();
 
     this.oglas.id = null;
     this.oglas.datumObjave = this.danas;
     this.oglas.arhiviran = 0;
+    this.oglas.korisnikID = this.authService.getKorisnikDetails().id;
 
     this.kreirajFormu();
 
@@ -99,6 +116,16 @@ export class KorisnikAdmNovComponent implements OnInit {
     // };
   }
 
+  dopremiKatPodkat() {
+    this.kategorijeServis.getKategorije().subscribe(data => {
+      if (data.status === 0) {
+        this.kategorije = data.data;
+      }
+    });
+
+    this.podkategorijeServis.getPotkategorije().subscribe(data => this.podkategorije = data);
+  }
+
   kreirajFormu() {
     this.oglasFormGroup = this.formBuilder.group({
       'naslov': [this.oglas.naslov],
@@ -106,12 +133,27 @@ export class KorisnikAdmNovComponent implements OnInit {
       'datumVazenja': [this.oglas.datumVazenja],
       'kategorijaID': [this.oglas.kategorijaID],
       'podkategorijaID': [this.oglas.podkategorijaID],
-      'korisnikID': [this.oglas.korisnikID],
       'fotografijeNiz': this.oglasFormArray.push(new FormControl(''))
     });
+
+    this.oglasFormGroup.controls['kategorijaID'].setValue(-1);
+    this.oglasFormGroup.controls['podkategorijaID'].setValue(-1);
+
+    // this.oglasFormGroup.controls['kategorijaID'].setValue(this.kategorije[0].id);
+    // this.oglasFormGroup.controls['podkategorijaID'].setValue(this.podkategorije[0].id);
+  }
+
+  kategProm(katId: number) {
+    this.oglasFormGroup.controls['podkategorijaID'].setValue(-1);
+    // console.log('intex stavke: vrijednost: ' + katId);
   }
 
   objaviOglas() {}
+
+  // Ne treba nam. Nema resolvera.
+  // ngOnDestroy() {
+  //   this.sub.unsubscribe();
+  // }
 
   // dodajOglas(): void {
   //   if (this.authService.isLoggedIn()) {
