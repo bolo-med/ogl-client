@@ -3,6 +3,7 @@ import { environment } from './../../environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { Oglas } from './../models/Oglas';
 import { OperationResponse } from 'src/app/models/OperationResponse';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -21,7 +22,7 @@ export class OglasiService {
     return this.http.get<OperationResponse>(`${this.serviceUrl}/${id}`);
   }
 
-  public insertOglas(oglas: Oglas) {
+  public insertOglas(oglas: Oglas): Observable<OperationResponse> {
     return this.http.post<OperationResponse>(this.serviceUrl, oglas);
   }
 
