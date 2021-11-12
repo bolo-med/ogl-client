@@ -8,8 +8,9 @@ import { environment } from 'src/environments/environment';
 import { FileUploader } from 'ng2-file-upload';
 import { KategorijeService } from 'src/app/services/kategorije.service';
 import { PotkategorijeService } from 'src/app/services/potkategorije.service';
-import { FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { StavkaOdaberite } from './../../validators/StavkaOdaberite';
 
 @Component({
   selector: 'app-korisnik-adm-nov',
@@ -27,6 +28,7 @@ export class KorisnikAdmNovComponent implements OnInit {
   // sub: any;
   apiUrl = environment.apiUrl;
   fotografije: string = '';
+  formaPotvrdjena: boolean;
   
   uploader: FileUploader = new FileUploader({
     itemAlias: 'img',
@@ -59,6 +61,8 @@ export class KorisnikAdmNovComponent implements OnInit {
     //   this.kategorije = data.katPodkat.kategorije;
     //   this.podkategorije = data.katPodkat.podkategorije;
     // });
+
+    this.formaPotvrdjena = false;
 
     this.dopremiKatPodkat();
 
@@ -93,11 +97,11 @@ export class KorisnikAdmNovComponent implements OnInit {
 
   kreirajFormu() {
     this.oglasFormGroup = this.formBuilder.group({
-      'naslov': [this.oglas.naslov],
-      'tekst': [this.oglas.tekst],
-      'datumVazenja': [this.oglas.datumVazenja],
-      'kategorijaID': [this.oglas.kategorijaID],
-      'podkategorijaID': [this.oglas.podkategorijaID],
+      'naslov': ['', Validators.required],
+      'tekst': ['', Validators.required],
+      'datumVazenja': [null],
+      'kategorijaID': [{value: this.oglas.kategorijaID}, {validators: StavkaOdaberite.nijeOdabrao}],
+      'podkategorijaID': ['', StavkaOdaberite.nijeOdabrao],
       // 'fotografijeNiz': this.oglasFormArray.push(new FormControl('')) // ovako ne moze - mora preko f-je
       'fotografijeNiz': this.prvaContrlNiz()
     });
@@ -110,7 +114,7 @@ export class KorisnikAdmNovComponent implements OnInit {
   }
 
   prvaContrlNiz(): FormArray {
-    this.oglasFormArray.push(new FormControl(''));
+    this.oglasFormArray.push(new FormControl('', Validators.required));
     return this.oglasFormArray;
   }
 
@@ -121,7 +125,7 @@ export class KorisnikAdmNovComponent implements OnInit {
 
   josPoljaFoto() {
     if (this.oglasFormArray.length < 5) {
-      this.oglasFormArray.push(new FormControl(''));
+      this.oglasFormArray.push(new FormControl('', Validators.required));
     }
   }
 
@@ -136,6 +140,10 @@ export class KorisnikAdmNovComponent implements OnInit {
   }
 
   objaviOglas(form: FormGroup) {
+    this.formaPotvrdjena = true;
+
+    if (!form.valid) return;
+
     this.oglas.id = null;
     this.oglas.naslov = form.controls['naslov'].value;
     this.oglas.tekst = form.controls['tekst'].value;
@@ -150,6 +158,7 @@ export class KorisnikAdmNovComponent implements OnInit {
       if (odgovor.status === 0) {
         alert('Oglas je uspješno postavljen.');
         this.ngOnInit();
+        this.router.navigateByUrl('/', {skipLocationChange: true}).then(() => this.router.navigate(['/korisnik/nov-oglas']));
       }
       else {
         alert('Greška pri postavljanju oglasa. Pokušajte kasnije.');

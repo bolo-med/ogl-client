@@ -74,7 +74,7 @@ export class OglasiComponent implements OnInit {
         o.fotografijeNiz.push('');
       }
       else {
-        o.fotografijeNiz = o.fotografije.split(' ');
+        o.fotografijeNiz = o.fotografije.split(';');
       }
     }
   }

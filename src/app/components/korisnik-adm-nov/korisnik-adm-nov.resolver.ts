@@ -9,6 +9,7 @@ import { ActivatedRouteSnapshot, Resolve, Router, RouterStateSnapshot } from '@a
 import { KatPodkat } from '../../models/KatPodkat';
 import { KategorijeService } from './../../services/kategorije.service';
 import { PotkategorijeService } from './../../services/potkategorije.service';
+import { Observable } from 'rxjs';
 
 @Injectable()
 export class KorisnikAdmNovResolver implements Resolve<KatPodkat> {
@@ -19,16 +20,17 @@ export class KorisnikAdmNovResolver implements Resolve<KatPodkat> {
 
     resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): KatPodkat {
 
-        this.kategorijaServis.getKategorije().subscribe(data => {
-            if (data.status === 0) {
-                this.katPodkat.kategorije = data.data;
-            }
-        });
-
-        this.podkategorijaServis.getPotkategorije().subscribe(data => this.katPodkat.podkategorije = data);
-
+        // 1. pokusaj
+        // this.kategorijaServis.getKategorije().subscribe(data => {
+        //     if (data.status === 0) {
+        //         this.katPodkat.kategorije = data.data;
+        //     }
+        // });
+        // this.podkategorijaServis.getPotkategorije().subscribe(data => this.katPodkat.podkategorije = data);
         return this.katPodkat;
 
+
+        // 2. pokusaj
         // Ne moze nikako. Ponovo prvo izvrsi 'if', prije nego sto dobije odgovor od servera.
         // if (this.katPodkat)
         // if (this.katPodkat.kategorije && this.katPodkat.podkategorije) {
@@ -39,6 +41,9 @@ export class KorisnikAdmNovResolver implements Resolve<KatPodkat> {
         //     alert('Greska...');
         //     return null;
         // }
+
+        // 3. pokusaj sa posebnim servisom i forkJoin - ne radi.
+        
     }
 
 }

@@ -27,6 +27,7 @@ export class OglasComponent implements OnInit {
       if (data.status === 0) {
         if (data.data) {
           this.oglas = data.data;
+          console.log(this.oglas);
         }
         else {
           alert('Oglas ne postoji!');

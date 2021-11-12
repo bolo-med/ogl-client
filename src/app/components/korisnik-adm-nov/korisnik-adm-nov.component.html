@@ -8,11 +8,19 @@
                 <div class="form-group">
                     <label for="naslov">Naslov oglasa</label>
                     <input id="naslov" class="form-control" placeholder="Upisite naslov..." formControlName="naslov">
+                    <div class="alert alert-danger" role="alert" *ngIf="oglasFormGroup.controls['naslov'].hasError('required') && 
+                                                                    (oglasFormGroup.controls['naslov'].touched || formaPotvrdjena)">
+                        Morate unijeti naslov!
+                    </div>
                 </div>
                 <br>
                 <div class="form-group">
                     <label for="tekst">Tekst oglasa</label>
                     <textarea id="tekst" class="form-control" placeholder="Upisite tekst..." formControlName="tekst"></textarea>
+                    <div class="alert alert-danger" role="alert" *ngIf="oglasFormGroup.controls['tekst'].hasError('required') && 
+                                                                    (oglasFormGroup.controls['tekst'].touched || formaPotvrdjena)">
+                        Morate unijeti tekst!
+                    </div>
                 </div>
                 <br>
                 <div class="form-group">
@@ -26,6 +34,10 @@
                         <option [ngValue]="-1">odaberite...</option>
                         <option *ngFor="let kategorija of kategorije | nizAbc:'naziv'" [ngValue]="kategorija.id">{{kategorija.naziv}}</option>
                     </select>
+                    <div class="alert alert-danger" role="alert" *ngIf="oglasFormGroup.controls['kategorijaID'].hasError('nijeOdabrao') && 
+                                                                    (oglasFormGroup.controls['kategorijaID'].touched || formaPotvrdjena)">
+                        Morate izabrati kategoriju!
+                    </div>
                 </div>
                 <br>
                 <div class="form-group">
@@ -35,6 +47,10 @@
                         <option *ngFor="let podkategorija of podkategorije | nizFilter:oglasFormGroup.controls['kategorijaID'].value" 
                                 [ngValue]="podkategorija.id">{{podkategorija.naziv}}</option>
                     </select>
+                    <div class="alert alert-danger" role="alert" *ngIf="oglasFormGroup.controls['podkategorijaID'].hasError('nijeOdabrao') && 
+                                                                        (oglasFormGroup.controls['podkategorijaID'].touched || formaPotvrdjena)">
+                        Morate izabrati podkategoriju!
+                    </div>
                 </div>
                 <br>
                 <div class="container-fluid pdn01">
@@ -46,6 +62,15 @@
                                 </div>
                                 <div class="col-3">
                                     <button type="button" class="btn btn-danger btn-block" (click)="ukloniPoljeFoto(i)">Ukloni</button>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="alert alert-danger" role="alert" 
+                                        *ngIf="oglasFormGroup.controls['fotografijeNiz'].controls[i].hasError('required') && 
+                                              (oglasFormGroup.controls['fotografijeNiz'].controls[i].touched || formaPotvrdjena)">
+                                        Morate postaviti sliku!
+                                    </div>
                                 </div>
                             </div>
                             <br>

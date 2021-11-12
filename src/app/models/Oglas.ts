@@ -17,6 +17,6 @@ export class Oglas {
 
     kategorija: Kategorija;
     podkategorija: Podkategorija;
-    korisnik: Korisnik; //Testirati unos novog oglasa!
+    korisnik: Korisnik;
 }
 
