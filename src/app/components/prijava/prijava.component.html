@@ -4,19 +4,26 @@
     <div class="row">
         <div class="col-12 col-sm-12 col-md-3 col-lg-3 col-xl-3"></div>
         <div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
-            <form>
+
+            <form [formGroup]='formaPrijava' (ngSubmit)='prijavi(formaPrijava)'>
                 <div class="form-group">
-                    <label for="korisn-ime1">Korisničko ime</label>
-                    <input type="text" class="form-control" id="korisn-ime1" placeholder="Unesite korisničko ime" 
-                                                                             [(ngModel)]='korisnik.username' name="usrnam">
+                    <label for="korisnicko">Korisničko ime</label>
+                    <input type="text" id="korisnicko" class="form-control"  placeholder="Unesite korisničko ime" formControlName='username'>
+                    <div class="alert alert-danger" role="alert" *ngIf="formaPrijava.controls['username'].hasError('required') && 
+                                                                    (formaPrijava.controls['username'].touched || formaPotvrdjena)">
+                        Niste unijeli korisničko ime!
+                    </div>
                 </div>
                 <div class="form-group">
-                  <label for="exampleInputPassword1">Lozinka</label>
-                  <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Unesite lozinku" 
-                                                                                         [(ngModel)]='korisnik.password' name="passwrd">
+                    <label for="lozinka">Lozinka</label>
+                    <input type="password" id="lozinka" class="form-control"  placeholder="Unesite lozinku" formControlName='password'>
+                    <div class="alert alert-danger" role="alert" *ngIf="formaPrijava.controls['password'].hasError('required') && 
+                                                                    (formaPrijava.controls['password'].touched || formaPotvrdjena)">
+                        Niste unijeli lozinku!
+                    </div>
                 </div>
                 <br>
-                <button type="submit" class="form-control btn btn-primary" (click)='prijavi()'>Prijavi se</button>
+                <button type="submit" class="form-control btn btn-primary">Prijavi se</button>
             </form>
         </div>
         <div class="col-12 col-sm-12 col-md-3 col-lg-3 col-xl-3"></div>

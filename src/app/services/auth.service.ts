@@ -14,7 +14,7 @@ export class AuthService {
 
   constructor(private http: HttpClient, private router: Router) {}
 
-  resister(korisnik: Korisnik) {
+  register(korisnik: Korisnik) {
     return this.http.post<AuthenticationResponse>(`${this.serviceUrl}/register`, korisnik);
   }
 

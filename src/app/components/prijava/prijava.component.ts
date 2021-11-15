@@ -1,4 +1,5 @@
-import { Component, EventEmitter, Host, OnInit, Output } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Korisnik } from 'src/app/models/Korisnik';
 import { AuthService } from 'src/app/services/auth.service';
@@ -12,18 +13,37 @@ import { MessageService } from 'src/app/services/message.service';
 export class PrijavaComponent implements OnInit {
 
   korisnik: Korisnik = new Korisnik();
+  formaPrijava: FormGroup;
+  formaPotvrdjena: boolean;
 
   constructor(private authService: AuthService, 
               private router: Router, 
-              private messageService: MessageService) {}
+              private messageService: MessageService, 
+              private formBuilder: FormBuilder) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
 
-  prijavi() {
-    this.korisnik.id = null;
-    this.korisnik.ime = null;
-    this.korisnik.prezime = null;
-    this.korisnik.isAdmin = null;
+    this.formaPotvrdjena = false;
+
+    this.kreirajFormu();
+
+  }
+
+  kreirajFormu() {
+    this.formaPrijava = this.formBuilder.group({
+      'username': ['', Validators.required],
+      'password': ['', Validators.required]
+    });
+  }
+
+  prijavi(forma: FormGroup) {
+
+    this.formaPotvrdjena = true;
+
+    if (!forma.valid) return;
+
+    this.mapirajKorisnika();
+    
     this.authService.login(this.korisnik).subscribe(data => {
       if (data.status === 0) {
         window.localStorage.setItem('ogl-token', data.token);
@@ -32,12 +52,22 @@ export class PrijavaComponent implements OnInit {
         this.messageService.accType = this.authService.getAccountType();
         //////////////////////////////////////////////////////////////////
         alert('Prijavili ste se!');
-        this.router.navigateByUrl('/');
+        this.router.navigateByUrl('/oglasi');
       }
       else {
-        alert("Neuspjesan pokusaj prijave!");
+        alert("Neuspješan pokušaj prijave!");
       }
     });
+
+  }
+
+  mapirajKorisnika() {
+    this.korisnik.id = null;
+    this.korisnik.ime = null;
+    this.korisnik.prezime = null;
+    this.korisnik.username = this.formaPrijava.controls['username'].value;
+    this.korisnik.password = this.formaPrijava.controls['password'].value;
+    this.korisnik.isAdmin = null;
   }
 
 }

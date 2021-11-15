@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Korisnik } from 'src/app/models/Korisnik';
 import { AuthService } from 'src/app/services/auth.service';
@@ -11,37 +12,61 @@ import { AuthService } from 'src/app/services/auth.service';
 export class RegistracijaComponent implements OnInit {
 
   korisnik: Korisnik = new Korisnik();
+  formaRegistracija: FormGroup;
+  formaPotvrdjena: boolean;
 
   constructor(private authService: AuthService, 
-              private router: Router) {
+              private router: Router, 
+              private formBuilder: FormBuilder) {
                 this.korisnik.id = null;
                 this.korisnik.isAdmin = null;
               }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
 
-  // registruj() {
-  //   this.authService.resister(this.korisnik).subscribe(data => {
-  //     if (data.status === 0) {
-  //       window.localStorage.setItem('ogl-token', data.token);
-  //       alert('Uspjesno ste se registrovali!');
-  //       this.router.navigateByUrl('/');
-  //     }
-  //     else {
-  //       alert('Doslo je do greske pri registrovanju!');
-  //     }
-  //   });
-  // }
+    this.formaPotvrdjena = false;
 
-  registruj(registrForma: any): void {
-    // console.log(`ID: ${this.korisnik.id}`);
-    // console.log(`Ime: ${this.korisnik.ime}`);
-    // console.log(`Prezime: ${this.korisnik.prezime}`);
-    // console.log(`Korisn. ime: ${this.korisnik.username}`);
-    // console.log(`Lozinka: ${this.korisnik.password}`);
-    // console.log(`Is admin: ${this.korisnik.isAdmin}`);
-    // console.log(`Templejt refrens: ${registrForma}`);
-    console.log(`Templejt refrens - validno: ${registrForma.valid}`);
+    this.kreirajFormu();
+
+  }
+
+  kreirajFormu() {
+    this.formaRegistracija = this.formBuilder.group({
+      'ime': ['', { validators: [Validators.required, Validators.pattern('[A-Z][a-z]*')] }],
+      'prezime': ['', { validators: [Validators.required, Validators.pattern('[A-Z][a-z]*')] }],
+      'korisnicko': ['', { validators: [Validators.required, Validators.minLength(3)] }],
+      'lozinka': ['', Validators.required]
+    });
+  }
+
+  registruj(forma: FormGroup) {
+
+    this.formaPotvrdjena = true;
+
+    if (!forma.valid) return;
+
+    this.korisnik.id = null;
+    this.korisnik.isAdmin = null;
+    this.mapirajFormu();
+
+    this.authService.register(this.korisnik).subscribe(data => {
+      if (data.status === 0) {
+        window.localStorage.setItem('ogl-token', data.token);
+        alert('Uspjesno ste se registrovali!');
+        this.router.navigateByUrl('/oglasi');
+      }
+      else {
+        alert('Doslo je do greske pri registrovanju!');
+      }
+    });
+    
+  }
+
+  mapirajFormu() {
+    this.korisnik.ime = this.formaRegistracija.controls['ime'].value;
+    this.korisnik.prezime = this.formaRegistracija.controls['prezime'].value;
+    this.korisnik.username = this.formaRegistracija.controls['korisnicko'].value;
+    this.korisnik.password = this.formaRegistracija.controls['lozinka'].value;
   }
 
 }
