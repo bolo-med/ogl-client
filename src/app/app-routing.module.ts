@@ -1,6 +1,8 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { AdministratorAdmKategorijeComponent } from './components/administrator-adm-kategorije/administrator-adm-kategorije.component';
+import { AdministratorAdmKorisniciComponent } from './components/administrator-adm-korisnici/administrator-adm-korisnici.component';
+import { AdministratorAdmKorisnikComponent } from './components/administrator-adm-korisnik/administrator-adm-korisnik.component';
 import { AdministratorAdmPotkategorijeComponent } from './components/administrator-adm-potkategorije/administrator-adm-potkategorije.component';
 import { AdministratorAdmComponent } from './components/administrator-adm/administrator-adm.component';
 import { KorisnikAdmAktuelniComponent } from './components/korisnik-adm-aktuelni/korisnik-adm-aktuelni.component';
@@ -43,7 +45,9 @@ const routes: Routes = [
     children: [
       {path: '', pathMatch: 'full', redirectTo: 'kategorije'},
       {path: 'kategorije', component: AdministratorAdmKategorijeComponent},
-      {path: 'podkategorije', component: AdministratorAdmPotkategorijeComponent}
+      {path: 'podkategorije', component: AdministratorAdmPotkategorijeComponent},
+      {path: 'korisnici', component: AdministratorAdmKorisniciComponent},
+      {path: 'korisnici/:id', component: AdministratorAdmKorisnikComponent}
     ]
   },
   {

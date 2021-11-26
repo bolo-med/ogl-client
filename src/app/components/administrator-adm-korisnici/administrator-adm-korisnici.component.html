@@ -1,0 +1,27 @@
+<div class="naslov display-4">korisnici</div>
+
+<br>
+
+<table class="table table-striped">
+    <thead>
+      <tr>
+        <th scope="col">ID</th>
+        <th scope="col">Ime</th>
+        <th scope="col">Prezime</th>
+        <th scope="col">Korisničko ime</th>
+        <th scope="col">Admin</th>
+        <!-- <th scope="col">Akcija</th> -->
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let korisnik of korisnici">
+        <td>{{korisnik.id}}</td>
+        <td>{{korisnik.ime}}</td>
+        <td>{{korisnik.prezime}}</td>
+        <td>{{korisnik.username}}</td>
+        <td>{{korisnik.isAdmin}}</td>
+        <td><span (click)="kaKorisniku(korisnik.id)">izmijeni</span></td>
+      </tr>
+    </tbody>
+  </table>
+

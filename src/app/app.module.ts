@@ -23,6 +23,9 @@ import { PocetnaComponent } from './components/pocetna/pocetna.component';
 import { KorisnikAdmNovResolver } from './components/korisnik-adm-nov/korisnik-adm-nov.resolver';
 import { NizAbcPipe } from './pipes/niz-abc.pipe';
 import { NizFilterPipe } from './pipes/niz-filter.pipe';
+import { AdministratorAdmMeniComponent } from './components/administrator-adm-meni/administrator-adm-meni.component';
+import { AdministratorAdmKorisniciComponent } from './components/administrator-adm-korisnici/administrator-adm-korisnici.component';
+import { AdministratorAdmKorisnikComponent } from './components/administrator-adm-korisnik/administrator-adm-korisnik.component';
 
 @NgModule({
   declarations: [
@@ -41,7 +44,10 @@ import { NizFilterPipe } from './pipes/niz-filter.pipe';
     OglasComponent,
     PocetnaComponent,
     NizAbcPipe,
-    NizFilterPipe
+    NizFilterPipe,
+    AdministratorAdmMeniComponent,
+    AdministratorAdmKorisniciComponent,
+    AdministratorAdmKorisnikComponent
   ],
   imports: [
     BrowserModule,
