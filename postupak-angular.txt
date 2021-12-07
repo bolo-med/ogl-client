@@ -129,3 +129,13 @@ U promjenljivu (niz) imports, dopisemo FileUploadModule
 
 ------------------------------------------------------------
 
+(da napravimo pajp)
+
+ng generate pipe pipes/naziv-pajpa
+
+--------------------------------------------------------
+
+(da napravimo direktivu; sluzi za DOM manipulaciju)
+
+ng generate directive directives/naziv-direktive
+

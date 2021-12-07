@@ -18,7 +18,15 @@ export class KorisniciService {
   }
 
   getKorisnikById(id: number) {
-    return this.http.get<OperationResponse>(`${this.serviceUrl}/${id}`);
+    return this.http.get<OperationResponse>(`${this.serviceUrl}/id/${id}`);
+  }
+
+  getKorisnikByUsername(uname: string) {
+    return this.http.get<Korisnik>(`${this.serviceUrl}/ime/${uname}`);
+  }
+
+  updateKorisnik(korisnik: Korisnik) {
+    return this.http.put<OperationResponse>(this.serviceUrl, korisnik);
   }
 
 }
