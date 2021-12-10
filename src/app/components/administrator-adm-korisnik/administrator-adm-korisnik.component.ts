@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Korisnik } from 'src/app/models/Korisnik';
 import { KorisniciService } from 'src/app/services/korisnici.service';
-import { ValidacijaKorisnickogService } from 'src/app/services/validacija-korisnickog.service';
+import { ValidacijaKorisnickog } from 'src/app/validators/validacija-korisnickog.directive';
 
 @Component({
   selector: 'app-administrator-adm-korisnik',
@@ -15,12 +15,13 @@ export class AdministratorAdmKorisnikComponent implements OnInit {
   id: number = -1;
   korisnik: Korisnik = new Korisnik();
   formaKorisnik: FormGroup;
+  korisnicko: string = '';
 
   constructor(private activatedRoute: ActivatedRoute, 
               private korisniciService: KorisniciService, 
               private router: Router, 
               private formBuilder: FormBuilder, 
-              private validacijaKorisnickog: ValidacijaKorisnickogService) { }
+              private validacijaKorisnickog: ValidacijaKorisnickog) { }
 
   ngOnInit(): void {
     this.nadjiKorisnika();
@@ -30,6 +31,7 @@ export class AdministratorAdmKorisnikComponent implements OnInit {
     this.id = +this.activatedRoute.snapshot.paramMap.get('id');
     this.korisniciService.getKorisnikById(this.id).subscribe(data => {
       if (data.status === 0 && data.data) {
+        this.korisnicko = data.data.username;
         this.mapirajKorisnika(data.data);
         this.kreirajFormu();
       }
@@ -51,19 +53,32 @@ export class AdministratorAdmKorisnikComponent implements OnInit {
 
   kreirajFormu() {
     this.formaKorisnik = this.formBuilder.group({
-      'ime': [this.korisnik.ime],
-      'prezime': [this.korisnik.prezime],
-      'korisnicko': [ this.korisnik.username, { 
-                                                validators: [Validators.required], 
-                                                asyncValidators: [this.validacijaKorisnickog.validacija()], 
-                                                updateOn: 'blur' 
-                                             } ], 
+      'ime': [this.korisnik.ime, Validators.required],
+      'prezime': [this.korisnik.prezime, Validators.required],
+      'korisnicko': [ this.korisnik.username, {validators: [Validators.required], 
+                                               asyncValidators: [this.validacijaKorisnickog.validate.bind(this.validacijaKorisnickog)], 
+                                               updateOn: 'blur'}], 
       'admin': [this.korisnik.isAdmin] // 1 tumaci kao true, a 0 tumaci kao false
     });
   }
 
   izmijeni(forma: FormGroup) {
+    // if (!forma.valid) return;
+
+    if (!forma.controls['ime'].valid) {
+      return;
+    }
+    else if (!forma.controls['prezime'].valid) {
+      return;
+    }
+    else if (!forma.controls['korisnicko'].valid) {
+      if (forma.controls['korisnicko'].value !== this.korisnicko) {
+        return;
+      }
+    }
+
     this.mapirajFormu(forma);
+
     this.korisniciService.updateKorisnik(this.korisnik).subscribe(opRes => {
       if (opRes.status === 0 && opRes.data) {
         alert('Korisnik je azuriran!');
@@ -82,11 +97,6 @@ export class AdministratorAdmKorisnikComponent implements OnInit {
     this.korisnik.username = f.controls['korisnicko'].value;
     this.korisnik.isAdmin = f.controls['admin'].value ? 1 : 0;
   }
-
-  provjeriKorisnicko = () => {
-    console.log('aaa');
-    
-  };
 
 }
 

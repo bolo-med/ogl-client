@@ -25,6 +25,11 @@ export class KorisniciService {
     return this.http.get<Korisnik>(`${this.serviceUrl}/ime/${uname}`);
   }
 
+  // Probni servis
+  public postojiLiKorisnicko = (usernm: string) => {
+    return this.http.get<boolean>(`${this.serviceUrl}/postoji/${usernm}`);
+  }
+
   updateKorisnik(korisnik: Korisnik) {
     return this.http.put<OperationResponse>(this.serviceUrl, korisnik);
   }

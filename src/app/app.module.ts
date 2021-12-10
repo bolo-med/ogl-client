@@ -26,6 +26,7 @@ import { NizFilterPipe } from './pipes/niz-filter.pipe';
 import { AdministratorAdmMeniComponent } from './components/administrator-adm-meni/administrator-adm-meni.component';
 import { AdministratorAdmKorisniciComponent } from './components/administrator-adm-korisnici/administrator-adm-korisnici.component';
 import { AdministratorAdmKorisnikComponent } from './components/administrator-adm-korisnik/administrator-adm-korisnik.component';
+import { ValidacijaKorisnickogDirective } from './validators/validacija-korisnickog.directive';
 
 @NgModule({
   declarations: [
@@ -47,7 +48,8 @@ import { AdministratorAdmKorisnikComponent } from './components/administrator-ad
     NizFilterPipe,
     AdministratorAdmMeniComponent,
     AdministratorAdmKorisniciComponent,
-    AdministratorAdmKorisnikComponent
+    AdministratorAdmKorisnikComponent,
+    ValidacijaKorisnickogDirective
   ],
   imports: [
     BrowserModule,
