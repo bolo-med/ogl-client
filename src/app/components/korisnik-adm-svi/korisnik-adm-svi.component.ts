@@ -21,4 +21,8 @@ export class KorisnikAdmSviComponent implements OnInit {
     });
   }
 
+  kliknutOglas(id: number) {
+    console.log('ID oglasa je: ' + id);
+  }
+
 }

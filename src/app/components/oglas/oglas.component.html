@@ -2,21 +2,29 @@
 
 <!-- <p class="display-3">Naslov oglasa: {{oglas.naslov}}</p> -->
 
-<p class="lead">ID oglasa: {{oglas.id}} </p>
+<div class="naslov-ogl">{{oglas.naslov}} </div>
 
-<p class="lead">Naslov oglasa: {{oglas.naslov}} </p>
+<br>
 
-<p class="lead">Tekst oglasa: {{oglas.tekst}}</p>
+<div class="lead">{{oglas.tekst}}</div>
 
-<p class="lead">Datum objave: {{oglas.datumObjave}} </p>
+<br>
 
-<p class="lead">Vazi do: {{oglas.datumVazenja ? oglas.datumVazenja : 'neograniceno'}} </p>
+<div class="responsive" *ngFor="let slika of oglas.fotografijeNiz">
+    <a target="_blank" [href]="url + '/' + slika">
+        <img class="img-thumbnail" [src]="slika ? url + '/' + slika : './../../../assets/slike/no-image-available.png'">
+    </a>
+</div>
 
-<p class="lead">Arhiviran: {{oglas.arhiviran}} </p>
+<div class="clearfix"></div>
 
-<p class="lead">Kategorija: {{oglas.kategorija.naziv}} </p>
+<br><br><br>
 
-<p class="lead">Podkategorija: {{oglas.podkategorija.naziv}} </p>
+<div class="detalji"><span class="detalji2">Datum objave:</span> {{oglas.datumObjave}} | <span class="detalji2">Važi do:</span> {{oglas.datumVazenja ? oglas.datumVazenja : 'neograničeno'}}</div>
 
-<p class="lead">Autor: {{oglas.korisnik.ime + ' ' + oglas.korisnik.prezime}} </p>
+<div class="detalji"><span class="detalji2">Kategorija:</span> {{oglas.kategorija.naziv}} - {{oglas.podkategorija.naziv}}</div>
+
+<div class="detalji"><span class="detalji2">Autor:</span> {{oglas.korisnik.ime + ' ' + oglas.korisnik.prezime}} </div>
+
+<br><br><br>
 

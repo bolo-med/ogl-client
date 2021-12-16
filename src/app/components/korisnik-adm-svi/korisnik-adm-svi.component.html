@@ -1,7 +1,7 @@
 <div class="container-fluid">
     <div class="naslov display-4">Svi Vaši oglasi</div>
     <br><br>
-    <div class="row okvir-oglasa" *ngFor='let oglas of oglasi'>
+    <div class="row okvir-oglasa" *ngFor='let oglas of oglasi' (click)="kliknutOglas(oglas.id)">
         <div class="col-12 col-sm-12 col-md-7 col-lg-7 col-xl-7 lead">
             <p>{{oglas.naslov}}</p>
             <p>{{oglas.tekst}}</p>

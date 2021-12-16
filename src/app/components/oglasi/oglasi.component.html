@@ -27,20 +27,19 @@
                     </div>
                 </form>
             </div>
-            <!-- <div>
-                <br>
-                <h4>autor</h4>
-            </div> -->
         </div>
         <div class="col-12 col-sm-12 col-md-9 col-lg-9 col-xl-9">
             <p class="naslov display-4">oglasi</p>
             <div class="container-fluid">
                 <div class="row okvir-oglasa" *ngFor='let e of oglasiIzabrani' (click)="clickOgl(e.id)">
                     <div class="col-12 col-sm-12 col-md-7 col-lg-7 col-xl-7 lead">
-                        <p>{{e.naslov}}</p>
+                        <div class="kat-pod">
+                            {{e.kategorija.naziv}} - {{e.podkategorija.naziv}}
+                        </div>
+                        <br>
+                        <p class="naslov-ogl">{{e.naslov}}</p>
                         <p>{{e.tekst}}</p>
                         <br>
-                        <p>Kateg: {{e.kategorija.naziv}} | Podkateg: {{e.podkategorija.naziv}} | Autor: {{e.korisnik.username}}</p>
                     </div>
                     <div class="col-12 col-sm-12 col-md-5 col-lg-5 col-xl-5">
                         <img class="img-fluid img-thumbnail mx-auto d-block" 

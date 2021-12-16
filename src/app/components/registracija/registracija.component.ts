@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Korisnik } from 'src/app/models/Korisnik';
 import { AuthService } from 'src/app/services/auth.service';
+import { ValidacijaKorisnickog } from 'src/app/validators/validacija-korisnickog.directive';
 
 @Component({
   selector: 'app-registracija',
@@ -17,7 +18,8 @@ export class RegistracijaComponent implements OnInit {
 
   constructor(private authService: AuthService, 
               private router: Router, 
-              private formBuilder: FormBuilder) {
+              private formBuilder: FormBuilder, 
+              private validacijaKorisnickog: ValidacijaKorisnickog) {
                 this.korisnik.id = null;
                 this.korisnik.isAdmin = null;
               }
@@ -34,7 +36,9 @@ export class RegistracijaComponent implements OnInit {
     this.formaRegistracija = this.formBuilder.group({
       'ime': ['', { validators: [Validators.required, Validators.pattern('[A-Z][a-z]*')] }],
       'prezime': ['', { validators: [Validators.required, Validators.pattern('[A-Z][a-z]*')] }],
-      'korisnicko': ['', { validators: [Validators.required, Validators.minLength(3)] }],
+      'korisnicko': ['', {validators: [Validators.required, Validators.minLength(3)], 
+                          asyncValidators: [this.validacijaKorisnickog.validate.bind(this.validacijaKorisnickog)], 
+                          updateOn: 'blur'}],
       'lozinka': ['', Validators.required]
     });
   }

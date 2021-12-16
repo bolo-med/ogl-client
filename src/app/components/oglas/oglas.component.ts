@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Oglas } from 'src/app/models/Oglas';
 import { AuthService } from 'src/app/services/auth.service';
 import { OglasiService } from 'src/app/services/oglasi.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-oglas',
@@ -13,6 +14,7 @@ export class OglasComponent implements OnInit {
 
   oglas: Oglas;
   oglasID: number;
+  url = environment.apiUrl;
 
   constructor(private activatedRoute: ActivatedRoute, 
               private oglasiService: OglasiService, 
@@ -27,7 +29,7 @@ export class OglasComponent implements OnInit {
       if (data.status === 0) {
         if (data.data) {
           this.oglas = data.data;
-          console.log(this.oglas);
+          this.pretvoriUNiz(this.oglas.fotografije);
         }
         else {
           alert('Oglas ne postoji!');
@@ -39,6 +41,20 @@ export class OglasComponent implements OnInit {
         this.router.navigateByUrl('/');
       }
     });
+  }
+
+  pretvoriUNiz(naziviSlika: string) {
+    console.log(naziviSlika);
+    
+    if (!naziviSlika) {
+      this.oglas.fotografijeNiz = [];
+      this.oglas.fotografijeNiz.push('');
+    }
+    else {
+      this.oglas.fotografijeNiz = naziviSlika.split(';');
+      console.log(this.oglas.fotografijeNiz);
+      
+    }
   }
 
 }

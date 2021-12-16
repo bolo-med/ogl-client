@@ -27,6 +27,7 @@ import { AdministratorAdmMeniComponent } from './components/administrator-adm-me
 import { AdministratorAdmKorisniciComponent } from './components/administrator-adm-korisnici/administrator-adm-korisnici.component';
 import { AdministratorAdmKorisnikComponent } from './components/administrator-adm-korisnik/administrator-adm-korisnik.component';
 import { ValidacijaKorisnickogDirective } from './validators/validacija-korisnickog.directive';
+import { KorisnikAdmOglEditComponent } from './components/korisnik-adm-ogl-edit/korisnik-adm-ogl-edit.component';
 
 @NgModule({
   declarations: [
@@ -49,7 +50,8 @@ import { ValidacijaKorisnickogDirective } from './validators/validacija-korisnic
     AdministratorAdmMeniComponent,
     AdministratorAdmKorisniciComponent,
     AdministratorAdmKorisnikComponent,
-    ValidacijaKorisnickogDirective
+    ValidacijaKorisnickogDirective,
+    KorisnikAdmOglEditComponent
   ],
   imports: [
     BrowserModule,
