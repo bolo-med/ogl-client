@@ -29,6 +29,10 @@ export class KorisnikAdmNovComponent implements OnInit {
   apiUrl = environment.apiUrl;
   fotografije: string = '';
   formaPotvrdjena: boolean;
+
+  ////////////////////////////////////////////////////////////////////////////////
+  oglasId: number;
+  ////////////////////////////////////////////////////////////////////////////////
   
   uploader: FileUploader = new FileUploader({
     itemAlias: 'img',
@@ -41,7 +45,8 @@ export class KorisnikAdmNovComponent implements OnInit {
               private route: ActivatedRoute, 
               private router: Router, 
               private kategorijeServis: KategorijeService, 
-              private podkategorijeServis: PotkategorijeService) {}
+              private podkategorijeServis: PotkategorijeService, 
+              private activatedRoute: ActivatedRoute) {}
 
   ngOnInit(): void {
 
@@ -63,10 +68,24 @@ export class KorisnikAdmNovComponent implements OnInit {
     // });
 
     this.formaPotvrdjena = false;
-
     this.dopremiKatPodkat();
+    // this.kreirajFormu();
 
-    this.kreirajFormu();
+    ////////////////////////////////////////////////////////////////////////////////////
+
+    this.oglasId = this.activatedRoute.snapshot.paramMap.get('id') ? +this.activatedRoute.snapshot.paramMap.get('id') : -1;
+    if (this.oglasId === -1) {
+      this.kreirajFormu();
+    }
+    else {
+      this.oglasiService.getOglasByID(this.oglasId).subscribe(data => {
+        if (data.data && data.status === 0) {
+          this.oglas = data.data;
+          this.kreirajFormu2();
+        }
+      });
+    }
+    ///////////////////////////////////////////////////////////////////////////////////
 
     this.uploader.onAfterAddingAll = (file) => {
       file.withCredentials = false;
@@ -100,22 +119,47 @@ export class KorisnikAdmNovComponent implements OnInit {
       'naslov': ['', Validators.required],
       'tekst': ['', Validators.required],
       'datumVazenja': [null],
-      'kategorijaID': [{value: this.oglas.kategorijaID}, {validators: StavkaOdaberite.nijeOdabrao}],
-      'podkategorijaID': ['', StavkaOdaberite.nijeOdabrao],
+      // 'kategorijaID': [{value: this.oglas.kategorijaID}, {validators: StavkaOdaberite.nijeOdabrao}], (nepotreban red)
+      'kategorijaID': [-1, {validators: StavkaOdaberite.nijeOdabrao}],
+      'podkategorijaID': [-1, StavkaOdaberite.nijeOdabrao],
       // 'fotografijeNiz': this.oglasFormArray.push(new FormControl('')) // ovako ne moze - mora preko f-je
       'fotografijeNiz': this.prvaContrlNiz()
     });
-
-    this.oglasFormGroup.controls['kategorijaID'].setValue(-1);
-    this.oglasFormGroup.controls['podkategorijaID'].setValue(-1);
-
-    // this.oglasFormGroup.controls['kategorijaID'].setValue(this.kategorije[0].id);
-    // this.oglasFormGroup.controls['podkategorijaID'].setValue(this.podkategorije[0].id);
+    
+    // Ne treba ???
+    //this.oglasFormGroup.controls['kategorijaID'].setValue(-1);
+    //this.oglasFormGroup.controls['podkategorijaID'].setValue(-1);
   }
 
   prvaContrlNiz(): FormArray {
     this.oglasFormArray.push(new FormControl('', Validators.required));
     return this.oglasFormArray;
+  }
+
+  kreirajFormu2() {
+    console.log('id oglasa (f-ja kreiraj formu): ' + this.oglas.id);/////////////////////////////////////////////////////
+    
+    this.oglasFormGroup = this.formBuilder.group({
+      'naslov': [this.oglas.naslov, Validators.required],
+      'tekst': [this.oglas.tekst, Validators.required],
+      'datumVazenja': [null],
+      'kategorijaID': [this.oglas.kategorijaID, {validators: StavkaOdaberite.nijeOdabrao}],
+      'podkategorijaID': [this.oglas.podkategorijaID, StavkaOdaberite.nijeOdabrao],
+      'fotografijeNiz': this.kreirajNizKontrola
+    });
+  }
+
+  kreirajNizKontrola(): FormArray {
+    for (let nazivSlike of this.kreirajNizNazivaSlika()) {
+      this.oglasFormArray.push(new FormControl('', Validators.required));
+    }
+    return this.oglasFormArray;
+  }
+
+  kreirajNizNazivaSlika(): string[] {
+    let niz: string[] = this.oglas.fotografije.split(';');
+    niz.pop();
+    return niz;
   }
 
   kategProm(katId: any) {

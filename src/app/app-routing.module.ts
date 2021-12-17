@@ -31,12 +31,13 @@ const routes: Routes = [
     path: 'korisnik',
     component: KorisnikAdmComponent,
     children: [
-      {path: '', pathMatch: 'full', redirectTo: 'nov-oglas'},
+      {path: '', pathMatch: 'full', redirectTo: 'oglas/nov'},
       // {path: 'nov-oglas', component: KorisnikAdmNovComponent, resolve: {katPodkat: KorisnikAdmNovResolver} },
-      {path: 'nov-oglas', component: KorisnikAdmNovComponent},
+      {path: 'oglas/nov', component: KorisnikAdmNovComponent},
       {path: 'aktuelni-oglasi', component: KorisnikAdmAktuelniComponent},
       {path: 'arhivirani-oglasi', component: KorisnikAdmArhivaComponent},
-      {path: 'svi-oglasi', component: KorisnikAdmSviComponent}
+      {path: 'svi-oglasi', component: KorisnikAdmSviComponent},
+      {path: 'oglas/:id', component: KorisnikAdmNovComponent}
     ]
   },
   {

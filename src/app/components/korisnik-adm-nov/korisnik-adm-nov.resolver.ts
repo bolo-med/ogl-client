@@ -1,3 +1,5 @@
+// RESOLVER NIJE U FUNKCIJI
+
 //
 // Ovaj fajl mora kompletno rucno da se napravi. Ne postoji komanda za njegovo kreiranje u verziji Angilar 10.
 // Mora da se importuje u odgovarajuci .module.ts
