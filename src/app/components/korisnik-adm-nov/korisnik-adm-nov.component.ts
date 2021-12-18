@@ -67,17 +67,29 @@ export class KorisnikAdmNovComponent implements OnInit {
     //   this.podkategorije = data.katPodkat.podkategorije;
     // });
 
+    // da ne bi javljalo gresku, jer prvo pokusa da renderuje componente tabele, pa saceka da dobije rezultate upita
+    this.oglasFormGroup = this.formBuilder.group({
+      'naslov': [''],
+      'tekst': [''],
+      'datumVazenja': [null],
+      'kategorijaID': [-1],
+      'podkategorijaID': [-1],
+      'fotografijeNiz': this.oglasFormArray
+    });
+
     this.formaPotvrdjena = false;
     this.dopremiKatPodkat();
     // this.kreirajFormu();
 
     ////////////////////////////////////////////////////////////////////////////////////
 
-    this.oglasId = this.activatedRoute.snapshot.paramMap.get('id') ? +this.activatedRoute.snapshot.paramMap.get('id') : -1;
-    if (this.oglasId === -1) {
+    this.oglasId = +this.activatedRoute.snapshot.paramMap.get('id');
+
+    if (!this.oglasId) {
       this.kreirajFormu();
     }
     else {
+
       this.oglasiService.getOglasByID(this.oglasId).subscribe(data => {
         if (data.data && data.status === 0) {
           this.oglas = data.data;
@@ -101,6 +113,7 @@ export class KorisnikAdmNovComponent implements OnInit {
       else {
         alert('Fajl NIJE aploudovan!');
       }
+      console.log('uploader: ' + this.fotografije);
     };
   }
 
@@ -132,35 +145,28 @@ export class KorisnikAdmNovComponent implements OnInit {
   }
 
   prvaContrlNiz(): FormArray {
-    this.oglasFormArray.push(new FormControl('', Validators.required));
+    // this.oglasFormArray.push(new FormControl('', Validators.required));
+    this.oglasFormArray.push(new FormControl(''));
     return this.oglasFormArray;
   }
 
   kreirajFormu2() {
-    console.log('id oglasa (f-ja kreiraj formu): ' + this.oglas.id);/////////////////////////////////////////////////////
-    
     this.oglasFormGroup = this.formBuilder.group({
       'naslov': [this.oglas.naslov, Validators.required],
       'tekst': [this.oglas.tekst, Validators.required],
       'datumVazenja': [null],
       'kategorijaID': [this.oglas.kategorijaID, {validators: StavkaOdaberite.nijeOdabrao}],
       'podkategorijaID': [this.oglas.podkategorijaID, StavkaOdaberite.nijeOdabrao],
-      'fotografijeNiz': this.kreirajNizKontrola
+      'fotografijeNiz': this.prvaContrlNiz()
     });
   }
 
-  kreirajNizKontrola(): FormArray {
-    for (let nazivSlike of this.kreirajNizNazivaSlika()) {
-      this.oglasFormArray.push(new FormControl('', Validators.required));
-    }
-    return this.oglasFormArray;
-  }
-
-  kreirajNizNazivaSlika(): string[] {
-    let niz: string[] = this.oglas.fotografije.split(';');
-    niz.pop();
-    return niz;
-  }
+  // kreirajNizKontrola(): FormArray {
+  //   for (let nazivSlike of this.kreirajNizNazivaSlika()) {
+  //     this.oglasFormArray.push(new FormControl(nazivSlike, Validators.required));
+  //   }
+  //   return this.oglasFormArray;
+  // }
 
   kategProm(katId: any) {
     this.oglasFormGroup.controls['podkategorijaID'].setValue(-1);
@@ -176,11 +182,19 @@ export class KorisnikAdmNovComponent implements OnInit {
   ukloniPoljeFoto(index: number) {
     if (this.oglasFormArray.length > 1) {
       let n = <FormArray>this.oglasFormGroup.controls['fotografijeNiz'];
+
+      let putanjaNiz = n.controls[index].value.split('\\');
+      console.log('element: ' + putanjaNiz[putanjaNiz.length - 1] + ';');
+      
+
       n.removeAt(index);
     }
     else if (this.oglasFormArray.length === 1) {
       this.oglasFormArray.controls[index].setValue('');
+      this.fotografije = '';
     }
+    console.log('ukloni polje: ' + this.fotografije);
+    
   }
 
   objaviOglas(form: FormGroup) {

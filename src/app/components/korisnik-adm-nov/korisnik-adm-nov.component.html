@@ -2,7 +2,7 @@
     <div class="row">
         <div class="col-12 col-sm-12 col-md-1 col-lg-1 col-xl-1"></div>
         <div class="col-12 col-sm-12 col-md-10 col-lg-10 col-xl-10">
-            <div class="naslov display-4">dodajte nov oglas</div>
+            <div class="naslov display-4">{{oglasId ? 'izmijenite oglas (#ID ' + oglasId + ')' : 'dodajte nov oglas'}}</div>
             <br>
             <form [formGroup]="oglasFormGroup" (ngSubmit)="objaviOglas(oglasFormGroup)">
                 <div class="form-group">
@@ -80,6 +80,17 @@
                         <div class="col">
                             <button type="button" class="btn btn-warning" [disabled]="oglasFormArray.length >=5" 
                                                                           (click)="josPoljaFoto()">Još fotografija</button>
+                        </div>
+                    </div>
+                    <br><br>
+                    <div class="row">
+                        <div class="col">
+                            <div class="responsive" *ngFor="let nazivSlike of oglas.fotografije | nizNazivaSlika">
+                                <a target="_blank" [href]="apiUrl + '/' + nazivSlike">
+                                    <img class="img-thumbnail" 
+                                         [src]="nazivSlike ? apiUrl + '/' + nazivSlike : './../../../assets/slike/no-image-available.png'">
+                                </a>
+                            </div>
                         </div>
                     </div>
                 </div>

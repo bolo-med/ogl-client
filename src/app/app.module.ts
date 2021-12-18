@@ -28,6 +28,7 @@ import { AdministratorAdmKorisniciComponent } from './components/administrator-a
 import { AdministratorAdmKorisnikComponent } from './components/administrator-adm-korisnik/administrator-adm-korisnik.component';
 import { ValidacijaKorisnickogDirective } from './validators/validacija-korisnickog.directive';
 import { KorisnikAdmOglEditComponent } from './components/korisnik-adm-ogl-edit/korisnik-adm-ogl-edit.component';
+import { NizNazivaPipe } from './pipes/niz-naziva.pipe';
 
 @NgModule({
   declarations: [
@@ -51,7 +52,8 @@ import { KorisnikAdmOglEditComponent } from './components/korisnik-adm-ogl-edit/
     AdministratorAdmKorisniciComponent,
     AdministratorAdmKorisnikComponent,
     ValidacijaKorisnickogDirective,
-    KorisnikAdmOglEditComponent
+    KorisnikAdmOglEditComponent,
+    NizNazivaPipe
   ],
   imports: [
     BrowserModule,
