@@ -29,10 +29,8 @@ export class KorisnikAdmNovComponent implements OnInit {
   apiUrl = environment.apiUrl;
   fotografije: string = '';
   formaPotvrdjena: boolean;
-
-  ////////////////////////////////////////////////////////////////////////////////
   oglasId: number;
-  ////////////////////////////////////////////////////////////////////////////////
+  fotoArr: string[] = [];
   
   uploader: FileUploader = new FileUploader({
     itemAlias: 'img',
@@ -94,6 +92,7 @@ export class KorisnikAdmNovComponent implements OnInit {
         if (data.data && data.status === 0) {
           this.oglas = data.data;
           this.kreirajFormu2();
+          this.popuniNizFotografijama();
         }
       });
     }
@@ -107,14 +106,21 @@ export class KorisnikAdmNovComponent implements OnInit {
     this.uploader.onCompleteItem = (item: any, response: any, status: any, headers: any) => {
       response = JSON.parse(response);
       if(response.status === 0) {
-        this.fotografije += response.filename + ';';
+        this.fotoArr.push(response.filename);
         alert('Fajl je aploudovan!');
       }
       else {
         alert('Fajl NIJE aploudovan!');
       }
-      console.log('uploader: ' + this.fotografije);
+      console.log('fotoArr: ' + this.fotoArr);
     };
+  }
+
+  popuniNizFotografijama() {
+    let niz: string[] = this.oglas.fotografije.split(';');
+    niz.pop();
+    this.fotoArr = niz;
+    console.log('fotoArr (br): ' + this.fotoArr.length);
   }
 
   dopremiKatPodkat() {
@@ -174,27 +180,32 @@ export class KorisnikAdmNovComponent implements OnInit {
   }
 
   josPoljaFoto() {
-    if (this.oglasFormArray.length < 5) {
-      this.oglasFormArray.push(new FormControl('', Validators.required));
+    if (this.fotoArr.length < 5) {
+      this.oglasFormArray.push(new FormControl(''));
     }
   }
 
   ukloniPoljeFoto(index: number) {
+    let n = <FormArray>this.oglasFormGroup.controls['fotografijeNiz'];
+    let nazivFajla: string = n.controls[index].value.split('\\').pop();
+
     if (this.oglasFormArray.length > 1) {
-      let n = <FormArray>this.oglasFormGroup.controls['fotografijeNiz'];
-
-      let putanjaNiz = n.controls[index].value.split('\\');
-      console.log('element: ' + putanjaNiz[putanjaNiz.length - 1] + ';');
-      
-
-      n.removeAt(index);
+      n.removeAt(index); // Uklanja kontrolu iz html-a
+      this.ukloniNaziv(nazivFajla);
     }
     else if (this.oglasFormArray.length === 1) {
       this.oglasFormArray.controls[index].setValue('');
       this.fotografije = '';
+      this.ukloniNaziv(nazivFajla);
     }
-    console.log('ukloni polje: ' + this.fotografije);
-    
+    console.log('fotoArr: ' + this.fotoArr);
+  }
+
+  ukloniNaziv(nazivFajla: string) {
+    // Uklanja element iz niza 'fotoArr'. Radi dobro, samo kad nazivi slika nisu isti.
+    for (let i = 0; i < this.fotoArr.length; i++) {
+      if (this.fotoArr[i].split('-').pop() === nazivFajla) this.fotoArr.splice(i, 1);
+    }
   }
 
   objaviOglas(form: FormGroup) {
@@ -211,7 +222,7 @@ export class KorisnikAdmNovComponent implements OnInit {
     this.oglas.kategorijaID = form.controls['kategorijaID'].value;
     this.oglas.podkategorijaID = form.controls['podkategorijaID'].value;
     this.oglas.korisnikID = this.authService.getKorisnikDetails().id;
-    this.oglas.fotografije = this.fotografije;
+    this.oglas.fotografije = this.fotografije; // izvrsiti izmjenu... //////////////////////////////////////////////////////////////s
     this.oglasiService.insertOglas(this.oglas).subscribe(odgovor => {
       if (odgovor.status === 0) {
         alert('Oglas je uspješno postavljen.');

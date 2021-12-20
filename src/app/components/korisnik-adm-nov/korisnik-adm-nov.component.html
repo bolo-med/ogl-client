@@ -85,7 +85,7 @@
                     <br><br>
                     <div class="row">
                         <div class="col">
-                            <div class="responsive" *ngFor="let nazivSlike of oglas.fotografije | nizNazivaSlika">
+                            <div class="responsive" *ngFor="let nazivSlike of fotoArr">
                                 <a target="_blank" [href]="apiUrl + '/' + nazivSlike">
                                     <img class="img-thumbnail" 
                                          [src]="nazivSlike ? apiUrl + '/' + nazivSlike : './../../../assets/slike/no-image-available.png'">
