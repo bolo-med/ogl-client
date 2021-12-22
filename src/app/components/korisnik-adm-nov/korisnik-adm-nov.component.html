@@ -58,13 +58,14 @@
                         <div *ngFor="let fotoContrl of oglasFormArray.controls; let i = index">
                             <div class="row">
                                 <div class="col-9">
-                                    <input type="file" class="form-control" [formControlName]="i" ng2FileSelect [uploader]='uploader'>
+                                    <input type="file" class="form-control" [formControlName]="i" ng2FileSelect [uploader]='uploader' 
+                                           (change)="dodataSlika(i)">
                                 </div>
                                 <div class="col-3">
                                     <button type="button" class="btn btn-danger btn-block" (click)="ukloniPoljeFoto(i)">Ukloni</button>
                                 </div>
                             </div>
-                            <div class="row">
+                            <!-- <div class="row">
                                 <div class="col-12">
                                     <div class="alert alert-danger" role="alert" 
                                         *ngIf="oglasFormGroup.controls['fotografijeNiz'].controls[i].hasError('required') && 
@@ -72,30 +73,43 @@
                                         Morate postaviti sliku!
                                     </div>
                                 </div>
-                            </div>
+                            </div> -->
                             <br>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col">
-                            <button type="button" class="btn btn-warning" [disabled]="oglasFormArray.length >=5" 
+                            <button type="button" class="btn btn-info" [disabled]="oglasFormArray.length >=5" 
                                                                           (click)="josPoljaFoto()">Još fotografija</button>
                         </div>
                     </div>
                     <br><br>
                     <div class="row">
                         <div class="col">
-                            <div class="responsive" *ngFor="let nazivSlike of fotoArr">
-                                <a target="_blank" [href]="apiUrl + '/' + nazivSlike">
-                                    <img class="img-thumbnail" 
-                                         [src]="nazivSlike ? apiUrl + '/' + nazivSlike : './../../../assets/slike/no-image-available.png'">
-                                </a>
+                            <div class="responsive" *ngFor="let nazivSlike of slikeSve">
+                                <div class="kontejner">
+                                    <img class="img-thumbnail slika" 
+                                        [src]="nazivSlike ? apiUrl + '/' + nazivSlike : './../../../assets/slike/no-image-available.png'">
+                                    <div class="middle pokazivac">
+                                        <div class="text" (click)="ukloniSliku(nazivSlike)">Ukloni</div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
                 <br><br>
-                <button type="submit" class="btn btn-success btn-block">Objavi oglas</button>
+                <button *ngIf="!oglasId" type="submit" class="btn btn-success btn-block">Objavi oglas</button>
+                <div class="container-fluid" *ngIf="oglasId">
+                    <div class="row">
+                        <div class="col-6">
+                            <button type="submit" class="btn btn-block btn-warning">Izmijeni</button>
+                        </div>
+                        <div class="col-6">
+                            <button type="button" class="btn btn-block btn-danger" (click)="ukloniOglas()">Ukloni</button>
+                        </div>
+                    </div>
+                </div>
             </form>
         </div>
         <div class="col-12 col-sm-12 col-md-1 col-lg-1 col-xl-1"></div>
@@ -103,6 +117,9 @@
 
     <!-- <pre>
         {{ kategorije | nizAbc:'naziv' | json}}
+    </pre> -->
+    <!-- <pre>
+        {{ oglas | json }}
     </pre> -->
     
 </div>
