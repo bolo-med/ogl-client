@@ -26,6 +26,10 @@ export class OglasiService {
     return this.http.post<OperationResponse>(this.serviceUrl, oglas);
   }
 
+  public updateOglas(oglas: Oglas): Observable<OperationResponse> {
+    return this.http.put<OperationResponse>(this.serviceUrl, oglas);
+  }
+
   public deleteOglas(id: number): Observable<OperationResponse> {
     return this.http.delete<OperationResponse>(this.serviceUrl + '/' + id);
   }

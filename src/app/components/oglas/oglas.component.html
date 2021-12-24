@@ -1,7 +1,5 @@
 <p class="naslov display-4">oglas</p>
 
-<!-- <p class="display-3">Naslov oglasa: {{oglas.naslov}}</p> -->
-
 <div class="naslov-ogl">{{oglas.naslov}} </div>
 
 <br>
@@ -10,9 +8,15 @@
 
 <br>
 
-<div class="responsive" *ngFor="let slika of oglas.fotografijeNiz">
+<div class="responsive" *ngFor="let slika of (oglas.fotografije | nizNazivaSlika)">
     <a target="_blank" [href]="url + '/' + slika">
         <img class="img-thumbnail" [src]="slika ? url + '/' + slika : './../../../assets/slike/no-image-available.png'">
+    </a>
+</div>
+
+<div class="responsive" *ngIf='!oglas.fotografije'>
+    <a target="_blank" href="./../../../assets/slike/no-image-available.png">
+        <img class="img-thumbnail" src="./../../../assets/slike/no-image-available.png">
     </a>
 </div>
 

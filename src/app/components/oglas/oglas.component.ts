@@ -1,6 +1,9 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Kategorija } from 'src/app/models/Kategorija';
+import { Korisnik } from 'src/app/models/Korisnik';
 import { Oglas } from 'src/app/models/Oglas';
+import { Podkategorija } from 'src/app/models/Podkategorija';
 import { AuthService } from 'src/app/services/auth.service';
 import { OglasiService } from 'src/app/services/oglasi.service';
 import { environment } from 'src/environments/environment';
@@ -18,8 +21,7 @@ export class OglasComponent implements OnInit {
 
   constructor(private activatedRoute: ActivatedRoute, 
               private oglasiService: OglasiService, 
-              private router: Router, 
-              private authService: AuthService) { }
+              private router: Router) { }
 
   ngOnInit(): void {
     
@@ -29,7 +31,6 @@ export class OglasComponent implements OnInit {
       if (data.status === 0) {
         if (data.data) {
           this.oglas = data.data;
-          this.pretvoriUNiz(this.oglas.fotografije);
         }
         else {
           alert('Oglas ne postoji!');
@@ -41,20 +42,6 @@ export class OglasComponent implements OnInit {
         this.router.navigateByUrl('/');
       }
     });
-  }
-
-  pretvoriUNiz(naziviSlika: string) {
-    console.log(naziviSlika);
-    
-    if (!naziviSlika) {
-      this.oglas.fotografijeNiz = [];
-      this.oglas.fotografijeNiz.push('');
-    }
-    else {
-      this.oglas.fotografijeNiz = naziviSlika.split(';');
-      console.log(this.oglas.fotografijeNiz);
-      
-    }
   }
 
 }

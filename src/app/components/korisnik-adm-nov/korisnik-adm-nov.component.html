@@ -4,7 +4,7 @@
         <div class="col-12 col-sm-12 col-md-10 col-lg-10 col-xl-10">
             <div class="naslov display-4">{{oglasId ? 'izmijenite oglas (#ID ' + oglasId + ')' : 'dodajte nov oglas'}}</div>
             <br>
-            <form [formGroup]="oglasFormGroup" (ngSubmit)="objaviOglas(oglasFormGroup)">
+            <form [formGroup]="oglasFormGroup" (ngSubmit)="potvrdiOglas(oglasFormGroup)">
                 <div class="form-group">
                     <label for="naslov">Naslov oglasa</label>
                     <input id="naslov" class="form-control" placeholder="Upisite naslov..." formControlName="naslov">
@@ -121,7 +121,7 @@
     <!-- <pre>
         {{ oglas | json }}
     </pre> -->
-    
+
 </div>
 
 <br><br><br>

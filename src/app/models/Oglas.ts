@@ -13,10 +13,9 @@ export class Oglas {
     podkategorijaID: number;
     korisnikID: number;
     fotografije: string;
-    fotografijeNiz: string[];
 
-    kategorija: Kategorija;
-    podkategorija: Podkategorija;
-    korisnik: Korisnik;
+    kategorija: Kategorija = new Kategorija();
+    podkategorija: Podkategorija = new Podkategorija();
+    korisnik: Korisnik = new Korisnik();
 }
 

@@ -5,7 +5,7 @@ import { Pipe, PipeTransform } from '@angular/core';
 })
 export class NizNazivaPipe implements PipeTransform {
 
-  transform(nazivi: string, ...args: unknown[]): string[] {
+  transform(nazivi: string): string[] {
     if (nazivi) {
       let nizNaziva: string[];
       nizNaziva = nazivi.split(';');

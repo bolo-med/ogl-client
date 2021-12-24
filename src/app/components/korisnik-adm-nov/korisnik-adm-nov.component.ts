@@ -25,9 +25,7 @@ export class KorisnikAdmNovComponent implements OnInit {
   danas: string = new Date().toISOString().split('T')[0];
   kategorije: Kategorija[];
   podkategorije: Podkategorija[];
-  // sub: any;
   apiUrl = environment.apiUrl;
-  // fotografije: string = '';
   formaPotvrdjena: boolean;
   oglasId: number;
   slikeIzBaze: string[] = [];
@@ -45,32 +43,13 @@ export class KorisnikAdmNovComponent implements OnInit {
   constructor(private oglasiService: OglasiService, 
               private authService: AuthService,  
               private formBuilder: FormBuilder, 
-              private route: ActivatedRoute, 
               private router: Router, 
               private kategorijeServis: KategorijeService, 
               private podkategorijeServis: PotkategorijeService, 
               private activatedRoute: ActivatedRoute) {}
 
   ngOnInit(): void {
-
-    // Ne moze ni ovo. Pocne da izvrsava tijelo f-je, prije nego sto dobije parametar 'data'. Resolver mi nicemu ne sluzi.
-    // this.sub = this.route.data.subscribe((data: {katPodkat: KatPodkat}) => {
-    //   if (data.katPodkat.kategorije && data.katPodkat.podkategorije) {
-    //     this.kategorije = data.katPodkat.kategorije;
-    //     this.podkategorije = data.katPodkat.podkategorije;
-    //   }
-    //   else {
-    //     alert('Greska sa DB serverom!\nPokušajte kasnije.');
-    //     this.router.navigateByUrl('/');
-    //   }
-    // });
-    // Nece ni ovako.
-    // this.sub = this.route.data.subscribe((data: {katPodkat: KatPodkat}) => {
-    //   this.kategorije = data.katPodkat.kategorije;
-    //   this.podkategorije = data.katPodkat.podkategorije;
-    // });
-
-    // da ne bi javljalo gresku, jer prvo pokusa da renderuje componente tabele, pa saceka da dobije rezultate upita
+    // da ne bi javljalo gresku, jer prvo pokusa da renderuje komponente tabele, pa saceka da dobije rezultate upita
     this.oglasFormGroup = this.formBuilder.group({
       'naslov': [''],
       'tekst': [''],
@@ -82,9 +61,6 @@ export class KorisnikAdmNovComponent implements OnInit {
 
     this.formaPotvrdjena = false;
     this.dopremiKatPodkat();
-    // this.kreirajFormu();
-
-    ////////////////////////////////////////////////////////////////////////////////////
 
     this.oglasId = +this.activatedRoute.snapshot.paramMap.get('id');
 
@@ -92,16 +68,14 @@ export class KorisnikAdmNovComponent implements OnInit {
       this.kreirajFormu();
     }
     else {
-
       this.oglasiService.getOglasByID(this.oglasId).subscribe(data => {
         if (data.data && data.status === 0) {
           this.oglas = data.data;
-          this.kreirajFormu2();
+          this.kreirajFormu();
           this.popuniNizFotografijama();
         }
       });
     }
-    ///////////////////////////////////////////////////////////////////////////////////
 
     this.uploader.onAfterAddingAll = (file: FileItem) => {
       file.withCredentials = false;
@@ -119,9 +93,9 @@ export class KorisnikAdmNovComponent implements OnInit {
       else {
         alert('Fajl NIJE aploudovan!');
       }
-      console.log('Slike iz baze: ' + this.slikeIzBaze);
-      console.log('Dodate slike: ' + this.slikeDodate);
-      console.log('Sve slike: ' + this.slikeSve);
+      // console.log('Slike iz baze: ' + this.slikeIzBaze);
+      // console.log('Dodate slike: ' + this.slikeDodate);
+      // console.log('Sve slike: ' + this.slikeSve);
     };
   }
 
@@ -146,19 +120,14 @@ export class KorisnikAdmNovComponent implements OnInit {
 
   kreirajFormu() {
     this.oglasFormGroup = this.formBuilder.group({
-      'naslov': ['', Validators.required],
-      'tekst': ['', Validators.required],
-      'datumVazenja': [null],
-      // 'kategorijaID': [{value: this.oglas.kategorijaID}, {validators: StavkaOdaberite.nijeOdabrao}], (nepotreban red)
-      'kategorijaID': [-1, {validators: StavkaOdaberite.nijeOdabrao}],
-      'podkategorijaID': [-1, StavkaOdaberite.nijeOdabrao],
+      'naslov': [this.oglasId ? this.oglas.naslov : '', Validators.required],
+      'tekst': [this.oglasId ? this.oglas.tekst : '', Validators.required],
+      'datumVazenja': [this.oglasId ? this.oglas.datumVazenja : null],
+      'kategorijaID': [this.oglasId ? this.oglas.kategorijaID : -1, {validators: StavkaOdaberite.nijeOdabrao}],
+      'podkategorijaID': [this.oglasId ? this.oglas.podkategorijaID : -1, StavkaOdaberite.nijeOdabrao],
       // 'fotografijeNiz': this.oglasFormArray.push(new FormControl('')) // ovako ne moze - mora preko f-je
       'fotografijeNiz': this.prvaContrlNiz()
     });
-    
-    // Ne treba ???
-    //this.oglasFormGroup.controls['kategorijaID'].setValue(-1);
-    //this.oglasFormGroup.controls['podkategorijaID'].setValue(-1);
   }
 
   prvaContrlNiz(): FormArray {
@@ -166,17 +135,6 @@ export class KorisnikAdmNovComponent implements OnInit {
     this.oglasFormArray.push(new FormControl(''));
     this.brKontrola++;
     return this.oglasFormArray;
-  }
-
-  kreirajFormu2() {
-    this.oglasFormGroup = this.formBuilder.group({
-      'naslov': [this.oglas.naslov, Validators.required],
-      'tekst': [this.oglas.tekst, Validators.required],
-      'datumVazenja': [null],
-      'kategorijaID': [this.oglas.kategorijaID, {validators: StavkaOdaberite.nijeOdabrao}],
-      'podkategorijaID': [this.oglas.podkategorijaID, StavkaOdaberite.nijeOdabrao],
-      'fotografijeNiz': this.prvaContrlNiz()
-    });
   }
 
   kategProm(katId: any) {
@@ -197,7 +155,6 @@ export class KorisnikAdmNovComponent implements OnInit {
 
     if (this.oglasFormArray.length > 1) {
       n.removeAt(index); // Uklanja kontrolu iz html-a
-      // this.ukloniNaziv(nazivFajla);
       this.slikeDodate.splice(index, 1);
       this.slikeDodate.push('');
       this.brKontrola--;
@@ -208,12 +165,15 @@ export class KorisnikAdmNovComponent implements OnInit {
       this.slikeDodate.push('');
     }
     this.sveSlikeUNiz();
-    console.log('Slike iz baze: ' + this.slikeIzBaze);
-    console.log('Dodate slike: ' + this.slikeDodate);
-    console.log('Sve slike: ' + this.slikeSve);
+    // console.log('Slike iz baze: ' + this.slikeIzBaze);
+    // console.log('Dodate slike: ' + this.slikeDodate);
+    // console.log('Sve slike: ' + this.slikeSve);
   }
 
   ukloniSliku(naziv: string) {
+
+    if (!confirm('Ukloniti sliku?')) return;
+
     let i: number = this.slikeDodate.indexOf(naziv);
     if (i > -1) {
       let n = <FormArray>this.oglasFormGroup.controls['fotografijeNiz'];
@@ -226,14 +186,14 @@ export class KorisnikAdmNovComponent implements OnInit {
       i = this.slikeIzBaze.indexOf(naziv);
       this.slikeIzBaze.splice(i, 1);
     }
-    console.log('Kao uklonjena slika: ' + naziv);
+    // console.log('Kao uklonjena slika: ' + naziv);
     this.sveSlikeUNiz();
-    console.log('Slike iz baze: ' + this.slikeIzBaze);
-    console.log('Dodate slike: ' + this.slikeDodate);
-    console.log('Sve slike: ' + this.slikeSve);
+    // console.log('Slike iz baze: ' + this.slikeIzBaze);
+    // console.log('Dodate slike: ' + this.slikeDodate);
+    // console.log('Sve slike: ' + this.slikeSve);
   }
 
-  objaviOglas(form: FormGroup) {
+  potvrdiOglas(form: FormGroup) {
     this.formaPotvrdjena = true;
 
     if (!form.valid) return;
@@ -248,24 +208,48 @@ export class KorisnikAdmNovComponent implements OnInit {
     this.oglas.podkategorijaID = form.controls['podkategorijaID'].value;
     this.oglas.korisnikID = this.authService.getKorisnikDetails().id;
     this.oglas.fotografije = this.nizSlikaStr(this.slikeSve);
-    this.oglas.fotografijeNiz = [];
-    this.oglasiService.insertOglas(this.oglas).subscribe(odgovor => {
-      if (odgovor.status === 0) {
-        alert('Oglas je uspješno postavljen.');
-        this.ngOnInit();
-        this.router.navigateByUrl('/', {skipLocationChange: true}).then(() => this.router.navigate(['/korisnik/nov-oglas']));
+
+    this.oglas.kategorija = null;
+    this.oglas.podkategorija = null;
+    this.oglas.korisnik = null;
+
+    if (this.oglasId) {
+      this.izmijeniOglas(this.oglas);
+    }
+    else {
+      this.dodajOglas(this.oglas);
+    }
+    // console.log(this.oglas);
+  }
+
+  izmijeniOglas(oglas: Oglas) {
+    this.oglasiService.updateOglas(oglas).subscribe(odgovor => {
+      if (odgovor.status === 0 && odgovor.data) {
+        alert('Oglas je uspješno izmijenjen u bazi podataka!');
+        this.router.navigateByUrl('/', {skipLocationChange: true}).then(() => this.router.navigate(['/korisnik/svi-oglasi']));
       }
       else {
-        alert('Greška pri postavljanju oglasa. Pokušajte kasnije.');
-        // this.router.navigateByUrl('/');
+        alert('Greška pri izmjeni oglasa u bazi podataka. Pokušajte kasnije.');
       }
     });
-    // console.log(this.oglas);
+
+    console.log(oglas);
+  }
+
+  dodajOglas(oglas: Oglas) {
+    this.oglasiService.insertOglas(oglas).subscribe(odgovor => {
+      if (odgovor.status === 0) {
+        alert('Oglas je uspješno dodat u bazu podataka!');
+        this.router.navigateByUrl('/', {skipLocationChange: true}).then(() => this.router.navigate(['/korisnik/svi-oglasi']));
+      }
+      else {
+        alert('Greška pri dodavanju oglasa u bazu podataka. Pokušajte kasnije.');
+      }
+    });
   }
 
   // Vraca indeks elementa, clana niza 'oglasFormGroup.controls['fotografijeNiz']'
   dodataSlika(index: number): void {
-    //console.log(index);
     this.indeksKontrole = index;
   }
 
@@ -277,8 +261,6 @@ export class KorisnikAdmNovComponent implements OnInit {
     for (let e of this.slikeDodate) {
       if (e) this.slikeSve.push(e);
     }
-    // console.log(this.slikeSve);
-    
   }
 
   nizSlikaStr(slike: string[]): string {
@@ -299,14 +281,10 @@ export class KorisnikAdmNovComponent implements OnInit {
       }
       else {
         alert('Doslo je do greske pri uklanjanju oglasa!');
+        console.log(data.data.message);
       }
     });
   }
-
-  // Ne treba nam. Nema resolvera.
-  // ngOnDestroy() {
-  //   this.sub.unsubscribe();
-  // }
 
 }
 

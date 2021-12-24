@@ -20,15 +20,15 @@ import { AdministratorAdmPotkategorijeComponent } from './components/administrat
 import { OglasComponent } from './components/oglas/oglas.component';
 import { FileUploadModule } from 'ng2-file-upload';
 import { PocetnaComponent } from './components/pocetna/pocetna.component';
-import { KorisnikAdmNovResolver } from './components/korisnik-adm-nov/korisnik-adm-nov.resolver';
 import { NizAbcPipe } from './pipes/niz-abc.pipe';
 import { NizFilterPipe } from './pipes/niz-filter.pipe';
 import { AdministratorAdmMeniComponent } from './components/administrator-adm-meni/administrator-adm-meni.component';
 import { AdministratorAdmKorisniciComponent } from './components/administrator-adm-korisnici/administrator-adm-korisnici.component';
 import { AdministratorAdmKorisnikComponent } from './components/administrator-adm-korisnik/administrator-adm-korisnik.component';
 import { ValidacijaKorisnickogDirective } from './validators/validacija-korisnickog.directive';
-import { KorisnikAdmOglEditComponent } from './components/korisnik-adm-ogl-edit/korisnik-adm-ogl-edit.component';
 import { NizNazivaPipe } from './pipes/niz-naziva.pipe';
+import { PrvaFotoNizaPipe } from './pipes/prva-foto-niza.pipe';
+import { OglasResolver } from 'src/app/components/korisnik-adm-nov/oglas.resolver';
 
 @NgModule({
   declarations: [
@@ -52,8 +52,8 @@ import { NizNazivaPipe } from './pipes/niz-naziva.pipe';
     AdministratorAdmKorisniciComponent,
     AdministratorAdmKorisnikComponent,
     ValidacijaKorisnickogDirective,
-    KorisnikAdmOglEditComponent,
-    NizNazivaPipe
+    NizNazivaPipe,
+    PrvaFotoNizaPipe
   ],
   imports: [
     BrowserModule,
@@ -63,7 +63,7 @@ import { NizNazivaPipe } from './pipes/niz-naziva.pipe';
     FileUploadModule,
     ReactiveFormsModule
   ],
-  providers: [KorisnikAdmNovResolver],
+  providers: [OglasResolver],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

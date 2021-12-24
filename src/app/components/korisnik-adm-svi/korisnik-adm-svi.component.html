@@ -4,13 +4,16 @@
     <div class="lead" *ngIf="duzinaNiza == 0">Još uvijek niste postavili nijedan oglas.</div>
     <div class="row okvir-oglasa" *ngFor='let oglas of oglasi' (click)="kliknutOglas(oglas.id)">
         <div class="col-12 col-sm-12 col-md-7 col-lg-7 col-xl-7 lead">
-            <p>{{oglas.naslov}}</p>
+            <div class="kat-pod">
+                {{oglas.kategorija.naziv}} - {{oglas.podkategorija.naziv}}
+            </div>
+            <br>
+            <p class="naslov-ogl">{{oglas.naslov}}</p>
             <p>{{oglas.tekst}}</p>
             <br>
-            <p>Kateg: {{oglas.kategorija.naziv}} | Podkateg: {{oglas.podkategorija.naziv}} | Autor: {{oglas.korisnik.username}}</p>
         </div>
         <div class="col-12 col-sm-12 col-md-5 col-lg-5 col-xl-5">
-            <img class="" [src]="oglas.fotografije ? apiUrl + '/' + oglas.fotografije : 
+            <img class="" [src]="oglas.fotografije ? apiUrl + '/' + (oglas.fotografije | prvaFotoNiza) : 
                                                        './../../../assets/slike/no-image-available.png'" alt="nema slike">
         </div>
     </div>

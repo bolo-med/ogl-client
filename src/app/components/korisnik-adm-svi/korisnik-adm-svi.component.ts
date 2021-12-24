@@ -29,11 +29,14 @@ export class KorisnikAdmSviComponent implements OnInit {
 
   korisnikoviOglasi(sviOglasi: Oglas[]): Oglas[] {
     let izabraniOglasi: Oglas[] = [];
+    
     for (let oglas of sviOglasi) {
-      if (oglas.korisnikID === this.korisnikId) izabraniOglasi.push(oglas);
+      if (oglas.korisnikID === this.korisnikId) {
+        izabraniOglasi.push(oglas)
+      }
     }
+
     this.duzinaNiza = izabraniOglasi.length;
-    //console.log(izabraniOglasi.length);///////////////////////////////////////////////////////////////////////////////////
     
     return izabraniOglasi;
   }
