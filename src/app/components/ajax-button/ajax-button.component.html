@@ -1,0 +1,12 @@
+<button [disabled]="zauzeto" class="btn btn-block btn-primary">
+    <span [hidden]="!zauzeto">
+        <ng-content select="[tekst2]"></ng-content>
+    </span>
+    <ng-content select="[tekst1]"></ng-content>
+</button>
+
+<!-- <button type="submit" [attr.disabled]="zauzeto" class="btn btn-block btn-primary">
+    <span [hidden]="!zauzeto">(AJAX-button) </span>
+    <span>Prijavi se</span>
+</button> -->
+

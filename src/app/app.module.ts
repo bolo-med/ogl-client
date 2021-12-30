@@ -29,6 +29,7 @@ import { ValidacijaKorisnickogDirective } from './validators/validacija-korisnic
 import { NizNazivaPipe } from './pipes/niz-naziva.pipe';
 import { PrvaFotoNizaPipe } from './pipes/prva-foto-niza.pipe';
 import { OglasResolver } from 'src/app/components/korisnik-adm-nov/oglas.resolver';
+import { AjaxButtonComponent } from './components/ajax-button/ajax-button.component';
 
 @NgModule({
   declarations: [
@@ -53,7 +54,8 @@ import { OglasResolver } from 'src/app/components/korisnik-adm-nov/oglas.resolve
     AdministratorAdmKorisnikComponent,
     ValidacijaKorisnickogDirective,
     NizNazivaPipe,
-    PrvaFotoNizaPipe
+    PrvaFotoNizaPipe,
+    AjaxButtonComponent
   ],
   imports: [
     BrowserModule,
