@@ -219,7 +219,7 @@ export class KorisnikAdmNovComponent implements OnInit {
     else {
       this.dodajOglas(this.oglas);
     }
-    // console.log(this.oglas);
+    //console.log(this.oglas);
   }
 
   izmijeniOglas(oglas: Oglas) {
@@ -233,7 +233,7 @@ export class KorisnikAdmNovComponent implements OnInit {
       }
     });
 
-    console.log(oglas);
+    //console.log(oglas);
   }
 
   dodajOglas(oglas: Oglas) {
@@ -281,7 +281,7 @@ export class KorisnikAdmNovComponent implements OnInit {
       }
       else {
         alert('Doslo je do greske pri uklanjanju oglasa!');
-        console.log(data.data.message);
+        //console.log(data.data.message);
       }
     });
   }
